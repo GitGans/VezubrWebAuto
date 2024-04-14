@@ -3,13 +3,13 @@ import allure
 from pages.cargo_place_add_page import CargoPlaceAdd
 from pages.cargo_place_list_page import CargoPlaceList
 from pages.request_ltl_add_page import LTLAdd
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 
 
 @allure.feature('Создание LTL заявок')
 @allure.description('ЛКЗ. Тест создания LTL заявки: дата - Сейчас +30мин, гм - Первое в списке, публикация - Позже')
 def test_ltl_request_no_publish_add_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.move_find_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.assignments_list_button,
                                 do_assert=True, wait="lst")
@@ -42,7 +42,7 @@ def test_ltl_request_no_publish_add_lkz(domain):
 @allure.description('ЛКЗ. Тест создания LTL заявки: дата - Сейчас +30мин, гм - Первое в списке, публикация - Ставка, '
                     'стоимость - Рандом')
 def test_ltl_request_rate_add_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.move_find_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.assignments_list_button,
                                 do_assert=True, wait="lst")
@@ -81,7 +81,7 @@ def test_ltl_request_rate_add_lkz(domain):
 @allure.feature('Создание LTL заявок')
 @allure.description('ЛКЗ. Тест создания LTL заявки: дата - Сейчас +30мин, гм - Первое в списке, публикация - Тариф')
 def test_ltl_request_tariff_add_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.move_find_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.assignments_list_button,
                                 do_assert=True, wait="lst")

@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.address_add_page import AddressAdd
 from pages.address_list_page import AddressesList
 
@@ -7,7 +7,7 @@ from pages.address_list_page import AddressesList
 @allure.feature('Создание адресов')
 @allure.description('ЛКЭ. Тест создания адреса: статус - Активный, ввод адреса в поле Фактический адрес.')
 def test_address_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.addresses_list_button,
                                 do_assert=True, wait="lst")

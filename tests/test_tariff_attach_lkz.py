@@ -1,20 +1,20 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.agreement_page import Agreement
 from pages.contractor_page import Contractor
 from pages.extra_agreement_add_page import ExtraAgreementAdd
-from pages.produsers_list_page import ProdusersList
+from pages.producers_list_page import ProducersList
 
 
 @allure.feature('Прикрепление тарифов')
 @allure.description('ЛКЗ. Тест прикрепления тарифа к ДУ c ПВ : создаем базовый ДУ и сразу прикрепляем существующий '
                     'тариф - Первый в списке')
 def test_tariff_attach_producer_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.click_button(sidebar.producers_list_button, do_assert=True, wait="lst")
 
-    producer_list = ProdusersList(base.driver)
+    producer_list = ProducersList(base.driver)
     producer_list.click_button(producer_list.producer_logo_inn, wait="lst")
 
     contractor = Contractor(base.driver)

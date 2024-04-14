@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.tariff_ltl_add_page import LTLTariffAdd
 from pages.tariffs_list_page import TariffsList
 
@@ -8,7 +8,7 @@ from pages.tariffs_list_page import TariffsList
 @allure.description('ЛКЗ. Тест создания LTL тарифа: название - LTL-timestamp, тип - Короб, мин.вес/объем вес/сбор '
                     'прям./сбор обр. - Рандом, регион - Свердл/Алтай, минималка/доплата/темп.коэф/срок - Рандом')
 def test_ltl_tariff_add_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
                                 do_assert=True, wait="lst")

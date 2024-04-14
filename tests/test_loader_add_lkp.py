@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.loader_add_page import LoaderAdd
 from pages.loader_list_page import LoaderList
 
@@ -8,7 +8,7 @@ from pages.loader_list_page import LoaderList
 @allure.description('ЛКП. Тест создания специалиста Экс: ФИО - ФИО-timestamp, паспорт - РФ, тип - Грузчик, '
                     '№ паспорт/код/права/тлф.апп/тлф. - Рандом.')
 def test_loader_add_lkp(domain):
-    base, sidebar = base_test(domain=domain, role='lkp')
+    base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.loaders_list_button,
                                 do_assert=True, wait="lst")

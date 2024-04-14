@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.transport_add_page import TransportAdd
 from pages.transports_list_page import TransportsList
 
@@ -8,7 +8,7 @@ from pages.transports_list_page import TransportsList
 @allure.description('ЛКЭ. Тест создания тягача Экс: номер - ТЯГ-timestamp, модель - Тягач, выпуск - 2023г, '
                     'собственник - Подрядчик')
 def test_tractor_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
                                 do_assert=True, wait="lst")

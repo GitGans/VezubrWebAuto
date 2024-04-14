@@ -1,6 +1,6 @@
 import time
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.tariff_ftl_add_page import FTLTariffAdd
 from pages.tariff_ltl_add_page import LTLTariffAdd
 from pages.tariff_luo_add_page import LUOTariffAdd
@@ -10,7 +10,7 @@ from pages.tariffs_list_page import TariffsList
 @allure.feature('Удаление тарифов')
 @allure.description('ЛКЗ. Тест удаления тарифа: тариф - Первый в списке')
 def test_tariff_delete_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
                                 do_assert=True, wait="lst")
@@ -29,7 +29,7 @@ def test_tariff_delete_lkz(domain):
 @allure.description('ЛКЗ. Тест копирования ПРР тарифа: фильтр - ПРР, название - ПРР-timestamp, '
                     'спец. - Старый, минималка/доплата/МКАД - Рандом, оригинал - Удалть')
 def test_tariff_luo_copy_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
                                 do_assert=True, wait="lst")
@@ -61,7 +61,7 @@ def test_tariff_luo_copy_lkz(domain):
 @allure.description('ЛКЗ. Тест копирования FTL тарифа: фильтр - ПЧ, тип - Почасовой, округление - Час, '
                     'название - ПЧ-timestamp, ТС - Старый, кузов - Старый, минималка - Рандом')
 def test_tariff_ftl_h_copy_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
                                 do_assert=True, wait="lst")
@@ -89,7 +89,7 @@ def test_tariff_ftl_h_copy_lkz(domain):
 @allure.description('ЛКЭ. Тест копирования FTL тарифа: фильтр - ГГ, тип - Фиксированный, маршрут - Старый, название '
                     '- ГГ-timestamp, ТС - Старый, кузов - Старый, минималка/доп.адрес/ожидание - Рандом')
 def test_tariff_ftl_cc_copy_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
                                 do_assert=True, wait="lst")
@@ -121,7 +121,7 @@ def test_tariff_ftl_cc_copy_lkz(domain):
 @allure.description('ЛКЗ. Тест копирования FTL тарифа: фильтр - ПБ, тип - Пробег, маршрут - Старый, '
                     'название - ПБ-timestamp, ТС - Старый, кузов - Старый, минималка/доп.адрес/ожидание - Рандом')
 def test_ftl_ml_tariff_copy_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
                                 do_assert=True, wait="lst")
@@ -160,7 +160,7 @@ def test_ftl_ml_tariff_copy_lkz(domain):
                     'мин.вес/объем вес/сбор прям./сбор обр. - Рандом, регион - Старый, '
                     'минималка/доплата/темп.коэф/срок - Рандом')
 def test_tariff_ltl_copy_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
                                 do_assert=True, wait="lst")

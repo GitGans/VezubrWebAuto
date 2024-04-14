@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.profile_page import Profile
 
 
@@ -8,7 +8,7 @@ from pages.profile_page import Profile
                     'налогообложение - Перебор всех вариантов без сохранения, документообор - Вкл./Выкл, '
                     'ссылка контура - Копирование, счет - 405+Рандом, бик - Фикс.')
 def test_profile_edit_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.click_button(sidebar.profile_button, do_assert=True, wait="form")
 

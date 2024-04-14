@@ -1,6 +1,6 @@
 import time
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.tariff_ftl_add_page import FTLTariffAdd
 from pages.tariffs_list_page import TariffsList
 
@@ -9,7 +9,7 @@ from pages.tariffs_list_page import TariffsList
 @allure.description('ЛКЗ. Тест создания FTL тарифа: тип - Почасовой, округление - Час, название - ПЧ-timestamp, '
                     'ТС - 0.5т, кузов - Закрытый, минималка - Рандом')
 def test_ftl_h_tariff_add_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
                                 do_assert=True, wait="lst")
@@ -35,7 +35,7 @@ def test_ftl_h_tariff_add_lkz(domain):
 @allure.description('ЛКЗ. Тест создания FTL тарифа: тип - Фиксированный, маршрут - Екб-Уфа, название - ГГ-timestamp, '
                     'ТС - 1.5т/9м3/4п, кузов - Закрытый, минималка/доп.адрес/ожидание - Рандом')
 def test_ftl_cc_tariff_add_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
                                 do_assert=True, wait="lst")
@@ -69,7 +69,7 @@ def test_ftl_cc_tariff_add_lkz(domain):
                     'название - ТТ-timestamp, ТС - 1.5т/9м3/4п, адреса - Первый и Второй в списке, '
                     'кузов - Закрытый, минималка/доп.адрес/ожидание - Рандом')
 def test_ftl_pp_tariff_add_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
                                 do_assert=True, wait="lst")
@@ -106,7 +106,7 @@ def test_ftl_pp_tariff_add_lkz(domain):
 @allure.description('ЛКЗ. Тест создания FTL тарифа: тип - Пробег, маршрут - Екб-Члб, название - ПБ-timestamp, '
                     'ТС - 5т/36м3/15п, кузов - Закрытый, минималка/доп.адрес/ожидание - Рандом')
 def test_ftl_ml_tariff_add_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
                                 do_assert=True, wait="lst")

@@ -1,12 +1,12 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 
 
 @allure.feature('Боковое меню')
 @allure.description('ЛКП. Тест бокового меню: '
                     'переход по всем вкладкам, ожидание прогрузки, проверка вкладки по названию')
 def test_sidebar_lkp(domain):
-    base, sidebar = base_test(domain=domain, role='lkp')
+    base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
     sidebar.move_find_and_click(move_to=sidebar.requests_hover, click_to=sidebar.ftl_active_list_button,
                                 do_assert=True, wait="lst")

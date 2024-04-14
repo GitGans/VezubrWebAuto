@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.group_page import Group
 from pages.profile_page import Profile
 
@@ -7,7 +7,7 @@ from pages.profile_page import Profile
 @allure.feature('Создание групп')
 @allure.description('ЛКЭ. Тест создания группы: имя - №-timestamp, тип - Признак договора, признак - Рандом')
 def test_group_attr_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.click_button(sidebar.profile_button, do_assert=True)
 
@@ -28,7 +28,7 @@ def test_group_attr_add_lke(domain):
 @allure.feature('Создание групп')
 @allure.description('ЛКЭ. Тест создания группы: имя - №-timestamp, тип - Заказчик, заказчик - Рандом')
 def test_group_client_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.click_button(sidebar.profile_button, do_assert=True)
 
@@ -49,7 +49,7 @@ def test_group_client_add_lke(domain):
 @allure.feature('Удаление групп')
 @allure.description('ЛКЭ. Тест удалания группы: группа - Шестая в списке')
 def test_group_delete_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.click_button(sidebar.profile_button, do_assert=True)
 

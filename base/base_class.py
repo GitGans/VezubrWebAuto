@@ -5,6 +5,7 @@ import re
 import allure
 from typing import Any, ClassVar, Dict, Type, NoReturn, Optional
 from selenium import webdriver
+from selenium.common import TimeoutException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -71,7 +72,8 @@ class Base:
     # """
     # Создает и возвращает экземпляр класса с драйвером Chrome, работающим в фоновом режиме.
     #
-    # Этот метод инициализирует веб-драйвер Chrome с опцией "--headless", что позволяет выполнять тесты без открытия браузера.
+    # Этот метод инициализирует веб-драйвер Chrome с опцией "--headless",
+    # что позволяет выполнять тесты без открытия браузера.
     #
     # Returns
     # -------
@@ -193,7 +195,8 @@ class Base:
         return
 
     """ Get timestamp"""
-    def get_timestamp(self) -> str:
+    @staticmethod
+    def get_timestamp() -> str:
         """
         Возвращает текущее время в формате UTC без разделителей.
 
@@ -204,8 +207,21 @@ class Base:
         """
         return datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S")
 
+    @staticmethod
+    def get_timestamp_eight_signs() -> str:
+        """
+        Возвращает текущее время в формате UTC без разделителей.
+
+        Returns
+        -------
+        str
+            Текущее время в формате "ДДЧЧММСС".
+        """
+        return datetime.datetime.utcnow().strftime("%d%H%M%S")
+
     """ Get timestamp with dot"""
-    def get_timestamp_dot(self) -> str:
+    @staticmethod
+    def get_timestamp_dot() -> str:
         """
         Возвращает текущее время в формате UTC с точками в качестве разделителей.
 
@@ -237,8 +253,58 @@ class Base:
             assert re.fullmatch(element_dict['reference'], value_word)
             print(f"Assert \"{value_word}\" == \"{element_dict['reference']}\"")
 
+    """ Assert word input reference wait clickable"""
+    def flexible_assert_word(self, element_dict: Dict[str, str], reference_value: str) -> NoReturn:
+        """
+        Проверяет, что текст элемента соответствует заданному значению.
+
+        Parameters
+        ----------
+        element_dict : dict
+            Словарь с информацией о локаторе элемента.
+        reference_value : str
+            Ожидаемый текст для проверки соответствия тексту элемента.
+
+        Raises
+        ------
+        AssertionError
+            Если текст элемента не соответствует ожидаемому значению.
+        """
+        value_word = WebDriverWait(self.driver, 60).until(
+            EC.element_to_be_clickable((By.XPATH, element_dict['reference_xpath']))
+        ).text
+        with allure.step(title=f"Assert \"{value_word}\" == \"{reference_value}\""):
+            assert re.fullmatch(reference_value, value_word), f"Expected '{reference_value}', but found '{value_word}'."
+            print(f"Assert \"{value_word}\" == \"{reference_value}\"")
+
+    """ Assert text extraction by INN wait clickable"""
+
+    def verify_text_by_inn(self, inn_value: str, reference_value: str) -> NoReturn:
+        """
+        Проверяет наличие и соответствие конкретного текста для строки таблицы, содержащей заданный ИНН.
+
+        Parameters
+        ----------
+        inn_value : str
+            ИНН, используемый для поиска соответствующей строки в таблице.
+        reference_value : str
+            Ожидаемый текст для сравнения, который должен точно совпадать с текстом элемента.
+
+        Raises
+        ------
+        AssertionError
+            Если текст элемента не соответствует ожидаемому значению.
+        """
+        locator = (By.XPATH, f"//tr[.//a[contains(text(), '{inn_value}')]]//div[contains(text(), '{reference_value}')]")
+        element = WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(locator))
+        value_word = element.text
+        with allure.step(title=f"Assert \"{value_word}\" == \"{reference_value}\""):
+            assert value_word == reference_value, f"Expected '{reference_value}', but found '{value_word}'."
+            print(f"Assert \"{value_word}\" == \"{reference_value}\"")
+
     """ Get random value float str"""
-    def random_value_float_str(self, of: float, to: float) -> str:
+    @staticmethod
+    def random_value_float_str(of: float, to: float) -> str:
         """
         Возвращает случайное вещественное число в виде строки с одним знаком после запятой.
 
@@ -257,7 +323,8 @@ class Base:
         return f'{random.uniform(of, to):.1f}'
 
     """ Get random value int str"""
-    def random_value_int_str(self, of: int, to: int) -> str:
+    @staticmethod
+    def random_value_int_str(of: int, to: int) -> str:
         """
         Возвращает случайное целое число в виде строки.
 
@@ -276,7 +343,8 @@ class Base:
         return f'{random.randint(of, to)}'
 
     """ Get random value int """
-    def random_value_int(self, of: int, to: int) -> int:
+    @staticmethod
+    def random_value_int(of: int, to: int) -> int:
         """
         Возвращает случайное целое число из заданного диапазона.
 
@@ -295,7 +363,8 @@ class Base:
         return random.randint(of, to)
 
     """ Get random value custom start int """
-    def random_value_custom_start(self, prefix: str, n: int) -> str:
+    @staticmethod
+    def random_value_custom_start(prefix: str, n: int) -> str:
         """
         Генерирует случайное число с заданным префиксом и общей длиной.
 
@@ -343,15 +412,16 @@ class Base:
             Если текущий URL не соответствует ожидаемому значению.
         """
         get_url = self.driver.current_url
-        with allure.step(title="Accert url true"):
+        with allure.step(title="Assert url true"):
             assert get_url == result
-            print("Accert url true")
+            print("Assert url true")
 
     """ Click button wait clickable"""
     def click_button(self, element_dict: Dict[str, str], do_assert: Optional[bool] = False,
                      wait: Optional[str] = None) -> NoReturn:
         """
-        Кликает по кнопке, ожидая ее кликабельности. После клика может выполнить проверку текста и ожидание исчезновения элементов загрузки.
+        Кликает по кнопке, ожидая ее кликабельности.
+        После клика может выполнить проверку текста и ожидание исчезновения элементов загрузки.
 
         Parameters
         ----------
@@ -379,7 +449,8 @@ class Base:
     def click_button_index(self, element_dict: Dict[str, str], index: int = 1, do_assert: bool = False,
                            wait: Optional[str] = None) -> NoReturn:
         """
-        Кликает по кнопке с указанным индексом, ожидая ее кликабельности. Позволяет кликнуть по одному из множества однотипных элементов.
+        Кликает по кнопке с указанным индексом, ожидая ее кликабельности.
+        Позволяет кликнуть по одному из множества однотипных элементов.
 
         Parameters
         ----------
@@ -413,7 +484,8 @@ class Base:
     def click_button_visibility(self, element_dict: Dict[str, str], do_assert: bool = False,
                                 wait: Optional[str] = None) -> NoReturn:
         """
-        Кликает по кнопке, ожидая ее видимости. После клика может выполнить проверку текста и ожидание исчезновения элементов загрузки.
+        Кликает по кнопке, ожидая ее видимости.
+        После клика может выполнить проверку текста и ожидание исчезновения элементов загрузки.
 
         Parameters
         ----------
@@ -440,7 +512,8 @@ class Base:
     def click_button_located(self, element_dict: Dict[str, str], do_assert: bool = False,
                              wait: Optional[str] = None) -> NoReturn:
         """
-        Кликает по кнопке, ожидая ее нахождения в DOM. После клика может выполнить проверку текста и ожидание исчезновения элементов загрузки.
+        Кликает по кнопке, ожидая ее нахождения в DOM.
+        После клика может выполнить проверку текста и ожидание исчезновения элементов загрузки.
 
         Parameters
         ----------
@@ -467,7 +540,8 @@ class Base:
     def click_button_find(self, element_dict: Dict[str, str], do_assert: bool = False,
                           wait: Optional[str] = None) -> NoReturn:
         """
-        Находит и кликает по кнопке без предварительного ожидания состояний. После клика может выполнить проверку текста и ожидание исчезновения элементов загрузки.
+        Находит и кликает по кнопке без предварительного ожидания состояний.
+        После клика может выполнить проверку текста и ожидание исчезновения элементов загрузки.
 
         Parameters
         ----------
@@ -609,7 +683,8 @@ class Base:
             dropdown_dict = self.get_element_clickable(element_dict)
             dropdown_dict['element'].click()
             option_to_select = WebDriverWait(self.driver, 60).until(
-                EC.presence_of_element_located((By.XPATH, f".//li[@role='option' and normalize-space(.)='{option_text}']")))
+                EC.presence_of_element_located(
+                    (By.XPATH, f".//li[@role='option' and normalize-space(.)='{option_text}']")))
             option_to_select.click()
             print(f"Selected '{option_text}' from dropdown {dropdown_dict['name']}")
 
@@ -743,7 +818,8 @@ class Base:
     """ Input field and enter wait clickable"""
     def input_in_field_and_enter(self, element_dict: Dict[str, str], value: str, wait: Optional[str] = None) -> None:
         """
-        Вводит текст в поле ввода, ожидая его кликабельности, и нажимает Enter. Может ожидать исчезновение элементов загрузки.
+        Вводит текст в поле ввода, ожидая его кликабельности, и нажимает Enter.
+        Может ожидать исчезновение элементов загрузки.
 
         Parameters
         ----------
@@ -844,7 +920,8 @@ class Base:
     def backspace_and_input(self, element_dict: Dict[str, str], value: str,
                             press_enter: Optional[bool] = False) -> None:
         """
-        Выполняет нажатие клавиши Backspace для удаления символов, соответствующих длине вводимого значения, и вводит текст.
+        Выполняет нажатие клавиши Backspace для удаления символов,
+        соответствующих длине вводимого значения, и вводит текст.
 
         Parameters
         ----------
@@ -982,7 +1059,8 @@ class Base:
         self.click_button(click_to, do_assert=do_assert, wait=wait)
 
     """ Naw time change"""
-    def naw_time_change(self, minutes: int) -> str:
+    @staticmethod
+    def naw_time_change(minutes: int) -> str:
         """
         Изменяет текущее время, добавляя указанное количество минут и округляет результат.
 
@@ -1004,7 +1082,8 @@ class Base:
         return rounded_time_str
 
     """ Naw datatime change"""
-    def naw_datatime_change(self, minutes: int) -> str:
+    @staticmethod
+    def naw_datatime_change(minutes: int) -> str:
         """
         Изменяет текущую дату и время, добавляя указанное количество минут и округляет результат.
 
@@ -1024,3 +1103,81 @@ class Base:
         new_time_str = new_time.strftime("%d%m%Y %H%M")
         rounded_time_str = str(int(round(int(new_time_str) / 5) * 5)).zfill(4)
         return rounded_time_str
+
+    """ Get sms code"""
+    def get_confirmation_code(self, phone_number):
+        """
+        Извлекает код подтверждения, связанный с заданным номером телефона.
+
+        Parameters
+        ----------
+        phone_number : str
+            Номер телефона в формате 10 цифр без префикса.
+
+        Returns
+        -------
+        str
+            Код подтверждения как строку, если найден.
+
+        Raises
+        ------
+        ValueError
+            Если код подтверждения не найден.
+        """
+        formatted_phone = '+7' + phone_number
+        xpath_locator = f"//tr[contains(.//div, '{formatted_phone}')]//div[contains(text(), 'Код подтверждения:')]"
+        try:
+            element_text = WebDriverWait(self.driver, 60).until(
+                EC.visibility_of_element_located((By.XPATH, xpath_locator))
+            ).text
+        except TimeoutException:
+            raise ValueError(f"Код подтверждения для номера {formatted_phone} не найден.")
+
+        match = re.search(r'\d+', element_text)
+        if match:
+            return match.group(0)
+        else:
+            raise ValueError(f"Не удалось извлечь код подтверждения из текста: {element_text}")
+
+    """ Generate inn"""
+    @staticmethod
+    def generate_inn(entity_type: str) -> str:
+        """
+        Генерирует ИНН для физического лица (individual) или юридического лица (entity).
+
+        Parameters
+        ----------
+        entity_type : str
+            Тип сущности, для которой генерируется ИНН. Допустимые значения: 'individual', 'entity'.
+
+        Returns
+        -------
+        str
+            Сгенерированный ИНН в виде строки.
+            Для юридического лица ИНН состоит из 10 цифр, для физического лица - из 12 цифр.
+
+        Raises
+        ------
+        ValueError
+            Если передан неизвестный тип сущности. Допустимые значения параметра entity_type: 'individual', 'entity'.
+        """
+
+        def calculate_control_sum(numbers: list[int], local_coeffs: list[int]) -> int:
+            return sum(a * b for a, b in zip(numbers, local_coeffs)) % 11 % 10
+
+        if entity_type == "entity":
+            base = [random.randint(0, 9) for _ in range(9)]
+            entity_coeffs = [2, 4, 10, 3, 5, 9, 4, 6, 8]
+            control_sum = calculate_control_sum(base, entity_coeffs)
+            inn = ''.join(map(str, base)) + str(control_sum)
+        elif entity_type == "individual":
+            base = [random.randint(0, 9) for _ in range(10)]
+            individual_coeffs_first = [7, 2, 4, 10, 3, 5, 9, 4, 6, 8]
+            individual_coeffs_second = [3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8, 5]
+            first_control_sum = calculate_control_sum(base, individual_coeffs_first)
+            second_control_sum = calculate_control_sum(base + [first_control_sum], individual_coeffs_second)
+            inn = ''.join(map(str, base)) + str(first_control_sum) + str(second_control_sum)
+        else:
+            raise ValueError("Неизвестный тип сущности. Допустимые значения: 'individual', 'entity'.")
+
+        return inn

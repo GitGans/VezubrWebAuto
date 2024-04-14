@@ -1,20 +1,20 @@
 import time
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.agreement_add_page import AgreementAdd
 from pages.contractor_page import Contractor
-from pages.produsers_list_page import ProdusersList
+from pages.producers_list_page import ProducersList
 
 
 @allure.feature('Создание договоров')
 @allure.description('ЛКЗ. Тест создания договора с ПВ: '
                     'номер - №-timestamp, срок - с Сегодня по 45 год, автоформирование реестров - Отключено.')
 def test_agreement_producer_add_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.click_button(sidebar.producers_list_button, do_assert=True, wait="lst")
 
-    produser_list = ProdusersList(base.driver)
+    produser_list = ProducersList(base.driver)
     produser_list.click_button(produser_list.producer_logo_inn, wait="form")
 
     contractor = Contractor(base.driver)

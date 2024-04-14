@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.transport_add_page import TransportAdd
 from pages.transports_list_page import TransportsList
 
@@ -8,7 +8,7 @@ from pages.transports_list_page import TransportsList
 @allure.description('ЛКП. Тест создания ТС: номер - ТС-timestamp, модель - Монорамник, выпуск - 2023г, собственник '
                     '- Подрядчик, тип - Грузовой, кузов - Тент, грузоподемность/объем/палеты/высота - Рандом')
 def test_transport_add_lkp(domain):
-    base, sidebar = base_test(domain=domain, role='lkp')
+    base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
                                 do_assert=True, wait="lst")
@@ -29,6 +29,6 @@ def test_transport_add_lkp(domain):
     add_ts.input_in_field(add_ts.pallets_input, base.random_value_int_str(0, 35))
     add_ts.input_in_field(add_ts.height_from_ground_input, base.random_value_float_str(1.0, 4.0))
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
-    add_ts.click_button(add_ts.confirm_add_button, wait="lst")
+    add_ts.click_button(add_ts.confirm_add_button, wait="form")
 
     sidebar.finish_test()

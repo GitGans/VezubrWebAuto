@@ -1,6 +1,6 @@
 import time
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.request_ftl_add_page import FTLAdd
 
 
@@ -8,7 +8,7 @@ from pages.request_ftl_add_page import FTLAdd
 @allure.description('ЛКЭ. Тест создания FTL заявки от ГВ: тип - Город, подача - Сейчас, ТС - Груз 0.5т, '
                     'кузов - Закрытый, адреса - Первые в списке, публикация - Тариф')
 def test_ftl_request_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
                                 do_assert=True, wait="form")

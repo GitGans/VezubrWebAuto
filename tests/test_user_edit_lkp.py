@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.profile_page import Profile
 from pages.user_add_page import User
 
@@ -8,7 +8,7 @@ from pages.user_add_page import User
 @allure.description('ЛКП. Тест редактирования пользователя: пользователь - Первый в списке, ФИО - ФИО-timestamp, '
                     'тип - API, роль - Логист, тлф - Рандом, email - Etimestamp@mail.ru. часовой пояс - Абиджан')
 def test_user_edit_lkp(domain):
-    base, sidebar = base_test(domain=domain, role='lkp')
+    base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
     sidebar.click_button(sidebar.profile_button, do_assert=True)
 

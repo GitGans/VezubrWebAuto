@@ -1,6 +1,6 @@
 import time
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.cargo_place_add_page import CargoPlaceAdd
 from pages.cargo_place_list_page import CargoPlaceList
 
@@ -9,7 +9,7 @@ from pages.cargo_place_list_page import CargoPlaceList
 @allure.description('ЛКЭ. Тест создания ГМ ГВ: '
                     'тип - Короб, вес/объем/цена - Рандом, статус - Новое, адреса - Первые из списка.')
 def test_cargo_place_from_lkz_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.assignments_list_button,
                                 do_assert=True, wait="lst")
@@ -37,7 +37,7 @@ def test_cargo_place_from_lkz_add_lke(domain):
 @allure.description('ЛКЭ. Тест создания ГМ Экс с вложеными ГМ ГВ: '
                     'ГМ - Первое, тип - Короб, вес/объем/цена - Рандом, статус - Новое, адреса - Первые из списка.')
 def test_cargo_place_own_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.assignments_list_button,
                                 do_assert=True, wait="lst")

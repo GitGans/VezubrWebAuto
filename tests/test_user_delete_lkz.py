@@ -1,13 +1,13 @@
 import allure
 from pages.login import accounts
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.profile_page import Profile
 
 
 @allure.feature('Удаление пользователей')
 @allure.description('ЛКЗ. Тест удаления пользователя: пользователь - Первый в списке')
 def test_delete_edit_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
     sidebar.click_button(sidebar.profile_button, do_assert=True)
 

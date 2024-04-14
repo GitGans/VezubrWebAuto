@@ -1,6 +1,6 @@
 import time
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.agreement_add_page import AgreementAdd
 from pages.clients_list_page import ClientsList
 from pages.contractor_page import Contractor
@@ -10,7 +10,7 @@ from pages.contractor_page import Contractor
 @allure.description('ЛКП. Тест создания договора с ГВ: '
                     'номер - №-timestamp, срок - с Сегодня по 45 год, автоформирование реестров - Отключено.')
 def test_agreement_client_add_lkp(domain):
-    base, sidebar = base_test(domain=domain, role='lkp')
+    base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
     sidebar.click_button(sidebar.clients_list_button, do_assert=True, wait="lst")
 
