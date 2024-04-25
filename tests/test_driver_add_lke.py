@@ -1,14 +1,17 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.driver_add_page import DriverAdd
 from pages.driver_list_page import DriverList
 
 
+
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание водителей')
 @allure.description('ЛКЭ. Тест создания водителя Экс: '
                     'ФИО - ФИО-timestamp, паспорт/права - РФ,  № паспорт/код/права/тлф.апп/тлф. - Рандом.')
 def test_own_driver_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.drivers_list_button,
                                 do_assert=True, wait="lst")
@@ -22,11 +25,13 @@ def test_own_driver_add_lke(domain):
     sidebar.finish_test()
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание водителей')
-@allure.description('ЛКЭ. Тест создания водителя внутр КА: ка - Первыйй в списке, ФИО - ФИО-timestamp, '
+@allure.description('ЛКЭ. Тест создания водителя внутр КА: ка - Первыйй в списке, ФИО - ВФИО-timestamp, '
                     'паспорт/права - РФ,  № паспорт/код/права/тлф. - Рандом.')
 def test_inner_driver_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.drivers_list_button,
                                 do_assert=True, wait="lst")

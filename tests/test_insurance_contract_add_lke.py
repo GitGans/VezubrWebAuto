@@ -1,15 +1,18 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.insurance_contract_add_page import InsuranceAdd
 from pages.insurer_page import Insurer
 from pages.insurers_list_page import InsurersList
 
 
+
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание договоров страхования')
 @allure.description('ЛКЭ. Тест договора страхования: номер и название - № и Н-timestamp, '
                     'срок - с Сегодня, макс стоимость - 1ккк, бордеро - Да, премия - 0.05%, мин - 50руб.')
 def test_insurance_contract_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.insurers_list_button,
                                 do_assert=True, wait="lst")

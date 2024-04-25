@@ -1,16 +1,18 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.agreement_page import Agreement
 from pages.clients_list_page import ClientsList
 from pages.contractor_page import Contractor
 from pages.extra_agreement_add_page import ExtraAgreementAdd
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Critical path test")
 @allure.feature('Создание ДУ')
 @allure.description('ЛКП. Тест создания ДУ с ГВ: номер - №-timestamp, срок - с Сегодня по 40 год, '
                     'коммент - ДУ создано автотестом')
 def test_extra_agreements_client_add_lkp(domain):
-    base, sidebar = base_test(domain=domain, role='lkp')
+    base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
     sidebar.click_button(sidebar.clients_list_button, do_assert=True, wait="lst")
 

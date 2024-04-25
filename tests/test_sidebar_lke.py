@@ -1,12 +1,14 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Боковое меню')
 @allure.description('ЛКЭ. Тест бокового меню: переход по всем вкладкам, ожидание прогрузки, '
                     'проверка вкладки по названию')
 def test_sidebar_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
                                 do_assert=True, wait="form")

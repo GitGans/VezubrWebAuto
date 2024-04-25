@@ -1,14 +1,16 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.profile_page import Profile
 from pages.user_add_page import User
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Critical path test")
 @allure.feature('Создание пользователей')
 @allure.description('ЛКП. Тест создания пользователя: ФИО - ФИО-timestamp, тип - Пользователь, роль - Админ, '
                     'тлф - Рандом, email - Etimestamp@mail.ru. часовой пояс - Екб')
 def test_user_add_lkp(domain):
-    base, sidebar = base_test(domain=domain, role='lkp')
+    base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
     sidebar.click_button(sidebar.profile_button, do_assert=True)
 

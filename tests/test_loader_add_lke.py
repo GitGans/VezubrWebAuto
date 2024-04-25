@@ -1,14 +1,16 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.loader_add_page import LoaderAdd
 from pages.loader_list_page import LoaderList
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание специалистов')
 @allure.description('ЛКЭ. Тест создания специалиста Экс: ФИО - ФИО-timestamp, паспорт - РФ, тип - Грузчик, '
                     '№ паспорт/код/права/тлф.апп/тлф. - Рандом.')
 def test_loader_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.loaders_list_button,
                                 do_assert=True, wait="lst")

@@ -124,7 +124,7 @@ class User(Base):
     }
     user_checkbox = {
         "xpath": "//span[@class='ant-checkbox']",
-        "name": "user_checkbox"
+        "name": "user_checkbox_empty"
     }
     confirm_off_responsible_button = {
         "xpath": "//button[@class='ant-btn ant-btn-primary']",

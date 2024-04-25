@@ -1,17 +1,19 @@
 import time
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.agreement_add_page import AgreementAdd
 from pages.clients_list_page import ClientsList
 from pages.contractor_page import Contractor
-from pages.produsers_list_page import ProdusersList
+from pages.producers_list_page import ProducersList
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание договоров')
 @allure.description('ЛКЭ. Тест создания договора с ГВ: '
                     'номер - №-timestamp, срок - с Сегодня по 45 год, автоформирование реестров - Отключено.')
 def test_agreement_client_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
                                 do_assert=True, wait="lst")
@@ -37,16 +39,18 @@ def test_agreement_client_add_lke(domain):
     print("Finish test")
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание договоров')
 @allure.description('ЛКЭ. Тест создания договора с ПВ: '
                     'номер - №-timestamp, срок - с Сегодня по 45 год, автоформирование реестров - Отключено.')
 def test_agreement_producer_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
                                 do_assert=True, wait="lst")
 
-    producer_list = ProdusersList(base.driver)
+    producer_list = ProducersList(base.driver)
     producer_list.click_button(producer_list.producer_lkp_inn, wait="form")
 
     contractor = Contractor(base.driver)
@@ -67,16 +71,18 @@ def test_agreement_producer_add_lke(domain):
     print("Finish test")
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание договоров')
 @allure.description('ЛКЭ. Тест создания договора с внутренним ПВ: '
                     'номер - №-timestamp, срок - с Сегодня по 45 год, автоформирование реестров - Отключено.')
 def test_agreement_inter_contractor_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
                                 do_assert=True, wait="lst")
 
-    produser_list = ProdusersList(base.driver)
+    produser_list = ProducersList(base.driver)
     produser_list.click_button(produser_list.producer_vaz_inn, wait="form")
 
     contractor = Contractor(base.driver)

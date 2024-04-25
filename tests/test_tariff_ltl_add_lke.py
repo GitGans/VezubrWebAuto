@@ -1,18 +1,16 @@
-import time
-
 import allure
-from selenium.webdriver import Keys
-
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.tariff_ltl_add_page import LTLTariffAdd
 from pages.tariffs_list_page import TariffsList
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание тарифов')
 @allure.description('ЛКЭ. Тест создания LTL тарифа: название - LTL-timestamp, тип - Короб, мин.вес/объем вес/сбор '
                     'прям./сбор обр. - Рандом, регион - Свердл/Алтай, минималка/доплата/темп.коэф/срок - Рандом')
 def test_ltl_tariff_add_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
                                 do_assert=True, wait="lst")
@@ -24,10 +22,10 @@ def test_ltl_tariff_add_lke(domain):
     add_tariff.dropdown_click_input_click(add_tariff.tariff_type_select, "LTL")
     add_tariff.input_in_field(add_tariff.tariff_name_input, f"LTL-{base.get_timestamp()}")
     add_tariff.dropdown_click_input_click(add_tariff.ltl_type_select, "Короб")
-    add_tariff.backspace_and_input(add_tariff.min_weight_input, base.random_value_int_str(10, 100))
-    add_tariff.backspace_and_input(add_tariff.volumetric_weight_input, base.random_value_int_str(10, 100))
-    add_tariff.backspace_and_input(add_tariff.direct_price_input, base.random_value_int_str(100, 500))
-    add_tariff.backspace_and_input(add_tariff.reverse_price_input, base.random_value_int_str(100, 500))
+    add_tariff.backspace_len_and_input(add_tariff.min_weight_input, base.random_value_int_str(10, 100))
+    add_tariff.backspace_len_and_input(add_tariff.volumetric_weight_input, base.random_value_int_str(10, 100))
+    add_tariff.backspace_len_and_input(add_tariff.direct_price_input, base.random_value_int_str(100, 500))
+    add_tariff.backspace_len_and_input(add_tariff.reverse_price_input, base.random_value_int_str(100, 500))
     add_tariff.dropdown_click_input_wait_enter(add_tariff.dispatch_region_select, "Свердловская область")
     add_tariff.dropdown_click_input_wait_enter(add_tariff.delivery_region_select, "Алтайский край")
     add_tariff.input_in_field(add_tariff.min_price_input, base.random_value_int_str(1000, 3000))

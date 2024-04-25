@@ -27,3 +27,7 @@ class ClientsList(Base):
         "reference_xpath": "//h4[@class='title' and text()='Auto LKZ']",
         "reference": "Auto LKZ"
     }
+    accept_button = {
+        "xpath": "(//button[.//span[text()='Принять']])[2]",
+        "name": "accept_button"
+    }

@@ -1,17 +1,19 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.agreement_page import Agreement
 from pages.clients_list_page import ClientsList
 from pages.contractor_page import Contractor
 from pages.extra_agreement_add_page import ExtraAgreementAdd
-from pages.produsers_list_page import ProdusersList
+from pages.producers_list_page import ProducersList
 
 
+@allure.epic("Нестабильные тесты")
 @allure.feature('Прикрепление тарифов')
+@allure.story("Smoke test")
 @allure.description('ЛКЭ. Тест прикрепления тарифа к ДУ c ГВ : создаем базовый ДУ и сразу прикрепляем существующий '
                     'тариф - Первый в списке')
 def test_tariff_attach_client_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
                                 do_assert=True, wait="lst")
@@ -35,16 +37,18 @@ def test_tariff_attach_client_lke(domain):
     sidebar.finish_test()
 
 
+@allure.epic("Нестабильные тесты")
 @allure.feature('Прикрепление тарифов')
+@allure.story("Smoke test")
 @allure.description('ЛКЭ. Тест прикрепления тарифа к ДУ c ПВ : создаем базовый ДУ и сразу прикрепляем существующий '
                     'тариф - Первый в списке')
 def test_tariff_attach_producer_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
                                 do_assert=True, wait="lst")
 
-    producer_list = ProdusersList(base.driver)
+    producer_list = ProducersList(base.driver)
     producer_list.click_button(producer_list.producer_lkp_inn, wait="lst")
 
     contractor = Contractor(base.driver)
@@ -63,16 +67,18 @@ def test_tariff_attach_producer_lke(domain):
     sidebar.finish_test()
 
 
+@allure.epic("Нестабильные тесты")
 @allure.feature('Прикрепление тарифов')
-@allure.description('ЛКЭ. Тест прикрепления тарифа к ДУ с внутр. ПВ : создаем базовый ДУ и сразу прикрепляем существующий'
+@allure.story("Smoke test")
+@allure.description('ЛКЭ. Тест прикрепления тарифа к ДУ внутр. ПВ: создаем базовый ДУ и сразу прикрепляем существующий'
                     ' тариф - Первый в списке')
 def test_tariff_attach_inner_producer_lke(domain):
-    base, sidebar = base_test(domain=domain, role='lke')
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
                                 do_assert=True, wait="lst")
 
-    producer_list = ProdusersList(base.driver)
+    producer_list = ProducersList(base.driver)
     producer_list.click_button(producer_list.producer_vaz_inn, wait="lst")
 
     contractor = Contractor(base.driver)

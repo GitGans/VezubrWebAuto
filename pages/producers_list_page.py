@@ -1,7 +1,7 @@
 from base.base_class import Base
 
 
-class ProdusersList(Base):
+class ProducersList(Base):
     def __init__(self, driver):
         super().__init__(driver)
         self.driver = driver
@@ -42,4 +42,12 @@ class ProdusersList(Base):
     assert_auto_vaz = {
         "reference_xpath": "//h4[@class='title' and text()='НАО АВТОВАЗ']",
         "reference": "НАО АВТОВАЗ"
+    }
+    accept_button = {
+        "xpath": "(//button[.//span[text()='Принять']])[2]",
+        "name": "accept_button"
+    }
+    add_internal_contractor = {
+        "xpath": "//button[@class='filter-button rounded box-shadow primary default']",
+        "name": "add_internal_contractor"
     }

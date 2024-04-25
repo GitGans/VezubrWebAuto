@@ -1,13 +1,15 @@
 import allure
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.address_add_page import AddressAdd
 from pages.address_list_page import AddressesList
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание адресов')
 @allure.description('ЛКЗ. Тест создания адреса: статус - Активный, ввод адреса в поле Фактический адрес.')
 def test_address_add_lkz(domain):
-    base, sidebar = base_test(domain=domain, role='lkz')
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
     sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.addresses_list_button,
                                 do_assert=True, wait="lst")
 

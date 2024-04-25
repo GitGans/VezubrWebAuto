@@ -1,16 +1,18 @@
 import allure
 from pages.clients_list_page import ClientsList
-from tests.base_test import base_test
+from tests.base_test import base_test_with_login
 from pages.agreement_page import Agreement
 from pages.contractor_page import Contractor
 from pages.extra_agreement_add_page import ExtraAgreementAdd
 
 
+@allure.epic("Нестабильные тесты")
 @allure.feature('Прикрепление тарифов')
+@allure.story("Critical path test")
 @allure.description('ЛКП. Тест прикрепления тарифа к ДУ c ГВ : создаем базовый ДУ и сразу прикрепляем существующий '
                     'тариф - Первый в списке')
 def test_tariff_attach_client_lkp(domain):
-    base, sidebar = base_test(domain=domain, role='lkp')
+    base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
     sidebar.click_button(sidebar.clients_list_button, do_assert=True, wait="lst")
 
