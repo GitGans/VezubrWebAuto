@@ -4,6 +4,8 @@ from pages.loader_add_page import LoaderAdd
 from pages.loader_list_page import LoaderList
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание специалистов')
 @allure.description('ЛКЭ. Тест создания специалиста Экс: ФИО - ФИО-timestamp, паспорт - РФ, тип - Грузчик, '
                     '№ паспорт/код/права/тлф.апп/тлф. - Рандом.')

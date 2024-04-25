@@ -5,6 +5,8 @@ from pages.cargo_place_add_page import CargoPlaceAdd
 from pages.cargo_place_list_page import CargoPlaceList
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание грузомест')
 @allure.description('ЛКЗ. Тест создания ГМ: '
                     'тип - Короб, вес/объем/цена - Рандом, статус - Новое, адреса - Первые из списка.')

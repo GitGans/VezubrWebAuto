@@ -1,3 +1,5 @@
+from typing import NoReturn
+
 from base.base_class import Base
 
 
@@ -103,15 +105,36 @@ class CargoPlaceAdd(Base):
         "xpath": "(//button[@class='ant-btn ant-btn-primary'])[2]",
         "name": "create_button"
     }
-    #Methods
-    def add_base_cargo_place(self):
+
+    # Methods
+    """ Create base cargo place"""
+    def add_base_cargo_place(self) -> NoReturn:
+        """
+        Автоматизирует добавление грузоместа  в систему, заполняя поля и выбирая опции из выпадающих списков.
+        Процесс включает выбор типа места груза, ввод веса, объема и стоимости груза, выбор статуса,
+        указание адресов отправления и доставки, а затем подтверждение создания грузоместа.
+
+        Parameters
+        ----------
+        Нет входных параметров. Все необходимые данные генерируются или выбираются внутри метода.
+
+        Returns
+        -------
+        NoReturn
+            Ничего не возвращает. Побочные эффекты: изменения на веб-странице.
+        """
+        # Выбор типа грузоместа
         self.dropdown_click_input_click(self.lkz_cp_type_select, "Короб")
+        # Ввод рандомизированных данных для веса, объема и стоимости груза
         self.input_in_field(self.cp_weight_input, self.random_value_int_str(10, 20000))
         self.input_in_field(self.cp_value_input, self.random_value_float_str(0.1, 35.0))
         self.input_in_field(self.cp_cost_input, self.random_value_int_str(100, 1000000))
+        # Выбор статуса грузоместа
         self.dropdown_click_input_click(self.lkz_cp_status_select, "Новое")
+        # Ввод адресов отправления и доставки
         self.dropdown_click_input_enter(self.departure_address_select, "Екатеринбург")
         self.dropdown_click_input_enter(self.delivery_address_select, "Екатеринбург")
+        # Последовательное нажатие на кнопки с условиями
         buttons_to_click = [
             {'button': self.create_cargo_place_button, 'do_assert': True, 'wait': None},
             {'button': self.confirm_add_button, 'do_assert': False, 'wait': "lst"}

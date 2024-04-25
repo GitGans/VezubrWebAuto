@@ -4,6 +4,8 @@ from tests.base_test import base_test_with_login
 from pages.request_ftl_add_page import FTLAdd
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание FTL заявок')
 @allure.description('ЛКЭ. Тест создания FTL заявки от ГВ: тип - Город, подача - Сейчас, ТС - Груз 0.5т, '
                     'кузов - Закрытый, адреса - Первые в списке, публикация - Тариф')
@@ -23,7 +25,7 @@ def test_ftl_request_add_lke(domain):
     time.sleep(1)
     ftl.click_button(ftl.request_category_select)
     ftl.click_button(ftl.select_freight)
-    ftl.dropdown_click_input_click(ftl.vehicle_type_select, "до 0.5т")
+    ftl.dropdown_click_input_enter(ftl.vehicle_type_select, "до 0.5т")
     ftl.click_button(ftl.vehicle_body_select)
     ftl.click_button(ftl.body_type_closed_checkbox)
     ftl.click_button(ftl.first_address_select, wait="lst")

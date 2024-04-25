@@ -4,6 +4,8 @@ from pages.group_page import Group
 from pages.profile_page import Profile
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Extended test")
 @allure.feature('Создание групп')
 @allure.description('ЛКЭ. Тест создания группы: имя - №-timestamp, тип - Признак договора, признак - Рандом')
 def test_group_attr_add_lke(domain):
@@ -25,6 +27,8 @@ def test_group_attr_add_lke(domain):
     sidebar.finish_test()
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Extended test")
 @allure.feature('Создание групп')
 @allure.description('ЛКЭ. Тест создания группы: имя - №-timestamp, тип - Заказчик, заказчик - Рандом')
 def test_group_client_add_lke(domain):
@@ -46,7 +50,9 @@ def test_group_client_add_lke(domain):
     sidebar.finish_test()
 
 
-@allure.feature('Удаление групп')
+@allure.epic("Стабильные тесты")
+@allure.story("Extended test")
+@allure.feature('Создание групп')
 @allure.description('ЛКЭ. Тест удалания группы: группа - Шестая в списке')
 def test_group_delete_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')

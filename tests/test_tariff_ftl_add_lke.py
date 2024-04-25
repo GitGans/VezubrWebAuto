@@ -4,6 +4,8 @@ from pages.tariff_ftl_add_page import FTLTariffAdd
 from pages.tariffs_list_page import TariffsList
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание тарифов')
 @allure.description('ЛКЭ. Тест создания FTL тарифа: тип - Почасовой, округление - Час, название - ПЧ-timestamp, '
                     'ТС - 0.5т, кузов - Закрытый, минималка - Рандом')
@@ -30,6 +32,8 @@ def test_ftl_hh_tariff_add_lke(domain):
     sidebar.finish_test()
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание тарифов')
 @allure.description('ЛКЭ. Тест создания FTL тарифа: тип - Фиксированный, маршрут - Екб-Уфа, название - ГГ-timestamp, '
                     'ТС - 1.5т/9м3/4п, кузов - Закрытый, минималка/доп.адрес/ожидание - Рандом')
@@ -63,6 +67,8 @@ def test_ftl_cc_tariff_add_lke(domain):
     sidebar.finish_test()
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание тарифов')
 @allure.description('ЛКЭ. Тест создания FTL тарифа: тип - Пробег, маршрут - Екб-Члб, название - ПБ-timestamp, '
                     'ТС - 5т/36м3/15п, кузов - Закрытый, минималка/доп.адрес/ожидание - Рандом')

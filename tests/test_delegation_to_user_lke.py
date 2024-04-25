@@ -7,7 +7,9 @@ from pages.contractor_page import Contractor
 from pages.producers_list_page import ProducersList
 
 
-@allure.feature('Делегирование пользователю прав управления ЛК')
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
+@allure.feature('Делегирование прав управления ЛК')
 @allure.description('ЛКЭ. Тест делегирования пользователю права управления ЛК ГВ : пользователь - Пятый в списке')
 def test_delegation_client_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
@@ -20,14 +22,17 @@ def test_delegation_client_lke(domain):
 
     contractor = Contractor(base.driver)
     contractor.click_button(contractor.settings_tab)
-    contractor.click_button_index(contractor.user_checkbox, 5)
+    contractor.click_button_index(contractor.user_checkbox_empty, 5)
+    contractor.click_button_index(contractor.user_checkbox_filled, 3)
     contractor.click_button(contractor.save_delegation_button, do_assert=True)
     contractor.click_button(contractor.ok_button)
 
     sidebar.finish_test()
 
 
-@allure.feature('Делегирование пользователю прав управления ЛК')
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
+@allure.feature('Делегирование прав управления ЛК')
 @allure.description('ЛКЭ. Тест делегирования пользователю права управления ЛК ПВ : пользователь - Пятый в списке')
 def test_delegation_producer_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
@@ -40,14 +45,17 @@ def test_delegation_producer_lke(domain):
 
     contractor = Contractor(base.driver)
     contractor.click_button(contractor.settings_tab)
-    contractor.click_button_index(contractor.user_checkbox, 5)
+    contractor.click_button_index(contractor.user_checkbox_empty, 5)
+    contractor.click_button_index(contractor.user_checkbox_filled, 3)
     contractor.click_button(contractor.save_delegation_button, do_assert=True)
     contractor.click_button(contractor.ok_button)
 
     sidebar.finish_test()
 
 
-@allure.feature('Делегирование пользователю прав управления ЛК')
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
+@allure.feature('Делегирование прав управления ЛК')
 @allure.description('ЛКЭ. Тест делегирования пользователю управления ЛК внутр.ПВ : пользователь - Пятый в списке')
 def test_delegation_inner_producer_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
@@ -60,13 +68,16 @@ def test_delegation_inner_producer_lke(domain):
 
     contractor = Contractor(base.driver)
     contractor.click_button(contractor.settings_tab)
-    contractor.click_button_index(contractor.user_checkbox, 5)
+    contractor.click_button_index(contractor.user_checkbox_empty, 5)
+    contractor.click_button_index(contractor.user_checkbox_filled, 3)
     contractor.click_button(contractor.save_delegation_button, do_assert=True)
     contractor.click_button(contractor.ok_button)
 
     sidebar.finish_test()
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Переход в ЛК делигировавшего КА')
 @allure.description('ЛКЭ. Тест перехода в ЛК делигировавшего ГВ: гв - auto LKZ')
 def test_go_to_account_client_lke(domain):
@@ -86,6 +97,8 @@ def test_go_to_account_client_lke(domain):
     sidebar.finish_test()
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Переход в ЛК делигировавшего КА')
 @allure.description('ЛКЭ. Тест перехода в ЛК делигировавшего ПВ: пв - auto LKP')
 def test_go_to_account_producer_lke(domain):
@@ -105,6 +118,8 @@ def test_go_to_account_producer_lke(domain):
     sidebar.finish_test()
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Переход в ЛК делигировавшего КА')
 @allure.description('ЛКЭ. Тест перехода в ЛК делигировавшего внутреннего ПВ: пв - НАО АВТОВАЗ')
 def test_go_to_account_inner_producer_lke(domain):

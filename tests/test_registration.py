@@ -9,6 +9,8 @@ from pages.sms_center_page import SmsCenter
 from tests.base_test import base_test_without_login, base_test_with_login_via_link
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Регистрация личного кабинета')
 @allure.description('Тест регистрации личного кабинета Экспедитора: регистрация - Прямая, тлф. - '
                     '99+get_timestamp_eight_signs, инн - Рандом, лицо - Юридическое, почта - Etimestamp@mail.ru, '
@@ -64,6 +66,8 @@ def test_registration_new_lke(domain):
     base.finish_test()
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Регистрация личного кабинета')
 @allure.description('Тест регистрации личного кабинета Грузовледельца: регистрация - По ссылке Экс, тлф. - '
                     '99+get_timestamp_eight_signs, инн - Рандом, лицо - Юридическое, почта - Etimestamp@mail.ru, '
@@ -134,6 +138,8 @@ def test_registration_new_lkz(domain):
     base.finish_test()
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Регистрация личного кабинета')
 @allure.description('Тест регистрации личного кабинета Перевозчика: регистрация - По ссылке Экс, тлф. - '
                     '99+get_timestamp_eight_signs, инн - Рандом, лицо - Юридическое, почта - Etimestamp@mail.ru, '

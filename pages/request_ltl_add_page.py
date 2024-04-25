@@ -1,3 +1,5 @@
+from typing import NoReturn
+
 from base.base_class import Base
 
 
@@ -7,6 +9,10 @@ class LTLAdd(Base):
         self.driver = driver
 
     # Locators
+    request_type_select = {
+        "xpath": "//div[@class='ant-select-selection__rendered']",
+        "name": "request_type_select"
+    }
     attach_cargo_place_button = {
         "xpath": "//button[@class='ant-btn order-assignments__add  ant-btn-primary ant-btn-lg']",
         "name": "attach_cargo_place_button"
@@ -83,9 +89,24 @@ class LTLAdd(Base):
     }
 
     # Methods
+    """ Base request LTL"""
+    def add_base_ltl(self) -> NoReturn:
+        """
+        Создание базовой LTL заявки. Метод включает выбор даты и времени доставки - текущее время + 30 минут,
+        прикрепление грузоместа и завершается созданием LTL заявки.
 
-    def add_base_ltl(self):
+        Parameters
+        ----------
+        Нет входных параметров.
+
+        Returns
+        -------
+        NoReturn
+            Метод не возвращает значения, но вызывает изменения на веб-странице.
+        """
+        # Получение нового времени с учетом изменений
         new_time = self.naw_time_change(30)
+        # Последовательный клик по кнопкам для выбора даты
         buttons_to_click_before_input = [
             self.start_at_from_button,
             self.today_button,
@@ -93,7 +114,9 @@ class LTLAdd(Base):
         ]
         for button in buttons_to_click_before_input:
             self.click_button(button)
+        # Ввод новой временной метки в соответствующее поле
         self.backspace_num_and_input(self.start_at_from_input, 5, new_time)
+        # Клик по кнопкам для подтверждения и создания LTL
         buttons_to_click_after_input = [
             self.calendar_ok_button,
             self.create_button,

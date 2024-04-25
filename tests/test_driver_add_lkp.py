@@ -4,6 +4,8 @@ from pages.driver_add_page import DriverAdd
 from pages.driver_list_page import DriverList
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание водителей')
 @allure.description('ЛКП. Тест создания водителя Экс: '
                     'ФИО - ФИО-timestamp, паспорт/права - РФ,  № паспорт/код/права/тлф.апп/тлф. - Рандом.')

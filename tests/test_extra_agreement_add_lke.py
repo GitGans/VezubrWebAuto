@@ -8,6 +8,8 @@ from pages.extra_agreement_add_page import ExtraAgreementAdd
 from pages.producers_list_page import ProducersList
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание ДУ')
 @allure.description('ЛКЭ. Тест создания ДУ с ГВ: номер - №-timestamp, срок - с Сегодня по 40 год, '
                     'коммент - ДУ создано автотестом')
@@ -35,6 +37,8 @@ def test_extra_agreements_client_add_lke(domain):
     sidebar.finish_test()
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание ДУ')
 @allure.description('ЛКЭ. Тест создания ДУ с ПВ: номер - №-timestamp, срок - с Сегодня по 40 год, '
                     'коммент - ДУ создано автотестом')
@@ -62,6 +66,8 @@ def test_extra_agreements_producer_add_lke(domain):
     sidebar.finish_test()
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание ДУ')
 @allure.description('ЛКЭ. Тест создания ДУ с внутр. ПВ: номер - №-timestamp, срок - с Сегодня по 40 год, '
                     'коммент - ДУ создано автотестом')

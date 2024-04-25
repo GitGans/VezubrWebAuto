@@ -2,6 +2,8 @@ import allure
 from tests.base_test import base_test_with_login
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Боковое меню')
 @allure.description('ЛКП. Тест бокового меню: '
                     'переход по всем вкладкам, ожидание прогрузки, проверка вкладки по названию')

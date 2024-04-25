@@ -4,6 +4,9 @@ from pages.driver_add_page import DriverAdd
 from pages.driver_list_page import DriverList
 
 
+
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание водителей')
 @allure.description('ЛКЭ. Тест создания водителя Экс: '
                     'ФИО - ФИО-timestamp, паспорт/права - РФ,  № паспорт/код/права/тлф.апп/тлф. - Рандом.')
@@ -22,8 +25,10 @@ def test_own_driver_add_lke(domain):
     sidebar.finish_test()
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание водителей')
-@allure.description('ЛКЭ. Тест создания водителя внутр КА: ка - Первыйй в списке, ФИО - ФИО-timestamp, '
+@allure.description('ЛКЭ. Тест создания водителя внутр КА: ка - Первыйй в списке, ФИО - ВФИО-timestamp, '
                     'паспорт/права - РФ,  № паспорт/код/права/тлф. - Рандом.')
 def test_inner_driver_add_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')

@@ -4,6 +4,8 @@ from pages.profile_page import Profile
 from pages.user_add_page import User
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Critical path test")
 @allure.feature('Редактирование пользователей')
 @allure.description('ЛКЗ. Тест редактирования пользователя: пользователь - Первый в списке, ФИО - ФИО-timestamp, '
                     'тип - API, роль - Логист, тлф - Рандом, email - Etimestamp@mail.ru. часовой пояс - Абиджан')
@@ -22,12 +24,12 @@ def test_user_edit_lkz(domain):
     user.click_button(user.user_role_reset)
     user.dropdown_click_input_click(user.user_role_select, "Логист")
     user.dropdown_click_input_click(user.user_timezone_select, "Africa/Abidjan")
-    user.backspace_and_input(user.surname_input, f"Ф-{base.get_timestamp()}")
-    user.backspace_and_input(user.name_input, f"И-{base.get_timestamp()}")
-    user.backspace_and_input(user.patronymic_input, f"О-{base.get_timestamp()}")
+    user.backspace_len_and_input(user.surname_input, f"Ф-{base.get_timestamp()}")
+    user.backspace_len_and_input(user.name_input, f"И-{base.get_timestamp()}")
+    user.backspace_len_and_input(user.patronymic_input, f"О-{base.get_timestamp()}")
     user.click_button(user.phone_input)
-    user.backspace_and_input(user.phone_input, base.random_value_int_str(1000000000, 9999999999))
-    user.backspace_and_input(user.email_input, f"E{base.get_timestamp()}@mail.ru")
+    user.backspace_len_and_input(user.phone_input, base.random_value_int_str(1000000000, 9999999999))
+    user.backspace_len_and_input(user.email_input, f"E{base.get_timestamp()}@mail.ru")
     user.click_button(user.save_edit_user_button, do_assert=True)
     user.click_button(user.confirm_add_button, wait="lst")
 

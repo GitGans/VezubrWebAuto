@@ -6,6 +6,8 @@ from pages.contractor_page import Contractor
 from pages.extra_agreement_add_page import ExtraAgreementAdd
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Critical path test")
 @allure.feature('Создание ДУ')
 @allure.description('ЛКП. Тест создания ДУ с ГВ: номер - №-timestamp, срок - с Сегодня по 40 год, '
                     'коммент - ДУ создано автотестом')

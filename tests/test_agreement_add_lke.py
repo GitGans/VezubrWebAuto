@@ -7,6 +7,8 @@ from pages.contractor_page import Contractor
 from pages.producers_list_page import ProducersList
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание договоров')
 @allure.description('ЛКЭ. Тест создания договора с ГВ: '
                     'номер - №-timestamp, срок - с Сегодня по 45 год, автоформирование реестров - Отключено.')
@@ -37,6 +39,8 @@ def test_agreement_client_add_lke(domain):
     print("Finish test")
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание договоров')
 @allure.description('ЛКЭ. Тест создания договора с ПВ: '
                     'номер - №-timestamp, срок - с Сегодня по 45 год, автоформирование реестров - Отключено.')
@@ -67,6 +71,8 @@ def test_agreement_producer_add_lke(domain):
     print("Finish test")
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание договоров')
 @allure.description('ЛКЭ. Тест создания договора с внутренним ПВ: '
                     'номер - №-timestamp, срок - с Сегодня по 45 год, автоформирование реестров - Отключено.')

@@ -6,7 +6,9 @@ from pages.contractor_page import Contractor
 from pages.extra_agreement_add_page import ExtraAgreementAdd
 
 
+@allure.epic("Нестабильные тесты")
 @allure.feature('Прикрепление тарифов')
+@allure.story("Critical path test")
 @allure.description('ЛКП. Тест прикрепления тарифа к ДУ c ГВ : создаем базовый ДУ и сразу прикрепляем существующий '
                     'тариф - Первый в списке')
 def test_tariff_attach_client_lkp(domain):

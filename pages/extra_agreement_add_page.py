@@ -57,6 +57,7 @@ class ExtraAgreementAdd(Base):
         "name": "radio_button"
     }
     # Methods
+
     def add_base_extra_agreements(self):
         self.input_in_field(self.extra_agr_number_input, f"№-{self.get_timestamp()}")
         buttons_to_click = [

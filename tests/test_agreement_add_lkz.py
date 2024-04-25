@@ -6,6 +6,8 @@ from pages.contractor_page import Contractor
 from pages.producers_list_page import ProducersList
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Critical path test")
 @allure.feature('Создание договоров')
 @allure.description('ЛКЗ. Тест создания договора с ПВ: '
                     'номер - №-timestamp, срок - с Сегодня по 45 год, автоформирование реестров - Отключено.')

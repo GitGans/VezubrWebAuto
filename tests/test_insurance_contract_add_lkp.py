@@ -5,6 +5,9 @@ from pages.insurer_page import Insurer
 from pages.insurers_list_page import InsurersList
 
 
+
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание договоров страхования')
 @allure.description('ЛКП. Тест договора страхования: номер и название - № и Н-timestamp, срок - с Сегодня, '
                     'макс стоимость - 1кккруб, бордеро - Да, премия - 0.05%, мин - 50руб.')

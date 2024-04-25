@@ -4,6 +4,8 @@ from pages.address_add_page import AddressAdd
 from pages.address_list_page import AddressesList
 
 
+@allure.epic("Стабильные тесты")
+@allure.story("Smoke test")
 @allure.feature('Создание адресов')
 @allure.description('ЛКЭ. Тест создания адреса: статус - Активный, ввод адреса в поле Фактический адрес.')
 def test_address_add_lke(domain):

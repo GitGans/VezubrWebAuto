@@ -29,9 +29,13 @@ class Contractor(Base):
         "reference_xpath": "//span[text()='Данные обновлены']",
         "reference": "Данные обновлены"
     }
-    user_checkbox = {
+    user_checkbox_empty = {
         "xpath": "//span[@class='ant-checkbox']",
-        "name": "user_checkbox"
+        "name": "user_checkbox_empty"
+    }
+    user_checkbox_filled = {
+        "xpath": "//span[@class='ant-checkbox ant-checkbox-checked']",
+        "name": "user_checkbox_filled"
     }
     save_delegation_button = {
         "xpath": "//button[@class='ant-btn settings-btn ant-btn-primary']",

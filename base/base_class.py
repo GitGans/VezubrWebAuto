@@ -49,6 +49,7 @@ class Base:
 
     """Single methods with Allure"""
     """ Get driver"""
+
     @classmethod
     def get_driver(cls: Type['Base']) -> 'Base':
         """
@@ -90,6 +91,7 @@ class Base:
     #         return cls(driver)
 
     """ Finish test"""
+
     def finish_test(self) -> None:
         """
         Завершает тест и закрывает браузер.
@@ -99,6 +101,7 @@ class Base:
             self.driver.quit()
 
     """ Get current url"""
+
     def get_current_url(self) -> None:
         """
         Получает и выводит текущий URL адрес в консоль.
@@ -108,6 +111,7 @@ class Base:
             print("Current url: " + get_url)
 
     """ Get element wait clickable"""
+
     def get_element_clickable(self, element_info: Dict[str, str]) -> Dict[str, Any]:
         """
         Ожидает, пока элемент не станет кликабельным, и возвращает его.
@@ -123,9 +127,10 @@ class Base:
             Словарь с информацией о найденном элементе.
         """
         return {'name': element_info['name'], 'element': WebDriverWait(self.driver, 60).until(
-                EC.element_to_be_clickable((By.XPATH, element_info['xpath'])))}
+            EC.element_to_be_clickable((By.XPATH, element_info['xpath'])))}
 
     """ Get element wait visibility"""
+
     def get_element_visibility(self, element_info: Dict[str, str]) -> Dict[str, Any]:
         """
         Ожидает видимости элемента и возвращает его.
@@ -144,6 +149,7 @@ class Base:
             EC.visibility_of_element_located((By.XPATH, element_info['xpath'])))}
 
     """ Get element wait located"""
+
     def get_element_located(self, element_info: Dict[str, str]) -> Dict[str, Any]:
         """
         Ожидает нахождения элемента в DOM и возвращает его.
@@ -162,6 +168,7 @@ class Base:
             EC.presence_of_element_located((By.XPATH, element_info['xpath'])))}
 
     """ Get element find"""
+
     def get_element_find(self, element_info: Dict[str, str]) -> Dict[str, Any]:
         """
         Находит элемент по заданному локатору и возвращает его.
@@ -176,9 +183,10 @@ class Base:
         dict
             Словарь с информацией о найденном элементе.
         """
-        return {'name': element_info['name'],  'element': self.driver.find_element(By.XPATH, element_info['xpath'])}
+        return {'name': element_info['name'], 'element': self.driver.find_element(By.XPATH, element_info['xpath'])}
 
     """ Wait element invisibility"""
+
     def wait_element_invisibility(self, element_info: Dict[str, str]) -> NoReturn:
         """
         Ожидает, пока элемент не станет невидимым на странице.
@@ -195,6 +203,7 @@ class Base:
         return
 
     """ Get timestamp"""
+
     @staticmethod
     def get_timestamp() -> str:
         """
@@ -220,6 +229,7 @@ class Base:
         return datetime.datetime.utcnow().strftime("%d%H%M%S")
 
     """ Get timestamp with dot"""
+
     @staticmethod
     def get_timestamp_dot() -> str:
         """
@@ -233,6 +243,7 @@ class Base:
         return datetime.datetime.utcnow().strftime("%Y.%m.%d.%H.%M.%S")
 
     """ Assert word wait clickable"""
+
     def assert_word(self, element_dict: Dict[str, str]) -> NoReturn:
         """
         Проверяет, что текст элемента соответствует заданному значению.
@@ -254,6 +265,7 @@ class Base:
             print(f"Assert \"{value_word}\" == \"{element_dict['reference']}\"")
 
     """ Assert word input reference wait clickable"""
+
     def flexible_assert_word(self, element_dict: Dict[str, str], reference_value: str) -> NoReturn:
         """
         Проверяет, что текст элемента соответствует заданному значению.
@@ -303,6 +315,7 @@ class Base:
             print(f"Assert \"{value_word}\" == \"{reference_value}\"")
 
     """ Get random value float str"""
+
     @staticmethod
     def random_value_float_str(of: float, to: float) -> str:
         """
@@ -323,6 +336,7 @@ class Base:
         return f'{random.uniform(of, to):.1f}'
 
     """ Get random value int str"""
+
     @staticmethod
     def random_value_int_str(of: int, to: int) -> str:
         """
@@ -343,6 +357,7 @@ class Base:
         return f'{random.randint(of, to)}'
 
     """ Get random value int """
+
     @staticmethod
     def random_value_int(of: int, to: int) -> int:
         """
@@ -363,6 +378,7 @@ class Base:
         return random.randint(of, to)
 
     """ Get random value custom start int """
+
     @staticmethod
     def random_value_custom_start(prefix: str, n: int) -> str:
         """
@@ -384,6 +400,7 @@ class Base:
         return f'{prefix}{random_digits}'
 
     """ Get screenshot"""
+
     def get_screenshot(self) -> NoReturn:
         """
         Сохраняет скриншот текущего состояния браузера.
@@ -397,6 +414,7 @@ class Base:
             print("Screen taken:" + name_screenshot)
 
     """ Assert url"""
+
     def assert_url(self, result: str) -> NoReturn:
         """
         Проверяет, соответствует ли текущий URL заданному значению.
@@ -417,6 +435,7 @@ class Base:
             print("Assert url true")
 
     """ Click button wait clickable"""
+
     def click_button(self, element_dict: Dict[str, str], do_assert: Optional[bool] = False,
                      wait: Optional[str] = None) -> NoReturn:
         """
@@ -446,6 +465,7 @@ class Base:
                 self.wait_element_invisibility(self.loading_form)
 
     """ Click button index wait clickable"""
+
     def click_button_index(self, element_dict: Dict[str, str], index: int = 1, do_assert: bool = False,
                            wait: Optional[str] = None) -> NoReturn:
         """
@@ -474,13 +494,14 @@ class Base:
             button_dict['element'].click()
             print(f"Click {button_dict['name']}")
             if do_assert:
-                self.assert_word(element_dict)  # Убедитесь, что assert_word может работать с обновлённым элементом
+                self.assert_word(element_dict)
             if wait == 'lst':
                 self.wait_element_invisibility(self.loading_list)
             elif wait == 'form':
                 self.wait_element_invisibility(self.loading_form)
 
     """ Click button wait visibility"""
+
     def click_button_visibility(self, element_dict: Dict[str, str], do_assert: bool = False,
                                 wait: Optional[str] = None) -> NoReturn:
         """
@@ -509,6 +530,7 @@ class Base:
                 self.wait_element_invisibility(self.loading_form)
 
     """ Click button wait located"""
+
     def click_button_located(self, element_dict: Dict[str, str], do_assert: bool = False,
                              wait: Optional[str] = None) -> NoReturn:
         """
@@ -537,6 +559,7 @@ class Base:
                 self.wait_element_invisibility(self.loading_form)
 
     """ Click button find"""
+
     def click_button_find(self, element_dict: Dict[str, str], do_assert: bool = False,
                           wait: Optional[str] = None) -> NoReturn:
         """
@@ -565,6 +588,7 @@ class Base:
                 self.wait_element_invisibility(self.loading_form)
 
     """ In dropdown click clickable, input enter find"""
+
     def dropdown_click_input_enter(self, element_dict: Dict[str, str], option_text: str,
                                    press_enter: bool = True) -> None:
         """
@@ -590,6 +614,7 @@ class Base:
             print(f"Selected '{option_text}' from dropdown {dropdown_dict['name']}")
 
     """In dropdown click clickable, input find, wait located, enter find"""
+
     def dropdown_click_input_wait_enter(self, element_dict: Dict[str, str], option_text: str,
                                         press_enter: bool = True) -> None:
         """
@@ -620,6 +645,7 @@ class Base:
             print(f"Selected '{option_text}' from dropdown {dropdown_dict['name']}")
 
     """In dropdown click clickable, input enter located"""
+
     def dropdown_click_input_enter_located(self, element_dict: Dict[str, str], option_text: str,
                                            press_enter: bool = True) -> None:
         """
@@ -645,8 +671,9 @@ class Base:
                 option_to_select.send_keys(Keys.ENTER)
             print(f"Selected '{option_text}' from dropdown {dropdown_dict['name']}")
 
-    """In dropdown click input click clickable"""
-    def dropdown_click_input_click(self, element_dict: Dict[str, str], option_text: str) -> None:
+    """In dropdown click input + index click clickable"""
+
+    def dropdown_click_input_click(self, element_dict: Dict[str, str], option_text: str, index: int = 1) -> None:
         """
         Выбирает опцию в выпадающем списке с помощью поиска и клика по найденному элементу.
 
@@ -656,17 +683,27 @@ class Base:
             Словарь с информацией о элементе выпадающего списка.
         option_text : str
             Текст опции для поиска и выбора.
+        index : int
+            Индекс опции в списке, начиная с 1, который нужно выбрать.
 
         """
-        with allure.step(title=f"Select '{option_text}' from dropdown {element_dict['name']}"):
+        step_title = f"Select '{option_text}' from dropdown {element_dict['name']}"
+        print_message = f"Selected '{option_text}' from dropdown {element_dict['name']}"
+        if index != 1:
+            step_title += f" at index {index}"
+            print_message += f" at index {index}"
+
+        with allure.step(title=step_title):
             dropdown_dict = self.get_element_clickable(element_dict)
             dropdown_dict['element'].click()
+            xpath_expression = f"(.//li[@role='option' and normalize-space(text())='{option_text}'])[{index}]"
             option_to_select = WebDriverWait(self.driver, 60).until(
-                EC.element_to_be_clickable((By.XPATH, f".//li[@role='option' and normalize-space(.)='{option_text}']")))
+                EC.element_to_be_clickable((By.XPATH, xpath_expression)))
             option_to_select.click()
-            print(f"Selected '{option_text}' from dropdown {dropdown_dict['name']}")
+            print(print_message)
 
     """ In dropdown click clickable, input click located"""
+
     def dropdown_click_input_click_located(self, element_dict: Dict[str, str], option_text: str) -> None:
         """
         Выбирает опцию в выпадающем списке, ожидая расположения элемента поиска и кликая по нему.
@@ -689,6 +726,7 @@ class Base:
             print(f"Selected '{option_text}' from dropdown {dropdown_dict['name']}")
 
     """ In dropdown select index clickable"""
+
     def dropdown_click_index_click(self, element_dict: Dict[str, str], index: int) -> None:
         """
         Выбирает опцию в выпадающем списке по индексу с помощью клика по элементу и клика по опции с заданным индексом.
@@ -712,6 +750,7 @@ class Base:
             print(f"Selected by index '{index}' from dropdown {dropdown_dict['name']}")
 
     """ Move to element wait clickable"""
+
     def move_to_element(self, element_dict: Dict[str, str]) -> None:
         """
         Перемещает курсор мыши к элементу, ожидая его кликабельности.
@@ -728,6 +767,7 @@ class Base:
             print(f"Move to {button_dict['name']}")
 
     """ Move to element find"""
+
     def move_to_element_find(self, element_dict: Dict[str, str]) -> None:
         """
         Перемещает курсор мыши к элементу без предварительного ожидания его состояний.
@@ -744,6 +784,7 @@ class Base:
             print(f"Move to {button_dict['name']}")
 
     """ Switch to original window"""
+
     def switch_to_original_window(self) -> None:
         """
         Переключается обратно к оригинальному окну браузера.
@@ -755,6 +796,7 @@ class Base:
             print("Returned to the original window")
 
     """ Input field wait clickable"""
+
     def input_in_field(self, element_dict: Dict[str, str], value: str, wait: Optional[str] = None,
                        safe: bool = False) -> None:
         """
@@ -782,6 +824,7 @@ class Base:
             print(f"In {field_dict['name']}: " + ("***" if safe else str(value)))
 
     """ Input field find"""
+
     def input_in_field_find(self, element_dict: Dict[str, str], value: str) -> None:
         """
         Вводит текст в поле ввода без предварительного ожидания его состояний.
@@ -800,6 +843,7 @@ class Base:
             print(f"In {field_dict['name']}: {value}")
 
     """ Clear field wait clickable"""
+
     def clear_field(self, element_dict: Dict[str, str]) -> None:
         """
         Очищает поле ввода, ожидая его кликабельности.
@@ -816,6 +860,7 @@ class Base:
             print(f"Clear {field_dict['name']}")
 
     """ Input field and enter wait clickable"""
+
     def input_in_field_and_enter(self, element_dict: Dict[str, str], value: str, wait: Optional[str] = None) -> None:
         """
         Вводит текст в поле ввода, ожидая его кликабельности, и нажимает Enter.
@@ -842,6 +887,7 @@ class Base:
             print(f"In {field_dict['name']}: {value} - and pressed enter")
 
     """ Enter and input field wait clickable"""
+
     def enter_and_input_in_field(self, element_dict: Dict[str, str], value: str) -> None:
         """
         Сначала нажимает Enter, а затем вводит текст в поле ввода, ожидая его кликабельности.
@@ -861,6 +907,7 @@ class Base:
             print(f"Enter pressed in {field_dict['name']}: {value}")
 
     """ Click and input field wait clickable"""
+
     def click_and_input_in_field(self, element_dict: Dict[str, str], value: str) -> None:
         """
         Кликает по полю ввода, ожидая его кликабельности, и вводит текст.
@@ -880,6 +927,7 @@ class Base:
             print(f"Click and in {field_dict['name']}: {value}")
 
     """ Click and enter wait clickable"""
+
     def click_and_enter(self, element_dict: Dict[str, str]) -> None:
         """
         Кликает по полю ввода, ожидая его кликабельности, и нажимает Enter.
@@ -897,6 +945,7 @@ class Base:
             print(f"Click {field_dict['name']} and pressed enter")
 
     """ Click input and enter wait clickable"""
+
     def click_input_and_enter(self, element_dict: Dict[str, str], value: str) -> None:
         """
         Кликает по полю ввода, ожидая его кликабельности, вводит текст и нажимает Enter.
@@ -916,9 +965,10 @@ class Base:
             field_dict['element'].send_keys(Keys.ENTER)
             print(f"Click {field_dict['name']} input: {value} and pressed enter")
 
-    """ Backspace and input wait clickable"""
-    def backspace_and_input(self, element_dict: Dict[str, str], value: str,
-                            press_enter: Optional[bool] = False) -> None:
+    """ Backspace len and input wait clickable"""
+
+    def backspace_len_and_input(self, element_dict: Dict[str, str], value: str,
+                                press_enter: Optional[bool] = False) -> None:
         """
         Выполняет нажатие клавиши Backspace для удаления символов,
         соответствующих длине вводимого значения, и вводит текст.
@@ -935,13 +985,43 @@ class Base:
         """
         with allure.step(title=f"Backspace and input in {element_dict['name']}: {value}"):
             field_dict = self.get_element_clickable(element_dict)
-            field_dict['element'].send_keys(Keys.BACKSPACE*len(value))
+            field_dict['element'].send_keys(Keys.BACKSPACE * len(value))
             field_dict['element'].send_keys(value)
             if press_enter:
                 field_dict['element'].send_keys(Keys.ENTER)
             print(f"Backspace and in {field_dict['name']}: {value}")
 
+    """ Backspace len and input wait clickable"""
+
+    def backspace_all_and_input(self, element_dict: Dict[str, str], value: str,
+                                press_enter: Optional[bool] = False) -> None:
+        """
+        Очищает поле ввода путем нажатий клавиши Backspace для каждого символа в поле,
+        затем вводит новое значение.
+
+        Parameters
+        ----------
+        element_dict : dict
+            Словарь с информацией о поле ввода.
+        value : str
+            Значение для ввода.
+        press_enter : bool, optional
+            Если True, нажимает Enter после ввода значения.
+
+        """
+        with allure.step(title=f"Backspace and input in {element_dict['name']}: {value}"):
+            field_dict = self.get_element_clickable(element_dict)
+            field_dict['element'].click()
+            current_value = field_dict['element'].get_attribute('value')
+            for _ in range(len(current_value)):
+                field_dict['element'].send_keys(Keys.BACKSPACE)
+            field_dict['element'].send_keys(value)
+            if press_enter:
+                field_dict['element'].send_keys(Keys.ENTER)
+            print(f"Backspaced and input in {field_dict['name']}: {value}")
+
     """ Click backspace and input wait clickable"""
+
     def click_backspace_and_input(self, element_dict: Dict[str, str], value: str) -> None:
         """
         Кликает по полю ввода, выполняет нажатие клавиши Backspace для удаления символов и вводит текст.
@@ -963,6 +1043,7 @@ class Base:
             print(f"Click backspace and in {field_dict['name']}: {value}")
 
     """ Backspace num times and input wait clickable"""
+
     def backspace_num_and_input(self, element_dict: Dict[str, str], num: int, value: str,
                                 press_enter: Optional[bool] = False) -> None:
         """
@@ -989,6 +1070,7 @@ class Base:
             print(f"Backspaced {num} times and input in {field_dict['name']}: {value}")
 
     """ Scroll X Y"""
+
     def scroll_page(self, x: Optional[int] = None, y: Optional[int] = None) -> None:
         """
         Прокручивает страницу на заданное количество пикселей по горизонтали и вертикали.
@@ -1037,6 +1119,7 @@ class Base:
         self.click_button(click_to, do_assert=do_assert, wait=wait)
 
     """ Move find and click button wait clickable"""
+
     def move_find_and_click(self, move_to: Dict[str, str], click_to: Dict[str, str], do_assert: bool = False,
                             wait: Optional[str] = None) -> None:
         """
@@ -1059,6 +1142,7 @@ class Base:
         self.click_button(click_to, do_assert=do_assert, wait=wait)
 
     """ Naw time change"""
+
     @staticmethod
     def naw_time_change(minutes: int) -> str:
         """
@@ -1082,6 +1166,7 @@ class Base:
         return rounded_time_str
 
     """ Naw datatime change"""
+
     @staticmethod
     def naw_datatime_change(minutes: int) -> str:
         """
@@ -1105,6 +1190,7 @@ class Base:
         return rounded_time_str
 
     """ Get sms code"""
+
     def get_confirmation_code(self, phone_number):
         """
         Извлекает код подтверждения, связанный с заданным номером телефона.
@@ -1140,6 +1226,7 @@ class Base:
             raise ValueError(f"Не удалось извлечь код подтверждения из текста: {element_text}")
 
     """ Generate inn"""
+
     @staticmethod
     def generate_inn(entity_type: str) -> str:
         """

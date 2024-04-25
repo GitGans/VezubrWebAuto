@@ -37,7 +37,7 @@ class TransportAdd(Base):
     """Vehicle categories drop-down list"""
     vehicle_categories_select = {
         "xpath": "//span[contains(text(), 'Тип автоперевозки')]",
-        "name": "year_select"
+        "name": "vehicle_categories_select"
     }
     """Vehicle body types drop-down list"""
     vehicle_body_types_select = {
@@ -68,6 +68,14 @@ class TransportAdd(Base):
         "xpath": "//input[@name='craneLength']",
         "name": "crane_length_input"
     }
+    compartment_count_input = {
+        "xpath": "//input[@name='compartmentCount']",
+        "name": "compartment_count_input"
+    }
+    car_count_input = {
+        "xpath": "//input[@name='carCount']",
+        "name": "car_count_input"
+    }
     create_vehicle_button = {
         "xpath": "//button[contains(@class, 'ant-btn-primary') and .//span[text()='Создать ТС']]",
         "name": "create_vehicle_button",
@@ -80,16 +88,34 @@ class TransportAdd(Base):
         "reference_xpath": "//span[contains(text(), 'успешно обновлен')]",
         "reference": ".* успешно обновлен.*"
     }
-    confirm_add_button = {
+    confirm_button = {
         "xpath": "//button[@class='ant-btn ant-btn-primary']",
-        "name": "create_button"
+        "name": "confirm_button"
+    }
+    yes_button = {
+        "xpath": "//button[.//span[text()='Да']]",
+        "name": "yes_button"
+    }
+    ok_button = {
+        "xpath": "//button[.//span[text()='OK']]",
+        "name": "ok_button",
+        "reference_xpath": "//span[text()='OK']",
+        "reference": "OK"
     }
     number_passengers_select = {
         "xpath": "//span[contains(text(), 'Пассажиров (без учета водителя)')]",
         "name": "number_passengers_select"
     }
+    platform_height_input = {
+        "xpath": "//input[@name='platformHeight']",
+        "name": "platform_height_input"
+    }
+    platform_length_input = {
+        "xpath": "//input[@name='platformLength']",
+        "name": "platform_length_input"
+    }
     edit_button = {
-        "xpath": "//button[contains(text(), 'Редактировать ТС')]",
+        "xpath": "//button[contains(text(), 'Редактировать')]",
         "name": "edit_button"
     }
     hydro_lift_toggl = {
@@ -148,5 +174,111 @@ class TransportAdd(Base):
         "xpath": "//span[contains(text(), 'Верхняя погрузка')]",
         "name": "top_loading_toggl"
     }
+    covered_body_toggl = {
+        "xpath": "//span[contains(text(), 'Крытый кузов')]",
+        "name": "covered_body_toggl"
+    }
+    sanitation_toggl = {
+        "xpath": "//span[contains(text(), 'Договор о санитарной обработке')]",
+        "name": "sanitation_toggl"
+    }
+    sanitary_date_button = {
+        "xpath": "//input[@name='sanitaryPassportExpiresAtDate']",
+        "name": "sanitary_date_button"
+    }
+    calendar_input = {
+        "xpath": "//input[@class='ant-calendar-input ']",
+        "name": "calendar_input"
+    }
+    first_pass_type_select = {
+        "xpath": "//label[contains(@class, 'vz-form-item') and .//span[contains(@class, 'vz-form-item__label') and "
+                 "contains(text(), 'Тип пропуска')]]//div[contains(@class, 'ant-select-selection__rendered')]",
+        "name": "first_pass_type_select"
+    }
+    second_pass_type_select = {
+        "xpath": "(//label[contains(@class, 'vz-form-item') and .//span[contains(@class, 'vz-form-item__label') and "
+                 "contains(text(), 'Тип пропуска')]]//div[contains(@class, 'ant-select-selection__rendered')])[2]",
+        "name": "second_pass_type_select"
+    }
+    third_pass_type_select = {
+        "xpath": "(//label[contains(@class, 'vz-form-item') and .//span[contains(@class, 'vz-form-item__label') and "
+                 "contains(text(), 'Тип пропуска')]]//div[contains(@class, 'ant-select-selection__rendered')])[3]",
+        "name": "third_pass_type_select"
+    }
+    first_pass_date_button = {
+        "xpath": "(//input[@class='ant-calendar-picker-input ant-input'])[2]",
+        "name": "first_pass_date_button"
+    }
+    second_pass_date_button = {
+        "xpath": "(//input[@class='ant-calendar-picker-input ant-input'])[3]",
+        "name": "second_pass_date_button"
+    }
+    third_pass_date_button = {
+        "xpath": "(//input[@class='ant-calendar-picker-input ant-input'])[4]",
+        "name": "third_pass_date_button"
+    }
+    tractor_first_pass_date_button = {
+        "xpath": "(//input[@class='ant-calendar-picker-input ant-input'])[1]",
+        "name": "tractor_first_pass_date_button"
+    }
+    tractor_second_pass_date_button = {
+        "xpath": "(//input[@class='ant-calendar-picker-input ant-input'])[2]",
+        "name": "tractor_second_pass_date_button"
+    }
+    tractor_third_pass_date_button = {
+        "xpath": "(//input[@class='ant-calendar-picker-input ant-input'])[3]",
+        "name": "tractor_third_pass_date_button"
+    }
+    close_circle_button = {
+        "xpath": "//i[@aria-label='icon: close-circle']",
+        "name": "close_circle_button"
+    }
+    attach_button = {
+        "xpath": "//button[@class='semi-wide element-button theme-primary']",
+        "name": "attach_button"
+    }
+    select_button = {
+        "xpath": "//button[@type='button' and contains(@class, 'ant-btn')]",
+        "name": "select_button"
+    }
+    unselect_button = {
+        "xpath": "//button[.//img[@alt='xWhite']]",
+        "name": "unselect_button"
+    }
+    assign_selected_button = {
+        "xpath": "//button[.//span[text()='Назначить выбранных']]",
+        "name": "assign_selected_button"
+    }
+    action_menu_button = {
+        "xpath": "//span[@class='icon-content']",
+        "name": "action_menu_button"
+    }
+    suspend_button = {
+        "xpath": "//span[normalize-space()='Временно приостановить']",
+        "name": "suspend_button"
+    }
+    resume_button = {
+        "xpath": "//span[normalize-space()='Возобновить']",
+        "name": "resume_button"
+    }
+    exploitation_finish_button = {
+        "xpath": "//span[normalize-space()='Эксплуатация завершена']",
+        "name": "exploitation_finish_button"
+    }
 
-
+    def all_additional_params_without_gps(self):
+        buttons_to_click = [
+            self.hydro_lift_toggl,
+            self.pallets_jack_toggl,
+            self.conics_toggl,
+            self.strap_toggl,
+            self.chain_toggl,
+            self.tarpaulin_toggl,
+            self.net_toggl,
+            self.wheel_chock_toggl,
+            self.corner_pillar_toggl,
+            self.doppel_stock_toggl,
+            self.wooden_floor_toggl
+        ]
+        for button in buttons_to_click:
+            self.click_button(button)
