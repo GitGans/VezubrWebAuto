@@ -13,8 +13,8 @@ from pages.insurers_list_page import InsurersList
 def test_insurance_contract_add_lkz(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
-    sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.insurers_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.insurers_list_button,
+                           do_assert=True, wait="lst")
 
     insurers_list = InsurersList(base.driver)
     insurers_list.click_button(insurers_list.insurer_energy_inn)
@@ -33,6 +33,6 @@ def test_insurance_contract_add_lkz(domain):
     add_contract.input_in_field(add_contract.insurance_premium_field, "0.05")
     add_contract.input_in_field(add_contract.min_premium_field, "50")
     add_contract.click_button(add_contract.add_contract_button, do_assert=True)
-    add_contract.click_button(add_contract.confirm_add_button, wait="lst")
+    add_contract.click_button(add_contract.confirm_add_button)
 
-    sidebar.finish_test()
+    sidebar.test_finish()

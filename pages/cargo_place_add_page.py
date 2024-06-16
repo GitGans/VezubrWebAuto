@@ -1,5 +1,4 @@
 from typing import NoReturn
-
 from base.base_class import Base
 
 
@@ -36,14 +35,6 @@ class CargoPlaceAdd(Base):
         "xpath": "(//div[@class='ant-select-selection__rendered'])[1]",
         "name": "cargo_place_type_select"
     }
-    select_type_box = {
-        "xpath": "//ul[@role='listbox']/li[text()='Короб']",
-        "name": "select_type_box"
-    }
-    select_type_bag = {
-        "xpath": "//ul[@role='listbox']/li[text()='Мешок']",
-        "name": "select_type_bag"
-    }
     cp_quantity_input = {
         "xpath": "(//input[@role='spinbutton'])[1]",
         "name": "cp_quantity_input"
@@ -69,13 +60,77 @@ class CargoPlaceAdd(Base):
         "xpath": "(//div[@class='ant-select-selection__rendered'])[3]",
         "name": "lkz_cp_status_select"
     }
-    select_status_new = {
-        "xpath": "//ul[@role='listbox']/li[text()='Новое']",
-        "name": "select_status_new"
+    lkz_cp_title_input = {
+        "xpath": "(//input[@type='text'])[2]",
+        "name": "lkz_cp_title_input"
     }
-    select_status_waiting_send = {
-        "xpath": "//ul[@role='listbox']/li[text()='Ожидание отправки']",
-        "name": "select_status_waiting_send"
+    lkz_invoice_number_input = {
+        "xpath": "(//input[@type='text'])[3]",
+        "name": "lkz_invoice_number_input"
+    }
+    lke_cp_title_input = {
+        "xpath": "(//input[@type='text'])[3]",
+        "name": "lke_cp_title_input"
+    }
+    lke_invoice_number_input = {
+        "xpath": "(//input[@type='text'])[4]",
+        "name": "lke_invoice_number_input"
+    }
+    invoice_date_input = {
+        "xpath": "//input[@class='ant-calendar-picker-input ant-input']",
+        "name": "invoice_date_input"
+    }
+    date_input = {
+        "xpath": "//input[@class='ant-calendar-input ']",
+        "name": "date_input"
+    }
+    lkz_bar_code_input = {
+        "xpath": "(//input[@type='text'])[4]",
+        "name": "lkz_bar_code_input"
+    }
+    lkz_seal_number_input = {
+        "xpath": "(//input[@type='text'])[5]",
+        "name": "lkz_seal_number_input"
+    }
+    lkz_external_id_input = {
+        "xpath": "(//input[@type='text'])[6]",
+        "name": "lkz_external_id_input"
+    }
+    lkz_wms_number_input = {
+        "xpath": "(//input[@type='text'])[8]",
+        "name": "lkz_wms_number_input"
+    }
+    lke_bar_code_input = {
+        "xpath": "(//input[@type='text'])[5]",
+        "name": "lke_bar_code_input"
+    }
+    lke_seal_number_input = {
+        "xpath": "(//input[@type='text'])[6]",
+        "name": "lke_seal_number_input"
+    }
+    lke_external_id_input = {
+        "xpath": "(//input[@type='text'])[7]",
+        "name": "lke_external_id_input"
+    }
+    lke_wms_number_input = {
+        "xpath": "(//input[@type='text'])[9]",
+        "name": "lke_wms_number_input"
+    }
+    temp_from_input = {
+        "xpath": "(//input[@role='spinbutton'])[5]",
+        "name": "temp_from_input"
+    }
+    temp_until_input = {
+        "xpath": "(//input[@role='spinbutton'])[6]",
+        "name": "temp_until_input"
+    }
+    lkz_comment_input = {
+        "xpath": "(//input[@type='text'])[10]",
+        "name": "lkz_comment_input"
+    }
+    lke_comment_input = {
+        "xpath": "(//input[@type='text'])[11]",
+        "name": "lke_comment_input"
     }
     """Departure address drop-down list"""
     departure_address_select = {
@@ -105,7 +160,108 @@ class CargoPlaceAdd(Base):
         "xpath": "(//button[@class='ant-btn ant-btn-primary'])[2]",
         "name": "create_button"
     }
-
+    delete_button = {
+        "xpath": "//button[@class='ant-btn margin-right-5']",
+        "name": "delete_button",
+        "reference_xpath": "//span[@class='ant-modal-confirm-title']",
+        "reference": "Вы точно хотите удалить ГМ.*"
+    }
+    edit_button = {
+        "xpath": "//button[@class='ant-btn ant-btn-primary']",
+        "name": "edit_button"
+    }
+    yes_button = {
+        "xpath": "//button[contains(., 'Да')]",
+        "name": "yes_button"
+    }
+    ok_button = {
+        "xpath": "//button[contains(., 'OK')]",
+        "name": "calendar_ok_button"
+    }
+    quantity_edit = {
+        "xpath": "(//input[@role='spinbutton'])[2]",
+        "name": "quantity_edit"
+    }
+    weight_edit = {
+        "xpath": "(//input[@role='spinbutton'])[3]",
+        "name": "weight_edit"
+    }
+    value_edit = {
+        "xpath": "(//input[@role='spinbutton'])[4]",
+        "name": "value_edit"
+    }
+    cost_edit = {
+        "xpath": "(//input[@role='spinbutton'])[5]",
+        "name": "cost_edit"
+    }
+    temp_from_edit = {
+        "xpath": "(//input[@role='spinbutton'])[6]",
+        "name": "temp_from_edit"
+    }
+    temp_until_edit = {
+        "xpath": "(//input[@role='spinbutton'])[7]",
+        "name": "temp_until_edit"
+    }
+    lkz_cp_title_edit = {
+        "xpath": "(//input[@type='text'])[4]",
+        "name": "lkz_cp_title_edit"
+    }
+    lkz_invoice_number_edit = {
+        "xpath": "(//input[@type='text'])[5]",
+        "name": "lkz_invoice_number_edit"
+    }
+    lkz_bar_code_edit = {
+        "xpath": "(//input[@type='text'])[6]",
+        "name": "lkz_bar_code_edit"
+    }
+    lkz_seal_number_edit = {
+        "xpath": "(//input[@type='text'])[7]",
+        "name": "lkz_seal_number_edit"
+    }
+    lkz_external_id_edit = {
+        "xpath": "(//input[@type='text'])[8]",
+        "name": "lkz_external_id_edit"
+    }
+    lkz_wms_number_edit = {
+        "xpath": "(//input[@type='text'])[10]",
+        "name": "lkz_wms_number_edit"
+    }
+    lkz_comment_edit = {
+        "xpath": "(//input[@type='text'])[12]",
+        "name": "lkz_comment_edit"
+    }
+    lke_cp_title_edit = {
+        "xpath": "(//input[@type='text'])[5]",
+        "name": "lke_cp_title_edit"
+    }
+    lke_invoice_number_edit = {
+        "xpath": "(//input[@type='text'])[6]",
+        "name": "lke_invoice_number_edit"
+    }
+    lke_bar_code_edit = {
+        "xpath": "(//input[@type='text'])[7]",
+        "name": "lke_bar_code_edit"
+    }
+    lke_seal_number_edit = {
+        "xpath": "(//input[@type='text'])[8]",
+        "name": "lke_seal_number_edit"
+    }
+    lke_external_id_edit = {
+        "xpath": "(//input[@type='text'])[9]",
+        "name": "lke_external_id_edit"
+    }
+    lke_wms_number_edit = {
+        "xpath": "(//input[@type='text'])[11]",
+        "name": "lke_wms_number_edit"
+    }
+    lke_comment_edit = {
+        "xpath": "(//input[@type='text'])[13]",
+        "name": "lke_comment_edit"
+    }
+    save_button = {
+        "xpath": "//button[contains(., 'Сохранить')]",
+        "name": "save_button"
+    }
     # Methods
     """ Create base cargo place"""
     def add_base_cargo_place(self) -> NoReturn:
@@ -126,14 +282,14 @@ class CargoPlaceAdd(Base):
         # Выбор типа грузоместа
         self.dropdown_click_input_click(self.lkz_cp_type_select, "Короб")
         # Ввод рандомизированных данных для веса, объема и стоимости груза
-        self.input_in_field(self.cp_weight_input, self.random_value_int_str(10, 20000))
+        self.input_in_field(self.cp_weight_input, self.random_value_float_str(10, 20000))
         self.input_in_field(self.cp_value_input, self.random_value_float_str(0.1, 35.0))
-        self.input_in_field(self.cp_cost_input, self.random_value_int_str(100, 1000000))
+        self.input_in_field(self.cp_cost_input, self.random_value_float_str(100, 1000000))
         # Выбор статуса грузоместа
         self.dropdown_click_input_click(self.lkz_cp_status_select, "Новое")
         # Ввод адресов отправления и доставки
-        self.dropdown_click_input_enter(self.departure_address_select, "Екатеринбург")
-        self.dropdown_click_input_enter(self.delivery_address_select, "Екатеринбург")
+        self.dropdown_click_input_wait_enter(self.departure_address_select, "Екатеринбург")
+        self.dropdown_click_input_wait_enter(self.delivery_address_select, "Екатеринбург")
         # Последовательное нажатие на кнопки с условиями
         buttons_to_click = [
             {'button': self.create_cargo_place_button, 'do_assert': True, 'wait': None},
@@ -142,3 +298,4 @@ class CargoPlaceAdd(Base):
         for button_info in buttons_to_click:
             self.click_button(button_info['button'], do_assert=button_info.get('do_assert', False),
                               wait=button_info.get('wait', None))
+            

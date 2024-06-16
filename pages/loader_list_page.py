@@ -11,3 +11,12 @@ class LoaderList(Base):
         "xpath": "//button[@class='filter-button rounded box-shadow primary default']",
         "name": "add_loader_button"
     }
+    first_loader_link = {
+        "xpath": "//a[@class='link-back']",
+        "name": "first_loader_link"
+    }
+    surname_filter = {
+        "xpath": "//input[@placeholder='Фамилия' and @class='ant-input']",
+        "name": "surname_filter"
+    }
+    

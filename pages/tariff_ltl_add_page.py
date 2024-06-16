@@ -88,6 +88,6 @@ class LTLTariffAdd(Base):
     confirm_button = {
         "xpath": "//button[@class='ant-btn ant-btn-primary']",
         "name": "create_button",
-        "reference_xpath": "//h2[@class='big-title title-bold' and contains(text(), 'Тарифы')]",
-        "reference": 'Тарифы'
+        "reference_xpath": "//div[contains(@class, 'ant-modal-confirm-content') and contains(., 'Тариф')]",
+        "reference": 'Тариф.*'
     }

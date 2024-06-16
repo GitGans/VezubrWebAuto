@@ -74,7 +74,7 @@ class SideBar(Base):
         "xpath": "//*[@id='requests-ltl-side']",
         "name": "ftl_active_list_button",
         "reference_xpath": base_reference_xpath,
-        "reference": "Активные LTL Заявки"
+        "reference": "Заявки на доставку Груза"
     }
     ftl_archive_list_button = {
         "xpath": "//*[@id='requests-side']",
@@ -116,9 +116,9 @@ class SideBar(Base):
         "xpath": "//span[@class='route-name no-events' and text()='Задания']",
         "name": "assignments_hover"
     }
-    assignments_list_button = {
+    cargo_place_list_button = {
         "xpath": "//li[contains(@class, 'ant-menu-item') and contains(., 'Задания')]",
-        "name": "assignments_list_button",
+        "name": "cargo_place_list_button",
         "reference_xpath": base_reference_xpath,
         "reference": "Задания"
     }

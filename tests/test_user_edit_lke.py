@@ -16,7 +16,7 @@ def test_first_user_edit_lke(domain):
     sidebar.click_button(sidebar.profile_button, do_assert=True)
 
     profile = Profile(base.driver)
-    profile.click_button(profile.users_tab, do_assert=True, wait="lst")
+    profile.click_button(profile.users_tab, do_assert=True)
     profile.click_button(profile.user_link, wait="form")
 
     user = User(base.driver)
@@ -29,12 +29,12 @@ def test_first_user_edit_lke(domain):
     user.backspace_len_and_input(user.name_input, f"И-{base.get_timestamp()}")
     user.backspace_len_and_input(user.patronymic_input, f"О-{base.get_timestamp()}")
     user.click_button(user.phone_input)
-    user.backspace_len_and_input(user.phone_input, base.random_value_int_str(1000000000, 9999999999))
+    user.backspace_len_and_input(user.phone_input, base.random_value_float_str(1000000000, 9999999999))
     user.backspace_len_and_input(user.email_input, f"E{base.get_timestamp()}@mail.ru")
     user.click_button(user.save_edit_user_button, do_assert=True)
-    user.click_button(user.confirm_add_button, wait="lst")
+    user.click_button(user.confirm_add_button)
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -48,8 +48,8 @@ def test_user_responsible_fo_client_lke(domain):
     sidebar.click_button(sidebar.profile_button, do_assert=True)
 
     profile = Profile(base.driver)
-    profile.click_button(profile.users_tab, do_assert=True, wait="lst")
-    profile.click_button_index(profile.user_link, 2, wait="form")
+    profile.click_button(profile.users_tab, do_assert=True)
+    profile.click_button(profile.user_link, 2, wait="form")
 
     user = User(base.driver)
     user.click_button(user.add_responsible_button, wait="lst")
@@ -58,27 +58,28 @@ def test_user_responsible_fo_client_lke(domain):
 
     user.click_button(user.all_contractor_off_checkbox)
     user.click_button(user.delegate_responsibility_button, wait="lst")
-    user.click_button_index(user.user_checkbox, 7)
+    user.click_button(user.user_checkbox, 7)
     user.click_button(user.confirm_responsible_button, wait="lst")
 
     user.click_button(user.all_contractor_off_checkbox)
     user.click_button(user.off_responsibility_button)
     user.click_button(user.confirm_off_responsible_button, wait="lst", do_assert=True)
 
-    sidebar.finish_test()
+    sidebar.test_finish()
+
 
 @allure.epic("Стабильные тесты")
 @allure.story("Extended test")
 @allure.feature('Редактирование пользователей')
 @allure.description('ЛКЭ. Тест управления ответственностью за КА: пользователь - Первый в списке, '
-                    'назначение на ПВ - Все, делигировать - Пятому, отвязать - Всех.')
+                    'назначение на ПВ - Все, делигировать - Шестому, отвязать - Всех.')
 def test_user_responsible_fo_producer_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
     sidebar.click_button(sidebar.profile_button, do_assert=True)
 
     profile = Profile(base.driver)
-    profile.click_button(profile.users_tab, do_assert=True, wait="lst")
+    profile.click_button(profile.users_tab, do_assert=True)
     profile.click_button(profile.user_link, wait="form")
 
     user = User(base.driver)
@@ -93,11 +94,11 @@ def test_user_responsible_fo_producer_lke(domain):
 
     user.click_button(user.all_contractor_off_checkbox)
     user.click_button(user.delegate_responsibility_button, wait="lst")
-    user.click_button_index(user.user_checkbox, 6)
+    user.click_button(user.user_checkbox, 6)
     user.click_button(user.confirm_responsible_button, wait="lst")
 
     user.click_button(user.all_contractor_off_checkbox)
     user.click_button(user.off_responsibility_button)
     user.click_button(user.confirm_off_responsible_button, wait="lst", do_assert=True)
 
-    sidebar.finish_test()
+    sidebar.test_finish()

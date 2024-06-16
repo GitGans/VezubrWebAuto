@@ -1,3 +1,5 @@
+from typing import NoReturn
+
 from base.base_class import Base
 
 
@@ -94,13 +96,13 @@ class TransportAdd(Base):
     }
     yes_button = {
         "xpath": "//button[.//span[text()='Да']]",
-        "name": "yes_button"
+        "name": "yes_button",
+        "reference_xpath": "//span[text()='OK']",
+        "reference": "OK"
     }
     ok_button = {
         "xpath": "//button[.//span[text()='OK']]",
-        "name": "ok_button",
-        "reference_xpath": "//span[text()='OK']",
-        "reference": "OK"
+        "name": "calendar_ok_button"
     }
     number_passengers_select = {
         "xpath": "//span[contains(text(), 'Пассажиров (без учета водителя)')]",
@@ -265,8 +267,22 @@ class TransportAdd(Base):
         "xpath": "//span[normalize-space()='Эксплуатация завершена']",
         "name": "exploitation_finish_button"
     }
+    
+    def all_additional_params_without_gps(self) -> NoReturn:
+        """
+        Активирует различные транспортные опции в интерфейсе, исключая GPS. Опции включают гидролифт,
+        рохлю, коники, стяжные ремни, цепи, тенты, сетки, упоры для колес, угловые стойки, двойные полы и
+        деревянные полы. Метод кликает по переключателям каждой опции для их активации или деактивации.
 
-    def all_additional_params_without_gps(self):
+        Parameters
+        ----------
+        Нет входных параметров.
+
+        Returns
+        -------
+        NoReturn
+            Метод не возвращает значения, но вызывает изменения на веб-странице, активируя указанные опции.
+        """
         buttons_to_click = [
             self.hydro_lift_toggl,
             self.pallets_jack_toggl,

@@ -11,3 +11,4 @@ class InsurersList(Base):
         "xpath": "//a[@class='link-back' and contains(text(), '7705041231')]",
         "name": "insurer_energy_inn"
     }
+    

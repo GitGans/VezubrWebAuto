@@ -31,3 +31,4 @@ class ClientsList(Base):
         "xpath": "(//button[.//span[text()='Принять']])[2]",
         "name": "accept_button"
     }
+    

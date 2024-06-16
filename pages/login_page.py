@@ -28,6 +28,8 @@ class Login(Base):
         "name": 'registration_button'
     }
     assert_inn = {
+        "name": "assert_inn",
+        "xpath": "//h4[@class='title']",
         "reference_xpath": "//h4[@class='title']"
     }
     registration_urls = {

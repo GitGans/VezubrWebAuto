@@ -28,8 +28,8 @@ def test_tariff_attach_producer_lkz(domain):
 
     add_extra = ExtraAgreementAdd(base.driver)
     add_extra.add_base_extra_agreements()
-    add_extra.click_button_located(add_extra.radio_button)
+    add_extra.click_button(add_extra.radio_button, wait_type="located")
     add_extra.click_button(add_extra.confirm_tariff_button, do_assert=True)
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
 
-    sidebar.finish_test()
+    sidebar.test_finish()

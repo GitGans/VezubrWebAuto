@@ -1,4 +1,3 @@
-import time
 import allure
 from tests.base_test import base_test_with_login
 from pages.agreement_page import Agreement
@@ -16,8 +15,8 @@ from pages.producers_list_page import ProducersList
 def test_extra_agreements_client_add_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
+                           do_assert=True, wait="lst")
 
     client_list = ClientsList(base.driver)
     client_list.click_button(client_list.client_lkz_inn, wait="lst")
@@ -34,7 +33,7 @@ def test_extra_agreements_client_add_lke(domain):
     add_extra.click_button(add_extra.appoint_later_button, do_assert=True)
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -45,8 +44,8 @@ def test_extra_agreements_client_add_lke(domain):
 def test_extra_agreements_producer_add_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
+                           do_assert=True, wait="lst")
 
     producer_list = ProducersList(base.driver)
     producer_list.click_button(producer_list.producer_lkp_inn, wait="lst")
@@ -63,7 +62,7 @@ def test_extra_agreements_producer_add_lke(domain):
     add_extra.click_button(add_extra.appoint_later_button, do_assert=True)
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -74,8 +73,8 @@ def test_extra_agreements_producer_add_lke(domain):
 def test_extra_agreements_inner_contractor_add_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
+                           do_assert=True, wait="lst")
 
     producer_list = ProducersList(base.driver)
     producer_list.click_button(producer_list.producer_vaz_inn, wait="lst")
@@ -92,4 +91,4 @@ def test_extra_agreements_inner_contractor_add_lke(domain):
     add_extra.click_button(add_extra.appoint_later_button, do_assert=True)
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
 
-    sidebar.finish_test()
+    sidebar.test_finish()

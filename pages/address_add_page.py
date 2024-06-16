@@ -25,3 +25,4 @@ class AddressAdd(Base):
         "xpath": "//button[@class='ant-btn ant-btn-primary']",
         "name": "create_button"
     }
+    

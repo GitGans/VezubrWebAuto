@@ -15,3 +15,8 @@ class DriverList(Base):
         "xpath": "//a[@class='link-back']",
         "name": "first_driver_link"
     }
+    surname_filter = {
+        "xpath": "//input[@placeholder='Фамилия' and @class='ant-input']",
+        "name": "surname_filter"
+    }
+    

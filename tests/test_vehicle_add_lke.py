@@ -15,11 +15,11 @@ from pages.transports_list_page import TransportsList
 def test_transport_add_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
+                           do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
-    transports_list.click_button(transports_list.add_transport_button, wait="form")
+    transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Монорамное ТС")
@@ -31,31 +31,31 @@ def test_transport_add_lke(domain):
     add_ts.dropdown_click_input_click(add_ts.vehicle_body_types_select, "Тентованный")
     add_ts.input_in_field(add_ts.capacity_input, base.random_value_float_str(0.5, 30.0))
     add_ts.input_in_field(add_ts.volume_input, base.random_value_float_str(0.5, 120.0))
-    add_ts.input_in_field(add_ts.pallets_input, base.random_value_int_str(0, 35))
+    add_ts.input_in_field(add_ts.pallets_input, base.random_value_float_str(0, 35))
     add_ts.input_in_field(add_ts.height_from_ground_input, base.random_value_float_str(1.0, 4.0))
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
-    add_ts.click_button(add_ts.attach_button, wait="form")
-    time.sleep(2)
-    add_ts.click_button(add_ts.select_button)
-    add_ts.click_button(add_ts.select_button)
-    add_ts.click_button(add_ts.assign_selected_button, wait="form")
-    time.sleep(2)
-    add_ts.click_button(add_ts.attach_button, wait="form")
-    time.sleep(1)
-    add_ts.click_button(add_ts.unselect_button)
-    add_ts.click_button(add_ts.assign_selected_button, wait="form")
-    time.sleep(1)
+    # add_ts.click_button(add_ts.attach_button)
+    # time.sleep(4)
+    # add_ts.click_button(add_ts.select_button)
+    # add_ts.click_button(add_ts.select_button)
+    # add_ts.click_button(add_ts.assign_selected_button, wait="form")
+    # time.sleep(3)
+    # add_ts.click_button(add_ts.attach_button)
+    # time.sleep(2)
+    # add_ts.click_button(add_ts.unselect_button)
+    # add_ts.click_button(add_ts.assign_selected_button, wait="form")
+    # time.sleep(1)
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.suspend_button)
+    add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.resume_button)
+    add_ts.click_button(add_ts.resume_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
     add_ts.click_button(add_ts.exploitation_finish_button)
-    add_ts.click_button(add_ts.yes_button)
-    add_ts.click_button(add_ts.ok_button, do_assert=True)
+    add_ts.click_button(add_ts.yes_button, do_assert=True)
+    add_ts.click_button(add_ts.ok_button)
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -67,11 +67,11 @@ def test_transport_add_lke(domain):
 def test_trailer_add_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
+                           do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
-    transports_list.click_button(transports_list.add_transport_button, wait="form")
+    transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Полуприцеп")
@@ -83,24 +83,24 @@ def test_trailer_add_lke(domain):
     add_ts.dropdown_click_input_click(add_ts.vehicle_body_types_select, "Тентованный")
     add_ts.input_in_field(add_ts.capacity_input, base.random_value_float_str(0.5, 100.0))
     add_ts.input_in_field(add_ts.volume_input, base.random_value_float_str(0.5, 120.0))
-    add_ts.input_in_field(add_ts.pallets_input, base.random_value_int_str(0, 35))
+    add_ts.input_in_field(add_ts.pallets_input, base.random_value_float_str(0, 35))
     add_ts.input_in_field(add_ts.height_from_ground_input, base.random_value_float_str(1.0, 4.0))
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
     # add_ts.click_button(add_ts.attach_button, wait="form")
+    # time.sleep(4)
+    # add_ts.click_button(add_ts.select_button, wait="form")
+    # time.sleep(3)
+    # add_ts.click_button(add_ts.attach_button, wait="form")
     # time.sleep(2)
     # add_ts.click_button(add_ts.select_button, wait="form")
-    # time.sleep(4)
-    # add_ts.click_button(add_ts.attach_button, wait="form")
-    # time.sleep(1)
-    # add_ts.click_button(add_ts.select_button, wait="form")
     # time.sleep(1)
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.suspend_button)
+    add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.resume_button)
+    add_ts.click_button(add_ts.resume_button, wait="form")
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -111,11 +111,11 @@ def test_trailer_add_lke(domain):
 def test_tractor1_add_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
+                           do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
-    transports_list.click_button(transports_list.add_transport_button, wait="form")
+    transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Тягач")
@@ -125,23 +125,23 @@ def test_tractor1_add_lke(domain):
     add_ts.dropdown_click_input_click(add_ts.year_select, "2023")
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
-    add_ts.click_button(add_ts.attach_button, wait="form")
-    time.sleep(2)
-    add_ts.click_button(add_ts.select_button)
-    add_ts.click_button(add_ts.select_button)
-    add_ts.click_button(add_ts.assign_selected_button, wait="form")
-    time.sleep(2)
-    add_ts.click_button(add_ts.attach_button, wait="form")
-    time.sleep(1)
-    add_ts.click_button(add_ts.unselect_button)
-    add_ts.click_button(add_ts.assign_selected_button, wait="form")
-    time.sleep(1)
+    # add_ts.click_button(add_ts.attach_button)
+    # time.sleep(4)
+    # add_ts.click_button(add_ts.select_button)
+    # add_ts.click_button(add_ts.select_button)
+    # add_ts.click_button(add_ts.assign_selected_button, wait="form")
+    # time.sleep(3)
+    # add_ts.click_button(add_ts.attach_button)
+    # time.sleep(2)
+    # add_ts.click_button(add_ts.unselect_button)
+    # add_ts.click_button(add_ts.assign_selected_button, wait="form")
+    # time.sleep(1)
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.suspend_button)
+    add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.resume_button)
+    add_ts.click_button(add_ts.resume_button, wait="form")
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -152,11 +152,11 @@ def test_tractor1_add_lke(domain):
 def test_tractor2_add_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
+                           do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
-    transports_list.click_button(transports_list.add_transport_button, wait="form")
+    transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Тягач")
@@ -167,19 +167,19 @@ def test_tractor2_add_lke(domain):
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
     # add_ts.click_button_index(add_ts.attach_button, index=2, wait="form")
+    # time.sleep(4)
+    # add_ts.click_button_visibility(add_ts.select_button, wait="form")
+    # time.sleep(3)
+    # add_ts.click_button_index(add_ts.attach_button, index=2, wait="form")
     # time.sleep(2)
     # add_ts.click_button_visibility(add_ts.select_button, wait="form")
-    # time.sleep(4)
-    # add_ts.click_button_index(add_ts.attach_button, index=2, wait="form")
-    # time.sleep(1)
-    # add_ts.click_button_visibility(add_ts.select_button, wait="form")
     # time.sleep(1)
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.suspend_button)
+    add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.resume_button)
+    add_ts.click_button(add_ts.resume_button, wait="form")
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -191,17 +191,17 @@ def test_tractor2_add_lke(domain):
 def test_transport_inner_add_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
+                           do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
-    transports_list.click_button(transports_list.add_transport_button, wait="form")
+    transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Монорамное ТС")
     add_ts.click_button(add_ts.vehicle_owner_select, wait="lst")
 
-    transports_list.click_button_located(transports_list.first_radio_button)
+    transports_list.click_button(transports_list.first_radio_button, wait_type="located")
     transports_list.click_button(transports_list.confirm_choice_button)
 
     add_ts.input_in_field(add_ts.plate_number_input, f"ВТС-{base.get_timestamp()}")
@@ -212,31 +212,31 @@ def test_transport_inner_add_lke(domain):
     add_ts.dropdown_click_input_click(add_ts.vehicle_body_types_select, "Тентованный")
     add_ts.input_in_field(add_ts.capacity_input, base.random_value_float_str(0.5, 30.0))
     add_ts.input_in_field(add_ts.volume_input, base.random_value_float_str(0.5, 120.0))
-    add_ts.input_in_field(add_ts.pallets_input, base.random_value_int_str(0, 35))
+    add_ts.input_in_field(add_ts.pallets_input, base.random_value_float_str(0, 35))
     add_ts.input_in_field(add_ts.height_from_ground_input, base.random_value_float_str(1.0, 4.0))
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
-    add_ts.click_button(add_ts.attach_button, wait="form")
-    time.sleep(2)
-    add_ts.click_button(add_ts.select_button)
-    add_ts.click_button(add_ts.select_button)
-    add_ts.click_button(add_ts.assign_selected_button, wait="form")
-    time.sleep(2)
-    add_ts.click_button(add_ts.attach_button, wait="form")
-    time.sleep(1)
-    add_ts.click_button(add_ts.unselect_button)
-    add_ts.click_button(add_ts.assign_selected_button, wait="form")
-    time.sleep(1)
+    # add_ts.click_button(add_ts.attach_button)
+    # time.sleep(4)
+    # add_ts.click_button(add_ts.select_button)
+    # add_ts.click_button(add_ts.select_button)
+    # add_ts.click_button(add_ts.assign_selected_button, wait="form")
+    # time.sleep(3)
+    # add_ts.click_button(add_ts.attach_button)
+    # time.sleep(2)
+    # add_ts.click_button(add_ts.unselect_button)
+    # add_ts.click_button(add_ts.assign_selected_button, wait="form")
+    # time.sleep(1)
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.suspend_button)
+    add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.resume_button)
+    add_ts.click_button(add_ts.resume_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
     add_ts.click_button(add_ts.exploitation_finish_button)
-    add_ts.click_button(add_ts.yes_button)
-    add_ts.click_button(add_ts.ok_button, do_assert=True)
+    add_ts.click_button(add_ts.yes_button, do_assert=True)
+    add_ts.click_button(add_ts.ok_button)
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -248,17 +248,17 @@ def test_transport_inner_add_lke(domain):
 def test_trailer_inner_add_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
+                           do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
-    transports_list.click_button(transports_list.add_transport_button, wait="form")
+    transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Полуприцеп")
     add_ts.click_button(add_ts.vehicle_owner_select, wait="lst")
 
-    transports_list.click_button_located(transports_list.first_radio_button)
+    transports_list.click_button(transports_list.first_radio_button, wait_type="located")
     transports_list.click_button(transports_list.confirm_choice_button)
 
     add_ts.input_in_field(add_ts.plate_number_input, f"ВПП-{base.get_timestamp()}")
@@ -269,24 +269,24 @@ def test_trailer_inner_add_lke(domain):
     add_ts.dropdown_click_input_click(add_ts.vehicle_body_types_select, "Тентованный")
     add_ts.input_in_field(add_ts.capacity_input, base.random_value_float_str(0.5, 100.0))
     add_ts.input_in_field(add_ts.volume_input, base.random_value_float_str(0.5, 120.0))
-    add_ts.input_in_field(add_ts.pallets_input, base.random_value_int_str(0, 35))
+    add_ts.input_in_field(add_ts.pallets_input, base.random_value_float_str(0, 35))
     add_ts.input_in_field(add_ts.height_from_ground_input, base.random_value_float_str(1.0, 4.0))
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
-    add_ts.click_button(add_ts.attach_button, wait="form")
+    add_ts.click_button(add_ts.attach_button)
+    time.sleep(4)
+    add_ts.click_button(add_ts.select_button, wait="form")
+    time.sleep(3)
+    add_ts.click_button(add_ts.attach_button)
     time.sleep(2)
     add_ts.click_button(add_ts.select_button, wait="form")
-    time.sleep(4)
-    add_ts.click_button(add_ts.attach_button, wait="form")
-    time.sleep(1)
-    add_ts.click_button(add_ts.select_button, wait="form")
     time.sleep(1)
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.suspend_button)
+    add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.resume_button)
+    add_ts.click_button(add_ts.resume_button, wait="form")
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -298,17 +298,17 @@ def test_trailer_inner_add_lke(domain):
 def test_tractor1_inner_add_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
+                           do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
-    transports_list.click_button(transports_list.add_transport_button, wait="form")
+    transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Тягач")
     add_ts.click_button(add_ts.vehicle_owner_select, wait="lst")
 
-    transports_list.click_button_located(transports_list.first_radio_button)
+    transports_list.click_button(transports_list.first_radio_button, wait_type="located")
     transports_list.click_button(transports_list.confirm_choice_button)
 
     add_ts.input_in_field(add_ts.plate_number_input, f"ВТЯГ-{base.get_timestamp()}")
@@ -317,23 +317,23 @@ def test_tractor1_inner_add_lke(domain):
     add_ts.dropdown_click_input_click(add_ts.year_select, "2023")
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
-    add_ts.click_button(add_ts.attach_button, wait="form")
-    time.sleep(2)
-    add_ts.click_button(add_ts.select_button)
-    add_ts.click_button(add_ts.select_button)
-    add_ts.click_button(add_ts.assign_selected_button, wait="form")
-    time.sleep(2)
-    add_ts.click_button(add_ts.attach_button, wait="form")
-    time.sleep(1)
-    add_ts.click_button(add_ts.unselect_button)
-    add_ts.click_button(add_ts.assign_selected_button, wait="form")
-    time.sleep(1)
+    # add_ts.click_button(add_ts.attach_button)
+    # time.sleep(4)
+    # add_ts.click_button(add_ts.select_button)
+    # add_ts.click_button(add_ts.select_button)
+    # add_ts.click_button(add_ts.assign_selected_button, wait="form")
+    # time.sleep(3)
+    # add_ts.click_button(add_ts.attach_button)
+    # time.sleep(2)
+    # add_ts.click_button(add_ts.unselect_button)
+    # add_ts.click_button(add_ts.assign_selected_button, wait="form")
+    # time.sleep(1)
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.suspend_button)
+    add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.resume_button)
+    add_ts.click_button(add_ts.resume_button, wait="form")
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -344,17 +344,17 @@ def test_tractor1_inner_add_lke(domain):
 def test_tractor2_inner_add_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
+                           do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
-    transports_list.click_button(transports_list.add_transport_button, wait="form")
+    transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Тягач")
     add_ts.click_button(add_ts.vehicle_owner_select, wait="lst")
 
-    transports_list.click_button_located(transports_list.first_radio_button)
+    transports_list.click_button(transports_list.first_radio_button, wait_type="located")
     transports_list.click_button(transports_list.confirm_choice_button)
 
     add_ts.input_in_field(add_ts.plate_number_input, f"ВТЯГ-{base.get_timestamp()}")
@@ -362,18 +362,18 @@ def test_tractor2_inner_add_lke(domain):
     add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
     add_ts.dropdown_click_input_click(add_ts.year_select, "2023")
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
-    add_ts.click_button(add_ts.confirm_button, wait="lst")
-    add_ts.click_button_index(add_ts.attach_button, index=2, wait="form")
-    time.sleep(2)
-    add_ts.click_button_visibility(add_ts.select_button, wait="form")
+    add_ts.click_button(add_ts.confirm_button, wait="form")
+    add_ts.click_button(add_ts.attach_button, index=2, wait="form")
     time.sleep(4)
-    add_ts.click_button_index(add_ts.attach_button, index=2, wait="form")
-    time.sleep(1)
-    add_ts.click_button_visibility(add_ts.select_button, wait="form")
+    add_ts.click_button(add_ts.select_button, wait="form")
+    time.sleep(3)
+    add_ts.click_button(add_ts.attach_button, index=2, wait="form")
+    time.sleep(2)
+    add_ts.click_button(add_ts.select_button, wait="form")
     time.sleep(1)
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.suspend_button)
+    add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.resume_button)
+    add_ts.click_button(add_ts.resume_button, wait="form")
 
-    sidebar.finish_test()
+    sidebar.test_finish()

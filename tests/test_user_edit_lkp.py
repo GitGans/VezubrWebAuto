@@ -15,7 +15,7 @@ def test_user_edit_lkp(domain):
     sidebar.click_button(sidebar.profile_button, do_assert=True)
 
     profile = Profile(base.driver)
-    profile.click_button(profile.users_tab, do_assert=True, wait="lst")
+    profile.click_button(profile.users_tab, do_assert=True)
     profile.click_button(profile.user_link, wait="form")
 
     user = User(base.driver)
@@ -28,9 +28,9 @@ def test_user_edit_lkp(domain):
     user.backspace_len_and_input(user.name_input, f"И-{base.get_timestamp()}")
     user.backspace_len_and_input(user.patronymic_input, f"О-{base.get_timestamp()}")
     user.click_button(user.phone_input)
-    user.backspace_len_and_input(user.phone_input, base.random_value_int_str(1000000000, 9999999999))
+    user.backspace_len_and_input(user.phone_input, base.random_value_float_str(1000000000, 9999999999))
     user.backspace_len_and_input(user.email_input, f"E{base.get_timestamp()}@mail.ru")
     user.click_button(user.save_edit_user_button, do_assert=True)
-    user.click_button(user.confirm_add_button, wait="lst")
+    user.click_button(user.confirm_add_button)
 
-    sidebar.finish_test()
+    sidebar.test_finish()

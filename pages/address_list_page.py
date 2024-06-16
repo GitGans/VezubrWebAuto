@@ -11,3 +11,4 @@ class AddressesList(Base):
         "xpath": "//button[@class='filter-button rounded box-shadow primary default']",
         "name": "add_address_button"
     }
+    
