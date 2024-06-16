@@ -16,11 +16,11 @@ from pages.transports_list_page import TransportsList
 def test_transport_edit_lkp(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
-    sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
+                           do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
-    transports_list.click_button(transports_list.add_transport_button, wait="form")
+    transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Монорамное ТС")
@@ -31,13 +31,13 @@ def test_transport_edit_lkp(domain):
     add_ts.click_button(add_ts.sanitation_toggl)
     add_ts.click_button(add_ts.sanitary_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
-    add_ts.dropdown_click_input_click(add_ts.first_pass_type_select, "МКАД", 1)
+    add_ts.dropdown_click_input_click(add_ts.first_pass_type_select, "МКАД", index=1)
     add_ts.click_button(add_ts.first_pass_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
-    add_ts.dropdown_click_input_click(add_ts.second_pass_type_select, "СК", 2)
+    add_ts.dropdown_click_input_click(add_ts.second_pass_type_select, "СК", index=2)
     add_ts.click_button(add_ts.second_pass_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
-    add_ts.dropdown_click_input_click(add_ts.third_pass_type_select, "ТТК", 3)
+    add_ts.dropdown_click_input_click(add_ts.third_pass_type_select, "ТТК", index=3)
     add_ts.click_button(add_ts.third_pass_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
     add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Манипулятор")
@@ -56,12 +56,9 @@ def test_transport_edit_lkp(domain):
     add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Манипулятор")
     add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Грузопассажирская")
     add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Грузовая")
-    add_ts.move_to_element_find(add_ts.third_pass_type_select)
-    add_ts.click_button_index(add_ts.close_circle_button, 10)
-    add_ts.move_to_element_find(add_ts.second_pass_type_select)
-    add_ts.click_button_index(add_ts.close_circle_button, 8)
-    add_ts.move_to_element_find(add_ts.first_pass_type_select)
-    add_ts.click_button_index(add_ts.close_circle_button, 6)
+    add_ts.move_and_click(move_to=add_ts.third_pass_type_select, click_to=add_ts.close_circle_button, click_index=10)
+    add_ts.move_and_click(move_to=add_ts.second_pass_type_select, click_to=add_ts.close_circle_button, click_index=8)
+    add_ts.move_and_click(move_to=add_ts.first_pass_type_select, click_to=add_ts.close_circle_button, click_index=6)
     add_ts.click_button(add_ts.sanitation_toggl)
     add_ts.backspace_all_and_input(add_ts.capacity_input, "1")
     add_ts.input_in_field(add_ts.pallets_input, "0")
@@ -71,9 +68,9 @@ def test_transport_edit_lkp(domain):
     add_ts.all_additional_params_without_gps()
     add_ts.click_button(add_ts.side_loading_toggl)
     add_ts.click_button(add_ts.top_loading_toggl)
-    add_ts.click_button(add_ts.edit_confirm_button, do_assert=True, wait="form")
+    add_ts.click_button(add_ts.edit_confirm_button, do_assert=True)
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -87,11 +84,11 @@ def test_transport_edit_lkp(domain):
 def test_semitrailer1_edit_lkp(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
-    sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
+                           do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
-    transports_list.click_button(transports_list.add_transport_button, wait="form")
+    transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Полуприцеп")
@@ -121,9 +118,9 @@ def test_semitrailer1_edit_lkp(domain):
     add_ts.all_additional_params_without_gps()
     add_ts.click_button(add_ts.side_loading_toggl)
     add_ts.click_button(add_ts.top_loading_toggl)
-    add_ts.click_button(add_ts.edit_confirm_button, do_assert=True, wait="form")
+    add_ts.click_button(add_ts.edit_confirm_button, do_assert=True)
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -137,11 +134,11 @@ def test_semitrailer1_edit_lkp(domain):
 def test_semitrailer2_edit_lkp(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
-    sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
+                           do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
-    transports_list.click_button(transports_list.add_transport_button, wait="form")
+    transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Полуприцеп")
@@ -174,9 +171,9 @@ def test_semitrailer2_edit_lkp(domain):
     add_ts.click_button(add_ts.side_loading_toggl)
     add_ts.click_button(add_ts.top_loading_toggl)
     add_ts.all_additional_params_without_gps()
-    add_ts.click_button(add_ts.edit_confirm_button, do_assert=True, wait="form")
+    add_ts.click_button(add_ts.edit_confirm_button, do_assert=True)
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -189,11 +186,11 @@ def test_semitrailer2_edit_lkp(domain):
 def test_tractor_edit_lkp(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
-    sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
+                           do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
-    transports_list.click_button(transports_list.add_transport_button, wait="form")
+    transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Тягач")
@@ -202,21 +199,21 @@ def test_tractor_edit_lkp(domain):
     add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Лизинг")
     add_ts.dropdown_click_input_click(add_ts.year_select, "2019")
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
-    add_ts.click_button(add_ts.confirm_button, wait="lst")
+    add_ts.click_button(add_ts.confirm_button, wait="form")
 
     add_ts.click_button(add_ts.edit_button)
     add_ts.dropdown_click_input_click(add_ts.year_select, "2021")
     add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Аренда")
-    add_ts.dropdown_click_input_click(add_ts.first_pass_type_select, "МКАД", 1)
+    add_ts.dropdown_click_input_click(add_ts.first_pass_type_select, "МКАД", index=1)
     add_ts.click_button(add_ts.tractor_first_pass_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
-    add_ts.dropdown_click_input_click(add_ts.second_pass_type_select, "СК", 2)
+    add_ts.dropdown_click_input_click(add_ts.second_pass_type_select, "СК", index=2)
     add_ts.click_button(add_ts.tractor_second_pass_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
-    add_ts.dropdown_click_input_click(add_ts.third_pass_type_select, "ТТК", 3)
+    add_ts.dropdown_click_input_click(add_ts.third_pass_type_select, "ТТК", index=3)
     add_ts.click_button(add_ts.tractor_third_pass_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
     add_ts.click_button(add_ts.gps_monitoring_toggl)
-    add_ts.click_button(add_ts.edit_confirm_button, do_assert=True, wait="form")
+    add_ts.click_button(add_ts.edit_confirm_button, do_assert=True)
 
-    sidebar.finish_test()
+    sidebar.test_finish()

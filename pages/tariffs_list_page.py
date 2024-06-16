@@ -9,7 +9,7 @@ class TariffsList(Base):
     # Locators
     add_tariff_button = {
         "xpath": "//button[@class='filter-button rounded box-shadow default']",
-        "name": "add_hourly_tariff_button"
+        "name": "add_tariff_button"
     }
     first_tariff_link = {
         "xpath": "//a[@class='link-back']",
@@ -19,3 +19,4 @@ class TariffsList(Base):
         "xpath": "//input[@class='ant-input']",
         "name": "tariff_name_filter"
     }
+    

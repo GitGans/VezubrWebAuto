@@ -59,13 +59,16 @@ class User(Base):
     create_user_button = {
         "xpath": "//button[@class='ant-btn semi-wide margin-left-16 ant-btn-primary']",
         "name": "create_user_button",
-        "reference_xpath": "//div[@class='ant-modal-confirm-content' and text()='Пользователь создан. На указанный email отправлено письмо с информацией о Логине и Пароле для входа в Ваш ЛК Vezubr']",
-        "reference": "Пользователь создан. На указанный email отправлено письмо с информацией о Логине и Пароле для входа в Ваш ЛК Vezubr"
+        "reference_xpath": "//div[@class='ant-modal-confirm-content' and text()='Пользователь создан. На указанный "
+                           "email отправлено письмо с информацией о Логине и Пароле для входа в Ваш ЛК Vezubr']",
+        "reference": "Пользователь создан. На указанный email отправлено письмо с информацией о Логине и Пароле "
+                     "для входа в Ваш ЛК Vezubr"
     }
     save_edit_user_button = {
         "xpath": "//button[@class='ant-btn semi-wide margin-left-16 ant-btn-primary']",
         "name": "save_edit_user_button",
-        "reference_xpath": "//div[@class='ant-modal-confirm-content' and text()='Данные пользователя успешно изменены']",
+        "reference_xpath": "//div[@class='ant-modal-confirm-content' and "
+                           "text()='Данные пользователя успешно изменены']",
         "reference": "Данные пользователя успешно изменены"
     }
     user_edit_button = {
@@ -74,7 +77,7 @@ class User(Base):
     }
     confirm_add_button = {
         "xpath": "//button[@class='ant-btn ant-btn-primary']",
-        "name": "create_button"
+        "name": "confirm_add_button"
     }
     add_responsible_button = {
         "xpath": "//button[@class='filter-button rounded box-shadow primary default']",
@@ -132,3 +135,4 @@ class User(Base):
         "reference_xpath": "//h2[@class='big-title title-bold']",
         "reference": "Ответственный за Контрагентов"
     }
+    

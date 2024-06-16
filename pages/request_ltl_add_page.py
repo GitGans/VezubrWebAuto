@@ -41,7 +41,7 @@ class LTLAdd(Base):
         "xpath": "//button[.//span[text()='Опубликовать позже']]",
         "name": "publish_later_button",
         "reference_xpath": "//h2[@class='big-title title-bold']",
-        "reference": "Активные LTL Заявки"
+        "reference": "Заявки на доставку Груза"
     }
     publish_naw_button = {
         "xpath": "//button[.//span[text()='Опубликовать заявку']]",
@@ -79,13 +79,13 @@ class LTLAdd(Base):
     }
     ok_button = {
         "xpath": "//button[.//span[text()='OK']]",
-        "name": "ok_button",
+        "name": "calendar_ok_button",
         "reference_xpath": "//h2[@class='big-title title-bold']",
         "reference": "Активные LTL Заявки"
     }
     text_to_click = {
         "xpath": "//h4[@class='vz-form-group__title' and contains(text(), 'Выбор подрядчиков')]",
-        "name": "ok_button"
+        "name": "calendar_ok_button"
     }
 
     # Methods

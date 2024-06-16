@@ -9,27 +9,11 @@ class CargoPlaceList(Base):
     # Locators
     add_cargo_place_button = {
         "xpath": "//p[@class='no-margin']",
-        "name": "attach_cargo_place_button"
+        "name": "add_cargo_place_button"
     }
     cp_list_checkbox = {
         "xpath": "//span[@class='ant-checkbox']",
         "name": "cp_list_checkbox"
-    }
-    cp_list_checkbox_1 = {
-        "xpath": "(//span[@class='ant-checkbox'])[1]",
-        "name": "cp_list_checkbox_1"
-    }
-    cp_list_checkbox_2 = {
-        "xpath": "(//span[@class='ant-checkbox'])[2]",
-        "name": "cp_list_checkbox_2"
-    }
-    cp_list_checkbox_3 = {
-        "xpath": "(//span[@class='ant-checkbox'])[3]",
-        "name": "cp_list_checkbox_3"
-    }
-    cp_list_checkbox_4 = {
-        "xpath": "(//span[@class='ant-checkbox'])[4]",
-        "name": "cp_list_checkbox_4"
     }
     date_hover = {
         "xpath": "//*[@id='cargoplaces-maindate-rangepicker']",
@@ -42,4 +26,70 @@ class CargoPlaceList(Base):
     confirm_button = {
         "xpath": "//button[@class='ant-btn margin-left-15 ant-btn-primary']",
         "name": "create_button"
+    }
+    first_cp_link = {
+        "xpath": "//a[@class='link-back']",
+        "name": "first_cp_link"
+    }
+    barcode_filter = {
+        "xpath": "//*[@id='cargoplaces-barcode-filter']",
+        "name": "barcode_filter"
+    }
+    reset_button = {
+        "xpath": "//button[contains(., 'Сбросить')]",
+        "name": "reset_button"
+    }
+    action_menu_button = {
+        "xpath": "//*[@id='cargoplaces-menu']",
+        "name": "action_menu_button"
+    }
+    multi_select_button = {
+        "xpath": "//span[contains(text(), 'Мультивыбор ГМ')]",
+        "name": "multi_select_button"
+    }
+    multi_edit_button = {
+        "xpath": "//button[contains(., 'Редактировать')]",
+        "name": "multi_edit_button"
+    }
+    multi_route_button = {
+        "xpath": "//button[contains(., 'Маршрутизировать')]",
+        "name": "multi_route_button"
+    }
+    multi_transfer_button = {
+        "xpath": "//button[contains(., 'Передать Экспедитору')]",
+        "name": "multi_transfer_button"
+    }
+    vehicle_type_select = {
+        "xpath": "//div[@class='ant-select-selection-selected-value' and text()='Добавить машину']",
+        "name": "vehicle_type_select"
+    }
+    quantity_vehicle_input = {
+        "xpath": "//input[@placeholder='Кол-во ТС']",
+        "name": "quantity_vehicle_input"
+    }
+    calendar_picker_button = {
+        "xpath": "//input[@class='ant-calendar-picker-input ant-input ant-input-sm']",
+        "name": "calendar_picker_button"
+    }
+    today_button = {
+        "xpath": "//a[@class='ant-calendar-today-btn ']",
+        "name": "today_button"
+    }
+    calendar_ok_button = {
+        "xpath": "//a[@class='ant-calendar-ok-btn']",
+        "name": "calendar_ok_button"
+    }
+    calendar_input = {
+        "xpath": "//input[@class='ant-calendar-input ']",
+        "name": "today_button"
+    }
+    send_button = {
+        "xpath": "//button[contains(., 'Отправить')]",
+        "name": "send_button",
+        "reference_xpath": "//div[@class='ant-modal-confirm-content']",
+        "reference": "Грузоместа отправлены на маршрутизацию"
+    }
+    ok_button = {
+        "xpath": "//button[@class='ant-btn ant-btn-primary']",
+        "name": "ok_button"
     }

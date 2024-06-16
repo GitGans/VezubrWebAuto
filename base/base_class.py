@@ -15,7 +15,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 
 """Variable"""
-chrome_driver_path = 'C:\\Users\\Gans\\PycharmProjects\\VezubrAutomationProject\\resource\\chromedriver.exe'
+chrome_driver_path = 'C:\\Users\\Gans\\PycharmProjects\\VezubrWebAuto\\resource\\chromedriver.exe'
 
 
 class Base:
@@ -47,9 +47,7 @@ class Base:
         "name": "loading_list"
     }
 
-    """Single methods with Allure"""
     """ Get driver"""
-
     @classmethod
     def get_driver(cls: Type['Base']) -> 'Base':
         """
@@ -90,18 +88,16 @@ class Base:
     #         print("Start test")
     #         return cls(driver)
 
-    """ Finish test"""
-
-    def finish_test(self) -> None:
+    """Test finish"""
+    def test_finish(self) -> None:
         """
         Завершает тест и закрывает браузер.
         """
-        with allure.step(title="Finish test"):
-            print("Finish test")
+        with allure.step(title="Test finish"):
+            print("Test finish")
             self.driver.quit()
 
     """ Get current url"""
-
     def get_current_url(self) -> None:
         """
         Получает и выводит текущий URL адрес в консоль.
@@ -110,100 +106,42 @@ class Base:
         with allure.step(title="Current url: " + get_url):
             print("Current url: " + get_url)
 
-    """ Get element wait clickable"""
-
-    def get_element_clickable(self, element_info: Dict[str, str]) -> Dict[str, Any]:
+    """ Get element with choosing a method for obtaining an element"""
+    def get_element(self, element_info: Dict[str, str], wait_type: str = 'clickable') -> Dict[str, Any]:
         """
-        Ожидает, пока элемент не станет кликабельным, и возвращает его.
+        Ожидает элемент в зависимости от выбранного типа ожидания и возвращает его.
 
         Parameters
         ----------
         element_info : dict
             Информация о локаторе элемента.
+        wait_type : str, optional
+            Тип ожидания: 'clickable', 'visible', 'located', 'find', или 'invisibility'.
 
         Returns
         -------
         dict
             Словарь с информацией о найденном элементе.
         """
-        return {'name': element_info['name'], 'element': WebDriverWait(self.driver, 60).until(
-            EC.element_to_be_clickable((By.XPATH, element_info['xpath'])))}
-
-    """ Get element wait visibility"""
-
-    def get_element_visibility(self, element_info: Dict[str, str]) -> Dict[str, Any]:
-        """
-        Ожидает видимости элемента и возвращает его.
-
-        Parameters
-        ----------
-        element_info : dict
-            Информация о локаторе элемента.
-
-        Returns
-        -------
-        dict
-            Словарь с информацией о найденном элементе.
-        """
-        return {'name': element_info['name'], 'element': WebDriverWait(self.driver, 60).until(
-            EC.visibility_of_element_located((By.XPATH, element_info['xpath'])))}
-
-    """ Get element wait located"""
-
-    def get_element_located(self, element_info: Dict[str, str]) -> Dict[str, Any]:
-        """
-        Ожидает нахождения элемента в DOM и возвращает его.
-
-        Parameters
-        ----------
-        element_info : dict
-            Информация о локаторе элемента.
-
-        Returns
-        -------
-        dict
-            Словарь с информацией о найденном элементе.
-        """
-        return {'name': element_info['name'], 'element': WebDriverWait(self.driver, 60).until(
-            EC.presence_of_element_located((By.XPATH, element_info['xpath'])))}
-
-    """ Get element find"""
-
-    def get_element_find(self, element_info: Dict[str, str]) -> Dict[str, Any]:
-        """
-        Находит элемент по заданному локатору и возвращает его.
-
-        Parameters
-        ----------
-        element_info : dict
-            Информация о локаторе элемента.
-
-        Returns
-        -------
-        dict
-            Словарь с информацией о найденном элементе.
-        """
-        return {'name': element_info['name'], 'element': self.driver.find_element(By.XPATH, element_info['xpath'])}
-
-    """ Wait element invisibility"""
-
-    def wait_element_invisibility(self, element_info: Dict[str, str]) -> NoReturn:
-        """
-        Ожидает, пока элемент не станет невидимым на странице.
-
-        Этот метод используется для ожидания, когда элемент, идентифицированный по заданному XPath, перестанет быть
-        видимым на странице. Метод ожидает до 60 секунд, прежде чем прервать ожидание, если элемент остается видимым.
-
-        Parameters
-        ----------
-        element_info : dict
-            Словарь, содержащий информацию о локаторе элемента, включая его 'xpath'.
-        """
-        WebDriverWait(self.driver, 60).until(EC.invisibility_of_element_located((By.XPATH, element_info['xpath'])))
-        return
+        if wait_type == 'clickable':
+            return {'name': element_info['name'], 'element': WebDriverWait(self.driver, 60).until(
+                EC.element_to_be_clickable((By.XPATH, element_info['xpath'])))}
+        elif wait_type == 'visible':
+            return {'name': element_info['name'], 'element': WebDriverWait(self.driver, 60).until(
+                EC.visibility_of_element_located((By.XPATH, element_info['xpath'])))}
+        elif wait_type == 'located':
+            return {'name': element_info['name'], 'element': WebDriverWait(self.driver, 60).until(
+                EC.presence_of_element_located((By.XPATH, element_info['xpath'])))}
+        elif wait_type == 'find':
+            return {'name': element_info['name'], 'element': self.driver.find_element(By.XPATH, element_info['xpath'])}
+        elif wait_type == 'invisibility':
+            WebDriverWait(self.driver, 60).until(
+                EC.invisibility_of_element_located((By.XPATH, element_info['xpath'])))
+            return {'name': element_info['name'], 'element': None}
+        else:
+            raise ValueError(f"Unsupported wait type: {wait_type}")
 
     """ Get timestamp"""
-
     @staticmethod
     def get_timestamp() -> str:
         """
@@ -216,6 +154,7 @@ class Base:
         """
         return datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S")
 
+    """ Get timestamp eight signs"""
     @staticmethod
     def get_timestamp_eight_signs() -> str:
         """
@@ -229,7 +168,6 @@ class Base:
         return datetime.datetime.utcnow().strftime("%d%H%M%S")
 
     """ Get timestamp with dot"""
-
     @staticmethod
     def get_timestamp_dot() -> str:
         """
@@ -242,31 +180,41 @@ class Base:
         """
         return datetime.datetime.utcnow().strftime("%Y.%m.%d.%H.%M.%S")
 
-    """ Assert word wait clickable"""
-
-    def assert_word(self, element_dict: Dict[str, str]) -> NoReturn:
+    """ Assert word fix reference"""
+    def assert_word(self, element_dict: Dict[str, str], wait_type: str = 'clickable') -> NoReturn:
         """
-        Проверяет, что текст элемента соответствует заданному значению.
+        Проверяет, что текст элемента соответствует заданному значению. Если предоставлен 'reference_xpath',
+        использует его для точного определения элемента для проверки текста.
 
         Parameters
         ----------
         element_dict : dict
             Словарь с информацией о локаторе элемента и ожидаемым текстом.
+            Может включать 'reference_xpath' для спецификации элемента, текст которого следует проверять.
+        wait_type : str, optional
+            Тип ожидания элемента ('clickable', 'visible', 'located', 'find').
 
         Raises
         ------
         AssertionError
             Если текст элемента не соответствует ожидаемому значению.
         """
-        value_word = (WebDriverWait(self.driver, 60).
-                      until(EC.element_to_be_clickable((By.XPATH, element_dict['reference_xpath']))).text)
+        if 'reference_xpath' in element_dict:
+            reference_element = WebDriverWait(self.driver, 60).until(
+                EC.presence_of_element_located((By.XPATH, element_dict['reference_xpath'])))
+            value_word = reference_element.text
+        else:
+            element = self.get_element(element_dict, wait_type=wait_type)['element']
+            value_word = element.text
+
         with allure.step(title=f"Assert \"{value_word}\" == \"{element_dict['reference']}\""):
-            assert re.fullmatch(element_dict['reference'], value_word)
+            assert re.fullmatch(element_dict['reference'],
+                                value_word), f"Expected '{element_dict['reference']}', but found '{value_word}'."
             print(f"Assert \"{value_word}\" == \"{element_dict['reference']}\"")
 
-    """ Assert word input reference wait clickable"""
-
-    def flexible_assert_word(self, element_dict: Dict[str, str], reference_value: str) -> NoReturn:
+    """ Assert word input reference"""
+    def flexible_assert_word(self, element_dict: Dict[str, str], reference_value: str,
+                             wait_type: str = 'clickable') -> NoReturn:
         """
         Проверяет, что текст элемента соответствует заданному значению.
 
@@ -276,24 +224,25 @@ class Base:
             Словарь с информацией о локаторе элемента.
         reference_value : str
             Ожидаемый текст для проверки соответствия тексту элемента.
+        wait_type : str, optional
+            Тип ожидания элемента ('clickable', 'visible', 'located', 'find').
 
         Raises
         ------
         AssertionError
             Если текст элемента не соответствует ожидаемому значению.
         """
-        value_word = WebDriverWait(self.driver, 60).until(
-            EC.element_to_be_clickable((By.XPATH, element_dict['reference_xpath']))
-        ).text
+        element = self.get_element(element_dict, wait_type=wait_type)['element']
+        value_word = element.text
         with allure.step(title=f"Assert \"{value_word}\" == \"{reference_value}\""):
             assert re.fullmatch(reference_value, value_word), f"Expected '{reference_value}', but found '{value_word}'."
             print(f"Assert \"{value_word}\" == \"{reference_value}\"")
 
     """ Assert text extraction by INN wait clickable"""
-
-    def verify_text_by_inn(self, inn_value: str, reference_value: str) -> NoReturn:
+    def verify_text_by_inn(self, inn_value: str, reference_value: str, wait_type: str = 'located') -> NoReturn:
         """
-        Проверяет наличие и соответствие конкретного текста для строки таблицы, содержащей заданный ИНН.
+        Проверяет наличие и соответствие конкретного текста для строки таблицы, содержащей заданный ИНН,
+        с выбором типа ожидания элемента.
 
         Parameters
         ----------
@@ -301,25 +250,29 @@ class Base:
             ИНН, используемый для поиска соответствующей строки в таблице.
         reference_value : str
             Ожидаемый текст для сравнения, который должен точно совпадать с текстом элемента.
+        wait_type : str, optional
+            Тип ожидания элемента ('clickable', 'visible', 'located', 'find').
 
         Raises
         ------
         AssertionError
             Если текст элемента не соответствует ожидаемому значению.
         """
-        locator = (By.XPATH, f"//tr[.//a[contains(text(), '{inn_value}')]]//div[contains(text(), '{reference_value}')]")
-        element = WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(locator))
+        element_info = {
+            "name": f"Text for INN {inn_value} matching '{reference_value}'",
+            "xpath": f"//tr[.//a[contains(text(), '{inn_value}')]]//div[contains(text(), '{reference_value}')]"
+        }
+        element = self.get_element(element_info, wait_type=wait_type)['element']
         value_word = element.text
         with allure.step(title=f"Assert \"{value_word}\" == \"{reference_value}\""):
             assert value_word == reference_value, f"Expected '{reference_value}', but found '{value_word}'."
             print(f"Assert \"{value_word}\" == \"{reference_value}\"")
 
-    """ Get random value float str"""
-
+    """ Get random value float to str"""
     @staticmethod
-    def random_value_float_str(of: float, to: float) -> str:
+    def random_value_float_str(of: float, to: float, precision: int = 0) -> str:
         """
-        Возвращает случайное вещественное число в виде строки с одним знаком после запятой.
+        Возвращает случайное вещественное число в виде строки с заданным количеством знаков после запятой.
 
         Parameters
         ----------
@@ -327,58 +280,17 @@ class Base:
             Нижняя граница диапазона.
         to : float
             Верхняя граница диапазона.
+        precision : int, optional
+            Количество знаков после запятой, по умолчанию 0.
 
         Returns
         -------
         str
-            Строковое представление случайного вещественного числа.
+            Строковое представление случайного вещественного числа с заданной точностью.
         """
-        return f'{random.uniform(of, to):.1f}'
+        return f'{random.uniform(of, to):.{precision}f}'
 
-    """ Get random value int str"""
-
-    @staticmethod
-    def random_value_int_str(of: int, to: int) -> str:
-        """
-        Возвращает случайное целое число в виде строки.
-
-        Parameters
-        ----------
-        of : int
-            Нижняя граница диапазона.
-        to : int
-            Верхняя граница диапазона.
-
-        Returns
-        -------
-        str
-            Строковое представление случайного целого числа.
-        """
-        return f'{random.randint(of, to)}'
-
-    """ Get random value int """
-
-    @staticmethod
-    def random_value_int(of: int, to: int) -> int:
-        """
-        Возвращает случайное целое число из заданного диапазона.
-
-        Parameters
-        ----------
-        of : int
-            Нижняя граница диапазона.
-        to : int
-            Верхняя граница диапазона.
-
-        Returns
-        -------
-        int
-            Случайное целое число.
-        """
-        return random.randint(of, to)
-
-    """ Get random value custom start int """
-
+    """ Get random value custom start int to str"""
     @staticmethod
     def random_value_custom_start(prefix: str, n: int) -> str:
         """
@@ -400,7 +312,6 @@ class Base:
         return f'{prefix}{random_digits}'
 
     """ Get screenshot"""
-
     def get_screenshot(self) -> NoReturn:
         """
         Сохраняет скриншот текущего состояния браузера.
@@ -414,7 +325,6 @@ class Base:
             print("Screen taken:" + name_screenshot)
 
     """ Assert url"""
-
     def assert_url(self, result: str) -> NoReturn:
         """
         Проверяет, соответствует ли текущий URL заданному значению.
@@ -433,166 +343,52 @@ class Base:
         with allure.step(title="Assert url true"):
             assert get_url == result
             print("Assert url true")
-
-    """ Click button wait clickable"""
-
-    def click_button(self, element_dict: Dict[str, str], do_assert: Optional[bool] = False,
-                     wait: Optional[str] = None) -> NoReturn:
+    
+    """ Click button"""
+    def click_button(self, element_dict: Dict[str, str], index: int = 1, do_assert: Optional[bool] = False,
+                     wait: Optional[str] = None, wait_type: str = 'clickable') -> NoReturn:
         """
-        Кликает по кнопке, ожидая ее кликабельности.
-        После клика может выполнить проверку текста и ожидание исчезновения элементов загрузки.
+        Кликает по кнопке с заданным типом ожидания и опционально по индексу элемента.
+        Может выполнять дополнительную проверку текста элемента после клика (ассерт) и ожидание
+        исчезновения элементов загрузки (списки или формы).
 
         Parameters
         ----------
         element_dict : dict
-            Словарь с информацией о элементе для клика.
-        do_assert : bool, optional
-            Если True, выполнит дополнительную проверку текста элемента после клика.
-        wait : str, optional
-            Если 'lst' или 'form', ожидает исчезновение указанных элементов загрузки после клика.
-
-        """
-        with allure.step(title=f"Click {element_dict['name']}"):
-            button_dict = self.get_element_clickable(element_dict)
-            button_dict['element'].click()
-            print(f"Click {button_dict['name']}")
-            if do_assert:
-                time.sleep(0.1)
-                self.assert_word(element_dict)
-            if wait == 'lst':
-                self.wait_element_invisibility(self.loading_list)
-            elif wait == 'form':
-                self.wait_element_invisibility(self.loading_form)
-
-    """ Click button index wait clickable"""
-
-    def click_button_index(self, element_dict: Dict[str, str], index: int = 1, do_assert: bool = False,
-                           wait: Optional[str] = None) -> NoReturn:
-        """
-        Кликает по кнопке с указанным индексом, ожидая ее кликабельности.
-        Позволяет кликнуть по одному из множества однотипных элементов.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с базовой информацией о элементах для клика.
+            Словарь с информацией о кнопке для клика.
         index : int, optional
-            Индекс элемента, по которому будет выполнен клик.
+            Индекс элемента в списке однотипных элементов. По умолчанию 1 (первый элемент).
         do_assert : bool, optional
             Если True, выполнит дополнительную проверку текста элемента после клика.
         wait : str, optional
-            Если 'lst' или 'form', ожидает исчезновение указанных элементов загрузки после клика.
+            Определяет, какой спиннер ожидать после клика ('lst' для списка или 'form' для формы).
+        wait_type : str, optional
+            Тип ожидания элемента перед кликом ('clickable', 'visible', 'located', 'find'), по умолчанию 'clickable'.
 
         """
-        with allure.step(title=f"Click {element_dict['name']}"):
-            locator = f"({element_dict['xpath']})[{index}]"
-            updated_element_dict = {
-                "name": f"{element_dict['name']} index {index}",
-                "xpath": locator
-            }
-            button_dict = self.get_element_clickable(updated_element_dict)
+        element_name = f"{element_dict['name']} index {index}" if index > 1 else element_dict['name']
+        locator = f"({element_dict['xpath']})[{index}]" if index > 1 else element_dict['xpath']
+        updated_element_dict = {"name": element_name, "xpath": locator}
+        
+        with allure.step(title=f"Click on {element_name}"):
+            button_dict = self.get_element(updated_element_dict, wait_type)
             button_dict['element'].click()
-            print(f"Click {button_dict['name']}")
+            print(f"Click on {button_dict['name']}")
             if do_assert:
+                time.sleep(1)
                 self.assert_word(element_dict)
-            if wait == 'lst':
-                self.wait_element_invisibility(self.loading_list)
-            elif wait == 'form':
-                self.wait_element_invisibility(self.loading_form)
-
-    """ Click button wait visibility"""
-
-    def click_button_visibility(self, element_dict: Dict[str, str], do_assert: bool = False,
-                                wait: Optional[str] = None) -> NoReturn:
+            if wait:
+                # Определяем, какой спиннер ожидать
+                loading_spinner = self.loading_form if wait == 'form' else self.loading_list
+                self.get_element(loading_spinner, wait_type="visible")  # Ожидание появления соответствующего спиннера
+                self.get_element(loading_spinner, wait_type="invisibility")  # Ожидание исчезновения спиннера
+    
+    """ In dropdown click, wait, input and enter"""
+    def dropdown_click_input_wait_enter(self, element_dict: Dict[str, str], option_text: str, press_enter: bool = True,
+                                        wait_presence: bool = False, wait_type: str = 'clickable') -> None:
         """
-        Кликает по кнопке, ожидая ее видимости.
-        После клика может выполнить проверку текста и ожидание исчезновения элементов загрузки.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о элементе для клика.
-        do_assert : bool, optional
-            Если True, выполнит дополнительную проверку текста элемента после клика.
-        wait : str, optional
-            Если 'lst' или 'form', ожидает исчезновение указанных элементов загрузки после клика.
-
-        """
-        with allure.step(title=f"Click {element_dict['name']}"):
-            button_dict = self.get_element_visibility(element_dict)
-            button_dict['element'].click()
-            print(f"Click {button_dict['name']}")
-            if do_assert:
-                self.assert_word(element_dict)
-            if wait == 'lst':
-                self.wait_element_invisibility(self.loading_list)
-            elif wait == 'form':
-                self.wait_element_invisibility(self.loading_form)
-
-    """ Click button wait located"""
-
-    def click_button_located(self, element_dict: Dict[str, str], do_assert: bool = False,
-                             wait: Optional[str] = None) -> NoReturn:
-        """
-        Кликает по кнопке, ожидая ее нахождения в DOM.
-        После клика может выполнить проверку текста и ожидание исчезновения элементов загрузки.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о элементе для клика.
-        do_assert : bool, optional
-            Если True, выполнит дополнительную проверку текста элемента после клика.
-        wait : str, optional
-            Если 'lst' или 'form', ожидает исчезновение указанных элементов загрузки после клика.
-
-        """
-        with allure.step(title=f"Click {element_dict['name']}"):
-            button_dict = self.get_element_located(element_dict)
-            button_dict['element'].click()
-            print(f"Click {button_dict['name']}")
-            if do_assert:
-                self.assert_word(element_dict)
-            if wait == 'lst':
-                self.wait_element_invisibility(self.loading_list)
-            elif wait == 'form':
-                self.wait_element_invisibility(self.loading_form)
-
-    """ Click button find"""
-
-    def click_button_find(self, element_dict: Dict[str, str], do_assert: bool = False,
-                          wait: Optional[str] = None) -> NoReturn:
-        """
-        Находит и кликает по кнопке без предварительного ожидания состояний.
-        После клика может выполнить проверку текста и ожидание исчезновения элементов загрузки.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о элементе для клика.
-        do_assert : bool, optional
-            Если True, выполнит дополнительную проверку текста элемента после клика.
-        wait : str, optional
-            Если 'lst' или 'form', ожидает исчезновение указанных элементов загрузки после клика.
-
-        """
-        with allure.step(title=f"Click {element_dict['name']}"):
-            button_dict = self.get_element_find(element_dict)
-            button_dict['element'].click()
-            print(f"Click {button_dict['name']}")
-            if do_assert:
-                self.assert_word(element_dict)
-            if wait == 'lst':
-                self.wait_element_invisibility(self.loading_list)
-            elif wait == 'form':
-                self.wait_element_invisibility(self.loading_form)
-
-    """ In dropdown click clickable, input enter find"""
-
-    def dropdown_click_input_enter(self, element_dict: Dict[str, str], option_text: str,
-                                   press_enter: bool = True) -> None:
-        """
-        Выбирает текст в выпадающем списке с помощью клика по элементу, ввода текста и нажатия Enter.
+        Выбирает текст в выпадающем списке, вводит текст и, опционально, ожидает появления опции,
+        после чего может нажимать Enter. Позволяет выбор типа ожидания для элемента.
 
         Parameters
         ----------
@@ -602,78 +398,31 @@ class Base:
             Текст опции для выбора.
         press_enter : bool, optional
             Если True, после ввода текста будет выполнено нажатие Enter.
+        wait_presence : bool, optional
+            Если True, ожидает появления текста перед нажатием Enter.
+        wait_type : str, optional
+            Тип ожидания элемента ('clickable', 'visible', 'located', 'find'), по умолчанию 'clickable'.
 
         """
         with allure.step(title=f"Select '{option_text}' from dropdown {element_dict['name']}"):
-            dropdown_dict = self.get_element_clickable(element_dict)
+            dropdown_dict = self.get_element(element_dict, wait_type=wait_type)
             dropdown_dict['element'].click()
             option_to_select = dropdown_dict['element'].find_element(By.XPATH, "./../..//input")
             option_to_select.send_keys(option_text)
-            if press_enter:
-                option_to_select.send_keys(Keys.ENTER)
-            print(f"Selected '{option_text}' from dropdown {dropdown_dict['name']}")
-
-    """In dropdown click clickable, input find, wait located, enter find"""
-
-    def dropdown_click_input_wait_enter(self, element_dict: Dict[str, str], option_text: str,
-                                        press_enter: bool = True) -> None:
-        """
-        Выбирает текст в выпадающем списке, ожидая появления опции после ввода текста, и нажимает Enter.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о элементе выпадающего списка.
-        option_text : str
-            Текст опции для выбора.
-        press_enter : bool, optional
-            Если True, после появления текста будет выполнено нажатие Enter.
-
-        """
-        with allure.step(title=f"Select '{option_text}' from dropdown {element_dict['name']}"):
-            dropdown_dict = self.get_element_clickable(element_dict)
-            dropdown_dict['element'].click()
-            option_to_select = dropdown_dict['element'].find_element(By.XPATH, "./../..//input")
-            option_to_select.send_keys(option_text)
-            WebDriverWait(self.driver, 60).until(
-                EC.presence_of_element_located(
-                    (By.XPATH, f".//li[@role='option' and normalize-space(.)='{option_text}']")
+            if wait_presence:
+                WebDriverWait(self.driver, 60).until(
+                    EC.presence_of_element_located(
+                        (By.XPATH, f".//li[@role='option' and normalize-space(.)='{option_text}']")
+                    )
                 )
-            )
             if press_enter:
                 option_to_select.send_keys(Keys.ENTER)
             print(f"Selected '{option_text}' from dropdown {dropdown_dict['name']}")
 
-    """In dropdown click clickable, input enter located"""
-
-    def dropdown_click_input_enter_located(self, element_dict: Dict[str, str], option_text: str,
-                                           press_enter: bool = True) -> None:
-        """
-        Выбирает текст в выпадающем списке с помощью клика, ввода текста и нажатия Enter, ожидая расположения опции.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о элементе выпадающего списка.
-        option_text : str
-            Текст опции для выбора.
-        press_enter : bool, optional
-            Если True, после ввода текста будет выполнено нажатие Enter.
-
-        """
-        with allure.step(title=f"Select '{option_text}' from dropdown {element_dict['name']}"):
-            dropdown_dict = self.get_element_clickable(element_dict)
-            dropdown_dict['element'].click()
-            option_to_select = WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(
-                (By.XPATH, f".//li[@role='option' and normalize-space(.)='{option_text}']")))
-            option_to_select.send_keys(option_text)
-            if press_enter:
-                option_to_select.send_keys(Keys.ENTER)
-            print(f"Selected '{option_text}' from dropdown {dropdown_dict['name']}")
-
-    """In dropdown click input + index click clickable"""
-
-    def dropdown_click_input_click(self, element_dict: Dict[str, str], option_text: str, index: int = 1) -> None:
+    """In dropdown click input + index click"""
+    
+    def dropdown_click_input_click(self, element_dict: Dict[str, str], option_text: str, dd_index: int = 1,
+                                   index: int = 1) -> None:
         """
         Выбирает опцию в выпадающем списке с помощью поиска и клика по найденному элементу.
 
@@ -683,108 +432,60 @@ class Base:
             Словарь с информацией о элементе выпадающего списка.
         option_text : str
             Текст опции для поиска и выбора.
+        dd_index : int
+            Индекс выпадающего списка для инициации клика, начиная с 1.
         index : int
             Индекс опции в списке, начиная с 1, который нужно выбрать.
 
         """
         step_title = f"Select '{option_text}' from dropdown {element_dict['name']}"
         print_message = f"Selected '{option_text}' from dropdown {element_dict['name']}"
+        
+        if dd_index != 1:
+            step_title += f" at dropdown index {dd_index}"
+            print_message += f" at dropdown index {dd_index}"
+        
         if index != 1:
-            step_title += f" at index {index}"
-            print_message += f" at index {index}"
-
+            step_title += f" at option index {index}"
+            print_message += f" at option index {index}"
+        
         with allure.step(title=step_title):
-            dropdown_dict = self.get_element_clickable(element_dict)
+            xpath_dropdown = f"({element_dict['xpath']})[{dd_index}]" if dd_index > 1 else element_dict['xpath']
+            dropdown_dict = self.get_element({"name": element_dict['name'], "xpath": xpath_dropdown})
             dropdown_dict['element'].click()
+            
             xpath_expression = f"(.//li[@role='option' and normalize-space(text())='{option_text}'])[{index}]"
             option_to_select = WebDriverWait(self.driver, 60).until(
                 EC.element_to_be_clickable((By.XPATH, xpath_expression)))
             option_to_select.click()
+            
             print(print_message)
-
-    """ In dropdown click clickable, input click located"""
-
-    def dropdown_click_input_click_located(self, element_dict: Dict[str, str], option_text: str) -> None:
+    
+    """ Move to element"""
+    def move_to_element(self, element_dict: Dict[str, str], index: int = 1, wait_type: str = 'clickable') -> None:
         """
-        Выбирает опцию в выпадающем списке, ожидая расположения элемента поиска и кликая по нему.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о элементе выпадающего списка.
-        option_text : str
-            Текст опции для поиска и выбора.
-
-        """
-        with allure.step(title=f"Select '{option_text}' from dropdown {element_dict['name']}"):
-            dropdown_dict = self.get_element_clickable(element_dict)
-            dropdown_dict['element'].click()
-            option_to_select = WebDriverWait(self.driver, 60).until(
-                EC.presence_of_element_located(
-                    (By.XPATH, f".//li[@role='option' and normalize-space(.)='{option_text}']")))
-            option_to_select.click()
-            print(f"Selected '{option_text}' from dropdown {dropdown_dict['name']}")
-
-    """ In dropdown select index clickable"""
-
-    def dropdown_click_index_click(self, element_dict: Dict[str, str], index: int) -> None:
-        """
-        Выбирает опцию в выпадающем списке по индексу с помощью клика по элементу и клика по опции с заданным индексом.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о элементе выпадающего списка.
-        index : int
-            Индекс опции для выбора.
-
-        """
-        with allure.step(title=f"Select by index '{index}' from dropdown {element_dict['name']}"):
-            dropdown_dict = self.get_element_clickable(element_dict)
-            dropdown_dict['element'].click()
-            option_xpath = (f"(//li[@class='ant-select-dropdown-menu-item ant-select-dropdown-menu-item-active'])"
-                            f"[{index}]")
-            option_to_select = WebDriverWait(self.driver, 60).until(
-                EC.element_to_be_clickable((By.XPATH, option_xpath)))
-            option_to_select.click()
-            print(f"Selected by index '{index}' from dropdown {dropdown_dict['name']}")
-
-    """ Move to element wait clickable"""
-
-    def move_to_element(self, element_dict: Dict[str, str]) -> None:
-        """
-        Перемещает курсор мыши к элементу, ожидая его кликабельности.
+        Перемещает курсор мыши к элементу с заданным типом ожидания и опционально по индексу элемента.
 
         Parameters
         ----------
         element_dict : dict
             Словарь с информацией о элементе, к которому необходимо переместить курсор.
+        index : int, optional
+            Индекс элемента в списке однотипных элементов. По умолчанию 1 (первый элемент).
+        wait_type : str, optional
+            Тип ожидания элемента для интеракции ('clickable', 'visible', 'located', 'find', 'invisibility').
 
         """
-        with allure.step(title=f"Move to {element_dict['name']}"):
-            button_dict = self.get_element_clickable(element_dict)
+        element_name = f"{element_dict['name']} index {index}" if index > 1 else element_dict['name']
+        locator = f"({element_dict['xpath']})[{index}]" if index > 1 else element_dict['xpath']
+        updated_element_dict = {"name": element_name, "xpath": locator}
+
+        with allure.step(title=f"Move to {element_name}"):
+            button_dict = self.get_element(updated_element_dict, wait_type)
             ActionChains(self.driver).move_to_element(button_dict['element']).perform()
-            print(f"Move to {button_dict['name']}")
-
-    """ Move to element find"""
-
-    def move_to_element_find(self, element_dict: Dict[str, str]) -> None:
-        """
-        Перемещает курсор мыши к элементу без предварительного ожидания его состояний.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о элементе, к которому необходимо переместить курсор.
-
-        """
-        with allure.step(title=f"Move to {element_dict['name']}"):
-            button_dict = self.get_element_find(element_dict)
-            ActionChains(self.driver).move_to_element(button_dict['element']).perform()
-            print(f"Move to {button_dict['name']}")
+            print(f"Moved to {button_dict['name']}")
 
     """ Switch to original window"""
-
     def switch_to_original_window(self) -> None:
         """
         Переключается обратно к оригинальному окну браузера.
@@ -794,13 +495,15 @@ class Base:
             original_window_handle = self.driver.current_window_handle
             self.driver.switch_to.window(original_window_handle)
             print("Returned to the original window")
-
-    """ Input field wait clickable"""
-
-    def input_in_field(self, element_dict: Dict[str, str], value: str, wait: Optional[str] = None,
-                       safe: bool = False) -> None:
+    
+    """ Input in field with optional click, enter, index and wait loading"""
+    def input_in_field(self, element_dict: Dict[str, str], value: str, click_first: bool = False,
+                       press_enter: bool = False, wait: Optional[str] = None, safe: bool = False,
+                       wait_type: str = 'clickable', index: int = 1) -> None:
         """
-        Вводит текст в поле ввода, ожидая его кликабельности. Может ожидать исчезновение элементов загрузки после ввода.
+        Универсальный метод для ввода текста в поле с опциональным кликом перед вводом и нажатием Enter после.
+        Поддерживает дополнительные параметры для управления взаимодействием, включая индекс элемента,
+        ожидание прогрузки элементов (списки или формы), и выбор типа ожидания доступности элемента.
 
         Parameters
         ----------
@@ -808,167 +511,43 @@ class Base:
             Словарь с информацией о поле ввода.
         value : str
             Значение для ввода.
+        click_first : bool, optional
+            Если True, сначала кликает по полю перед вводом текста.
+        press_enter : bool, optional
+            Если True, нажимает Enter после ввода текста.
         wait : str, optional
-            Если 'lst' или 'form', ожидает исчезновение указанных элементов загрузки после ввода.
+            Указывает, нужно ли ожидать исчезновение элементов загрузки после ввода ('lst' или 'form').
         safe : bool, optional
             Если True, заменяет введенное значение на символы "***" в логах.
+        wait_type : str, optional
+            Тип ожидания элемента ('clickable', 'visible', 'located', 'find'), по умолчанию 'clickable'.
+        index : int, optional
+            Индекс элемента в списке однотипных элементов. По умолчанию 1 (первый элемент).
 
         """
-        with allure.step(title=f"In {element_dict['name']}: " + ("***" if safe else str(value))):
-            field_dict = self.get_element_clickable(element_dict)
+        log_value = "***" if safe else value
+        element_name = f"{element_dict['name']} index {index}" if index > 1 else element_dict['name']
+        locator = f"({element_dict['xpath']})[{index}]" if index > 1 else element_dict['xpath']
+        updated_element_dict = {"name": element_name, "xpath": locator}
+        
+        with allure.step(title=f"{('Click and ' if click_first else '')}Input in {element_name}: " + log_value):
+            field_dict = self.get_element(updated_element_dict, wait_type)
+            if click_first:
+                field_dict['element'].click()
             field_dict['element'].send_keys(value)
-            if wait == 'lst':
-                self.wait_element_invisibility(self.loading_list)
-            elif wait == 'form':
-                self.wait_element_invisibility(self.loading_form)
-            print(f"In {field_dict['name']}: " + ("***" if safe else str(value)))
-
-    """ Input field find"""
-
-    def input_in_field_find(self, element_dict: Dict[str, str], value: str) -> None:
-        """
-        Вводит текст в поле ввода без предварительного ожидания его состояний.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о поле ввода.
-        value : str
-            Значение для ввода.
-
-        """
-        with allure.step(title=f"In {element_dict['name']}: {value}"):
-            field_dict = self.get_element_find(element_dict)
-            field_dict['element'].send_keys(value)
-            print(f"In {field_dict['name']}: {value}")
-
-    """ Clear field wait clickable"""
-
-    def clear_field(self, element_dict: Dict[str, str]) -> None:
-        """
-        Очищает поле ввода, ожидая его кликабельности.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о поле ввода, которое необходимо очистить.
-
-        """
-        with allure.step(title=f"Clear {element_dict['name']}"):
-            field_dict = self.get_element_clickable(element_dict)
-            field_dict['element'].clear()
-            print(f"Clear {field_dict['name']}")
-
-    """ Input field and enter wait clickable"""
-
-    def input_in_field_and_enter(self, element_dict: Dict[str, str], value: str, wait: Optional[str] = None) -> None:
-        """
-        Вводит текст в поле ввода, ожидая его кликабельности, и нажимает Enter.
-        Может ожидать исчезновение элементов загрузки.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о поле ввода.
-        value : str
-            Значение для ввода.
-        wait : str, optional
-            Если 'lst' или 'form', ожидает исчезновение указанных элементов загрузки после ввода.
-
-        """
-        with allure.step(f"In {element_dict['name']}: {value} - and pressed enter"):
-            field_dict = self.get_element_clickable(element_dict)
-            field_dict['element'].send_keys(value)
-            field_dict['element'].send_keys(Keys.RETURN)
-            if wait == 'lst':
-                self.wait_element_invisibility(self.loading_list)
-            elif wait == 'form':
-                self.wait_element_invisibility(self.loading_form)
-            print(f"In {field_dict['name']}: {value} - and pressed enter")
-
-    """ Enter and input field wait clickable"""
-
-    def enter_and_input_in_field(self, element_dict: Dict[str, str], value: str) -> None:
-        """
-        Сначала нажимает Enter, а затем вводит текст в поле ввода, ожидая его кликабельности.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о поле ввода.
-        value : str
-            Значение для ввода.
-
-        """
-        with allure.step(f"Enter pressed in {element_dict['name']}: {value}"):
-            field_dict = self.get_element_clickable(element_dict)
-            field_dict['element'].send_keys(Keys.RETURN)
-            field_dict['element'].send_keys(value)
-            print(f"Enter pressed in {field_dict['name']}: {value}")
-
-    """ Click and input field wait clickable"""
-
-    def click_and_input_in_field(self, element_dict: Dict[str, str], value: str) -> None:
-        """
-        Кликает по полю ввода, ожидая его кликабельности, и вводит текст.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о поле ввода.
-        value : str
-            Значение для ввода.
-
-        """
-        with allure.step(f"Click and in {element_dict['name']}: {value}"):
-            field_dict = self.get_element_clickable(element_dict)
-            field_dict['element'].click()
-            field_dict['element'].send_keys(value)
-            print(f"Click and in {field_dict['name']}: {value}")
-
-    """ Click and enter wait clickable"""
-
-    def click_and_enter(self, element_dict: Dict[str, str]) -> None:
-        """
-        Кликает по полю ввода, ожидая его кликабельности, и нажимает Enter.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о поле ввода.
-
-        """
-        with allure.step(f"Click {element_dict['name']} and pressed enter"):
-            field_dict = self.get_element_clickable(element_dict)
-            field_dict['element'].click()
-            field_dict['element'].send_keys(Keys.ENTER)
-            print(f"Click {field_dict['name']} and pressed enter")
-
-    """ Click input and enter wait clickable"""
-
-    def click_input_and_enter(self, element_dict: Dict[str, str], value: str) -> None:
-        """
-        Кликает по полю ввода, ожидая его кликабельности, вводит текст и нажимает Enter.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о поле ввода.
-        value : str
-            Значение для ввода.
-
-        """
-        with allure.step(f"Click {element_dict['name']} and pressed enter"):
-            field_dict = self.get_element_clickable(element_dict)
-            field_dict['element'].click()
-            field_dict['element'].send_keys(value)
-            field_dict['element'].send_keys(Keys.ENTER)
-            print(f"Click {field_dict['name']} input: {value} and pressed enter")
-
-    """ Backspace len and input wait clickable"""
-
+            if press_enter:
+                field_dict['element'].send_keys(Keys.ENTER)
+            print(f"{('Click and ' if click_first else '')}Input in {field_dict['name']}: " + log_value)
+            if wait:
+                # Определяем, какой спиннер ожидать
+                loading_spinner = self.loading_form if wait == 'form' else self.loading_list
+                self.get_element(loading_spinner, wait_type="visible")  # Ожидание появления соответствующего спиннера
+                self.get_element(loading_spinner, wait_type="invisibility")  # Ожидание исчезновения спиннера
+    
+    """ Backspace len and input with optional click, enter"""
+    
     def backspace_len_and_input(self, element_dict: Dict[str, str], value: str,
-                                press_enter: Optional[bool] = False) -> None:
+                                click_first: bool = False, press_enter: Optional[bool] = False) -> None:
         """
         Выполняет нажатие клавиши Backspace для удаления символов,
         соответствующих длине вводимого значения, и вводит текст.
@@ -979,22 +558,27 @@ class Base:
             Словарь с информацией о поле ввода.
         value : str
             Значение для ввода.
+        click_first : bool, optional
+            Если True, сначала кликает по полю перед вводом текста.
         press_enter : bool, optional
             Если True, нажимает Enter после ввода значения.
 
         """
-        with allure.step(title=f"Backspace and input in {element_dict['name']}: {value}"):
-            field_dict = self.get_element_clickable(element_dict)
+        element_name = element_dict['name']
+        with allure.step(title=f"{'Click and ' if click_first else ''}Backspace and input in {element_name}: {value}"):
+            field_dict = self.get_element(element_dict)
+            if click_first:
+                field_dict['element'].click()
             field_dict['element'].send_keys(Keys.BACKSPACE * len(value))
             field_dict['element'].send_keys(value)
             if press_enter:
                 field_dict['element'].send_keys(Keys.ENTER)
-            print(f"Backspace and in {field_dict['name']}: {value}")
-
-    """ Backspace len and input wait clickable"""
-
+            print(f"{'Click and ' if click_first else ''}Backspace and input in {element_name}: {value}")
+    
+    """ Backspace all and input with optional click, enter"""
+    
     def backspace_all_and_input(self, element_dict: Dict[str, str], value: str,
-                                press_enter: Optional[bool] = False) -> None:
+                                click_first: bool = False, press_enter: Optional[bool] = False) -> None:
         """
         Очищает поле ввода путем нажатий клавиши Backspace для каждого символа в поле,
         затем вводит новое значение.
@@ -1005,47 +589,29 @@ class Base:
             Словарь с информацией о поле ввода.
         value : str
             Значение для ввода.
+        click_first : bool, optional
+            Если True, сначала кликает по полю перед вводом текста.
         press_enter : bool, optional
             Если True, нажимает Enter после ввода значения.
 
         """
-        with allure.step(title=f"Backspace and input in {element_dict['name']}: {value}"):
-            field_dict = self.get_element_clickable(element_dict)
-            field_dict['element'].click()
+        element_name = element_dict['name']
+        with allure.step(title=f"{'Click and ' if click_first else ''}Backspace and input in {element_name}: {value}"):
+            field_dict = self.get_element(element_dict)
+            if click_first:
+                field_dict['element'].click()
             current_value = field_dict['element'].get_attribute('value')
             for _ in range(len(current_value)):
                 field_dict['element'].send_keys(Keys.BACKSPACE)
             field_dict['element'].send_keys(value)
             if press_enter:
                 field_dict['element'].send_keys(Keys.ENTER)
-            print(f"Backspaced and input in {field_dict['name']}: {value}")
-
-    """ Click backspace and input wait clickable"""
-
-    def click_backspace_and_input(self, element_dict: Dict[str, str], value: str) -> None:
-        """
-        Кликает по полю ввода, выполняет нажатие клавиши Backspace для удаления символов и вводит текст.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о поле ввода.
-        value : str
-            Значение для ввода.
-
-        """
-        with allure.step(title=f"Click backspace and input in {element_dict['name']}: {value}"):
-            field_dict = self.get_element_clickable(element_dict)
-            field_element = field_dict['element']
-            field_element.click()
-            field_element.send_keys(Keys.BACKSPACE * len(value))
-            field_element.send_keys(value)
-            print(f"Click backspace and in {field_dict['name']}: {value}")
-
-    """ Backspace num times and input wait clickable"""
-
+            print(f"{'Click and ' if click_first else ''}Backspaced and input in {element_name}: {value}")
+    
+    """ Backspace num times and input with optional click, enter"""
+    
     def backspace_num_and_input(self, element_dict: Dict[str, str], num: int, value: str,
-                                press_enter: Optional[bool] = False) -> None:
+                                click_first: bool = False, press_enter: Optional[bool] = False) -> None:
         """
         Выполняет нажатие клавиши Backspace заданное количество раз и вводит текст.
 
@@ -1057,20 +623,25 @@ class Base:
             Количество раз для нажатия клавиши Backspace.
         value : str
             Значение для ввода.
+        click_first : bool, optional
+            Если True, сначала кликает по полю перед вводом текста.
         press_enter : bool, optional
             Если True, нажимает Enter после ввода значения.
 
         """
-        with allure.step(title=f"Backspace {num} times and input in {element_dict['name']}: {value}"):
-            field_dict = self.get_element_clickable(element_dict)
+        element_name = element_dict['name']
+        with allure.step(
+                title=f"{'Click and ' if click_first else ''}Backspace {num} times and input in {element_name}: {value}"):
+            field_dict = self.get_element(element_dict)
+            if click_first:
+                field_dict['element'].click()
             field_dict['element'].send_keys(Keys.BACKSPACE * num)
             field_dict['element'].send_keys(value)
             if press_enter:
                 field_dict['element'].send_keys(Keys.ENTER)
-            print(f"Backspaced {num} times and input in {field_dict['name']}: {value}")
+            print(f"{'Click and ' if click_first else ''}Backspaced {num} times and input in {element_name}: {value}")
 
     """ Scroll X Y"""
-
     def scroll_page(self, x: Optional[int] = None, y: Optional[int] = None) -> None:
         """
         Прокручивает страницу на заданное количество пикселей по горизонтали и вертикали.
@@ -1094,36 +665,15 @@ class Base:
                     print(f" Y by {y} pixels", end="")
                 print()
 
-    """Combined methods"""
-    """ Move and click button clickable"""
-
-    def move_and_click(self, move_to: Dict[str, str], click_to: Dict[str, str], do_assert: bool = False,
-                       wait: Optional[str] = None) -> None:
+    """ Move to and click button"""
+    def move_and_click(self, move_to: Dict[str, str], click_to: Dict[str, str], move_index: int = 1,
+                       click_index: int = 1, move_wait_type: str = 'clickable', click_wait_type: str = 'clickable',
+                       do_assert: bool = False, wait: Optional[str] = None) -> None:
         """
-        Перемещается к элементу и кликает по другому элементу.
-
-        Parameters
-        ----------
-        move_to : dict
-            Словарь с информацией о элементе для перемещения к нему.
-        click_to : dict
-            Словарь с информацией о элементе для клика.
-        do_assert : bool, optional
-            Если True, выполняет дополнительную проверку текста элемента после клика.
-        wait : str, optional
-            Если 'lst' или 'form', ожидает исчезновение указанных элементов загрузки.
-
-        """
-        self.move_to_element(move_to)
-        time.sleep(0.2)
-        self.click_button(click_to, do_assert=do_assert, wait=wait)
-
-    """ Move find and click button wait clickable"""
-
-    def move_find_and_click(self, move_to: Dict[str, str], click_to: Dict[str, str], do_assert: bool = False,
-                            wait: Optional[str] = None) -> None:
-        """
-        Перемещается к элементу, найденному без ожидания, и кликает по другому элементу.
+        Перемещается к элементу с заданным типом ожидания и индексом,
+        и кликает по другому элементу с выбором типа ожидания и индексом.
+        После клика может выполнить дополнительную проверку текста элемента (ассерт)
+        и ожидание исчезновения элементов загрузки (списки или формы).
 
         Parameters
         ----------
@@ -1131,18 +681,25 @@ class Base:
             Словарь с информацией о элементе для перемещения.
         click_to : dict
             Словарь с информацией о элементе для клика.
+        move_index : int, optional
+            Индекс элемента для перемещения. По умолчанию 1 (первый элемент).
+        click_index : int, optional
+            Индекс элемента для клика. По умолчанию 1 (первый элемент).
+        move_wait_type : str, optional
+            Тип ожидания элемента для перемещения ('clickable', 'visible', 'located', 'find').
+        click_wait_type : str, optional
+            Тип ожидания элемента для клика ('clickable', 'visible', 'located', 'find').
         do_assert : bool, optional
             Если True, выполняет дополнительную проверку текста элемента после клика.
         wait : str, optional
-            Если 'lst' или 'form', ожидает исчезновение указанных элементов загрузки.
+            Если 'lst' или 'form', ожидает исчезновение указанных элементов загрузки после клика.
 
         """
-        self.move_to_element_find(move_to)
+        self.move_to_element(move_to, index=move_index, wait_type=move_wait_type)
         time.sleep(0.2)
-        self.click_button(click_to, do_assert=do_assert, wait=wait)
+        self.click_button(click_to, index=click_index, wait_type=click_wait_type, do_assert=do_assert, wait=wait)
 
     """ Naw time change"""
-
     @staticmethod
     def naw_time_change(minutes: int) -> str:
         """
@@ -1166,7 +723,6 @@ class Base:
         return rounded_time_str
 
     """ Naw datatime change"""
-
     @staticmethod
     def naw_datatime_change(minutes: int) -> str:
         """
@@ -1190,7 +746,6 @@ class Base:
         return rounded_time_str
 
     """ Get sms code"""
-
     def get_confirmation_code(self, phone_number):
         """
         Извлекает код подтверждения, связанный с заданным номером телефона.
@@ -1226,7 +781,6 @@ class Base:
             raise ValueError(f"Не удалось извлечь код подтверждения из текста: {element_text}")
 
     """ Generate inn"""
-
     @staticmethod
     def generate_inn(entity_type: str) -> str:
         """
@@ -1248,7 +802,6 @@ class Base:
         ValueError
             Если передан неизвестный тип сущности. Допустимые значения параметра entity_type: 'individual', 'entity'.
         """
-
         def calculate_control_sum(numbers: list[int], local_coeffs: list[int]) -> int:
             return sum(a * b for a, b in zip(numbers, local_coeffs)) % 11 % 10
 

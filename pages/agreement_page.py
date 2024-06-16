@@ -33,4 +33,3 @@ class Agreement(Base):
         "xpath": "//span[@class='ant-radio']",
         "name": "select_tariff_radio_button"
     }
-

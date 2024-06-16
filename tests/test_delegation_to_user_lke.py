@@ -10,70 +10,76 @@ from pages.producers_list_page import ProducersList
 @allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Делегирование прав управления ЛК')
-@allure.description('ЛКЭ. Тест делегирования пользователю права управления ЛК ГВ : пользователь - Пятый в списке')
+@allure.description('ЛКЭ. Тест делегирования пользователю права управления ЛК ГВ: пользователь - Пятый в списке')
 def test_delegation_client_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
+                           do_assert=True, wait="lst")
 
     client_list = ClientsList(base.driver)
     client_list.click_button(client_list.client_lkz_inn, wait="lst")
 
     contractor = Contractor(base.driver)
     contractor.click_button(contractor.settings_tab)
-    contractor.click_button_index(contractor.user_checkbox_empty, 5)
-    contractor.click_button_index(contractor.user_checkbox_filled, 3)
+    contractor.click_button(contractor.user_checkbox_empty, 2)
+    contractor.click_button(contractor.save_delegation_button, do_assert=True)
+    contractor.click_button(contractor.ok_button)
+    contractor.click_button(contractor.user_checkbox_filled, 3)
     contractor.click_button(contractor.save_delegation_button, do_assert=True)
     contractor.click_button(contractor.ok_button)
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Делегирование прав управления ЛК')
-@allure.description('ЛКЭ. Тест делегирования пользователю права управления ЛК ПВ : пользователь - Пятый в списке')
+@allure.description('ЛКЭ. Тест делегирования пользователю права управления ЛК ПВ: пользователь - Пятый в списке')
 def test_delegation_producer_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
+                           do_assert=True, wait="lst")
 
     producer_list = ProducersList(base.driver)
     producer_list.click_button(producer_list.producer_lkp_inn, wait="lst")
 
     contractor = Contractor(base.driver)
     contractor.click_button(contractor.settings_tab)
-    contractor.click_button_index(contractor.user_checkbox_empty, 5)
-    contractor.click_button_index(contractor.user_checkbox_filled, 3)
+    contractor.click_button(contractor.user_checkbox_empty, 2, wait_type="located")
+    contractor.click_button(contractor.save_delegation_button, do_assert=True)
+    contractor.click_button(contractor.ok_button)
+    contractor.click_button(contractor.user_checkbox_filled, 3, wait_type="located")
     contractor.click_button(contractor.save_delegation_button, do_assert=True)
     contractor.click_button(contractor.ok_button)
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Делегирование прав управления ЛК')
-@allure.description('ЛКЭ. Тест делегирования пользователю управления ЛК внутр.ПВ : пользователь - Пятый в списке')
+@allure.description('ЛКЭ. Тест делегирования пользователю управления ЛК внутр.ПВ: пользователь - Пятый в списке')
 def test_delegation_inner_producer_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
+                           do_assert=True, wait="lst")
 
     producer_list = ProducersList(base.driver)
     producer_list.click_button(producer_list.producer_vaz_inn, wait="lst")
 
     contractor = Contractor(base.driver)
     contractor.click_button(contractor.settings_tab)
-    contractor.click_button_index(contractor.user_checkbox_empty, 5)
-    contractor.click_button_index(contractor.user_checkbox_filled, 3)
+    contractor.click_button(contractor.user_checkbox_empty, 2, wait_type="visible")
+    contractor.click_button(contractor.save_delegation_button, do_assert=True)
+    contractor.click_button(contractor.ok_button)
+    contractor.click_button(contractor.user_checkbox_filled, 3, wait_type="visible")
     contractor.click_button(contractor.save_delegation_button, do_assert=True)
     contractor.click_button(contractor.ok_button)
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -83,8 +89,8 @@ def test_delegation_inner_producer_lke(domain):
 def test_go_to_account_client_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
+                           do_assert=True, wait="lst")
 
     client_list = ClientsList(base.driver)
     client_list.move_and_click(move_to=client_list.action_button, click_to=client_list.go_to_account_button)
@@ -94,7 +100,7 @@ def test_go_to_account_client_lke(domain):
     base.driver.switch_to.window(windows[1])
     client_list.assert_word(client_list.assert_auto_lkz)
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -104,8 +110,8 @@ def test_go_to_account_client_lke(domain):
 def test_go_to_account_producer_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
+                           do_assert=True, wait="lst")
 
     producer_list = ProducersList(base.driver)
     producer_list.move_and_click(move_to=producer_list.action_button_lkp, click_to=producer_list.go_to_account_button)
@@ -115,7 +121,7 @@ def test_go_to_account_producer_lke(domain):
     base.driver.switch_to.window(windows[1])
     producer_list.assert_word(producer_list.assert_auto_lkp)
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Стабильные тесты")
@@ -125,8 +131,8 @@ def test_go_to_account_producer_lke(domain):
 def test_go_to_account_inner_producer_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
+                           do_assert=True, wait="lst")
 
     producer_list = ProducersList(base.driver)
     producer_list.move_and_click(move_to=producer_list.action_button_vaz, click_to=producer_list.go_to_account_button)
@@ -136,4 +142,4 @@ def test_go_to_account_inner_producer_lke(domain):
     base.driver.switch_to.window(windows[1])
     producer_list.assert_word(producer_list.assert_auto_vaz)
 
-    sidebar.finish_test()
+    sidebar.test_finish()

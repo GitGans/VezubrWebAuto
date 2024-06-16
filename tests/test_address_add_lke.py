@@ -4,24 +4,31 @@ from pages.address_add_page import AddressAdd
 from pages.address_list_page import AddressesList
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Создание адресов')
 @allure.description('ЛКЭ. Тест создания адреса: статус - Активный, ввод адреса в поле Фактический адрес.')
 def test_address_add_lke(domain):
+    # Инициализация базовых объектов и авторизация под ролью 'lke'
     base, sidebar = base_test_with_login(domain=domain, role='lke')
-
-    sidebar.move_find_and_click(move_to=sidebar.directories_hover, click_to=sidebar.addresses_list_button,
-                                do_assert=True, wait="lst")
-
+    
+    # Переход к списку адресов
+    sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.addresses_list_button,
+                           do_assert=True, wait="lst")
+    
     address_list = AddressesList(base.driver)
-    address_list.click_button(address_list.add_address_button, wait="form")
-
+    # Клик по кнопке добавления адреса
+    address_list.click_button(address_list.add_address_button)
+    
     add_address = AddressAdd(base.driver)
+    # Установка статуса адреса в "Активный"
     add_address.click_button(add_address.status_toggl)
+    # Ввод фактического адреса
     add_address.input_in_field(add_address.address_input,
-                               f"г Екатеринбург, пр-кт Ленина, д {base.random_value_int_str(1, 150)}")
+                               f"г Екатеринбург, пр-кт Ленина, д {base.random_value_float_str(1, 150)}")
+    # Клик по кнопке создания адреса
     add_address.click_button(add_address.create_address_button, do_assert=True)
+    # Клик по кнопке подтверждения добавления
     add_address.click_button(add_address.confirm_add_button, wait="lst")
-
-    sidebar.finish_test()
+    
+    # Завершение теста
+    sidebar.test_finish()

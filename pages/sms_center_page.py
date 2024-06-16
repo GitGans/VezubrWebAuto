@@ -25,7 +25,3 @@ class SmsCenter(Base):
         "xpath": "//div[text()='Детализация']",
         "name": "detailing_button"
     }
-
-
-    # Methods
-

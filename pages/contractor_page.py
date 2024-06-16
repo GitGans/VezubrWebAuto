@@ -45,5 +45,6 @@ class Contractor(Base):
     }
     ok_button = {
         "xpath": "//button[.//span[text()='OK']]",
-        "name": "ok_button"
+        "name": "calendar_ok_button"
     }
+    

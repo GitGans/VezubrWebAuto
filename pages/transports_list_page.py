@@ -19,3 +19,4 @@ class TransportsList(Base):
         "xpath": "//button[@class='ant-btn margin-left-15 ant-btn-primary']",
         "name": "confirm_choice_button"
     }
+    

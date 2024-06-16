@@ -68,6 +68,6 @@ class ExtraAgreementAdd(Base):
         for button in buttons_to_click:
             self.click_button(button)
         time.sleep(0.5)
-        self.input_in_field_and_enter(self.extra_agr_date_input, "01012040")
-        self.click_and_input_in_field(self.extra_agr_comment_input, "ДУ создано автотестом")
-        self.click_button(self.add_extra_agr_button, wait="lst")
+        self.input_in_field(self.extra_agr_date_input, "01012040", press_enter=True)
+        self.input_in_field(self.extra_agr_comment_input, "ДУ создано автотестом", click_first=True)
+        self.click_button(self.add_extra_agr_button)

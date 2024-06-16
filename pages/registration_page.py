@@ -75,9 +75,10 @@ class Registration(Base):
     }
     ok_button = {
         "xpath": "//button[.//span[text()='OK']]",
-        "name": "ok_button"
+        "name": "calendar_ok_button"
     }
     registration_new_account = {
         "xpath": "//button[.//span[contains(text(), 'Регистрация Нового')]]",
         "name": "registration_new_account"
     }
+    

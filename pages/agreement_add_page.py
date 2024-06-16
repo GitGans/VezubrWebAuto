@@ -45,7 +45,8 @@ class AgreementAdd(Base):
         "name": "select_all"
     }
     select_confirmed = {
-        "xpath": "//li[@title='Только рейсы с подтвержденными документами ГВ, Расчетами Заказчиком и полученными оригиналами у водителей']",
+        "xpath": "//li[@title='Только рейсы с подтвержденными документами ГВ, "
+                 "Расчетами Заказчиком и полученными оригиналами у водителей']",
         "name": "select_confirmed"
     }
     select_disabled = {
@@ -79,3 +80,4 @@ class AgreementAdd(Base):
         "xpath": "//button[@class='ant-btn ant-btn-primary']",
         "name": "create_button"
     }
+    

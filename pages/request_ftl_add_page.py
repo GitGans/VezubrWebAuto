@@ -1,5 +1,4 @@
 from base.base_class import Base
-import re
 
 
 class FTLAdd(Base):
@@ -52,7 +51,7 @@ class FTLAdd(Base):
         "xpath": "//span[@class='vz-form-item__label ' and contains(text(),'Тип кузова')]",
         "name": "vehicle_body_select"
     }
-    body_type_closed_checkbox= {
+    body_type_closed_checkbox = {
         "xpath": "//span[@class='ant-select-tree-title' and contains(text(), 'Закрытый')]",
         "name": "body_type_closed_checkbox"
     }
@@ -121,7 +120,3 @@ class FTLAdd(Base):
         "xpath": "//button[@class='ant-btn ant-btn-primary' and span[contains(text(), 'OK')]]",
         "name": "create_button"
     }
-
-
-
-

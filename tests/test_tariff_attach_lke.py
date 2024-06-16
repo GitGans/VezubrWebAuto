@@ -15,8 +15,8 @@ from pages.producers_list_page import ProducersList
 def test_tariff_attach_client_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
+                           do_assert=True, wait="lst")
 
     client_list = ClientsList(base.driver)
     client_list.click_button(client_list.client_lkz_inn, wait="lst")
@@ -30,11 +30,11 @@ def test_tariff_attach_client_lke(domain):
 
     add_extra = ExtraAgreementAdd(base.driver)
     add_extra.add_base_extra_agreements()
-    add_extra.click_button_located(add_extra.radio_button)
+    add_extra.click_button(add_extra.radio_button, wait_type="located")
     add_extra.click_button(add_extra.confirm_tariff_button, do_assert=True)
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Нестабильные тесты")
@@ -45,8 +45,8 @@ def test_tariff_attach_client_lke(domain):
 def test_tariff_attach_producer_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
+                           do_assert=True, wait="lst")
 
     producer_list = ProducersList(base.driver)
     producer_list.click_button(producer_list.producer_lkp_inn, wait="lst")
@@ -60,11 +60,11 @@ def test_tariff_attach_producer_lke(domain):
 
     add_extra = ExtraAgreementAdd(base.driver)
     add_extra.add_base_extra_agreements()
-    add_extra.click_button_located(add_extra.radio_button)
+    add_extra.click_button(add_extra.radio_button, wait_type="located")
     add_extra.click_button(add_extra.confirm_tariff_button, do_assert=True)
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
 
-    sidebar.finish_test()
+    sidebar.test_finish()
 
 
 @allure.epic("Нестабильные тесты")
@@ -75,8 +75,8 @@ def test_tariff_attach_producer_lke(domain):
 def test_tariff_attach_inner_producer_lke(domain):
     base, sidebar = base_test_with_login(domain=domain, role='lke')
 
-    sidebar.move_find_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
-                                do_assert=True, wait="lst")
+    sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
+                           do_assert=True, wait="lst")
 
     producer_list = ProducersList(base.driver)
     producer_list.click_button(producer_list.producer_vaz_inn, wait="lst")
@@ -90,8 +90,8 @@ def test_tariff_attach_inner_producer_lke(domain):
 
     add_extra = ExtraAgreementAdd(base.driver)
     add_extra.add_base_extra_agreements()
-    add_extra.click_button_located(add_extra.radio_button)
+    add_extra.click_button(add_extra.radio_button, wait_type="located")
     add_extra.click_button(add_extra.confirm_tariff_button, do_assert=True)
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
 
-    sidebar.finish_test()
+    sidebar.test_finish()

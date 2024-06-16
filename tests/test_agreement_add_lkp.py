@@ -20,7 +20,7 @@ def test_agreement_client_add_lkp(domain):
     client_list.click_button(client_list.client_lkz_inn, wait="form")
 
     contractor = Contractor(base.driver)
-    contractor.click_button(contractor.add_agreements_button, wait="form")
+    contractor.click_button(contractor.add_agreements_button)
 
     add_agr = AgreementAdd(base.driver)
     add_agr.input_in_field(add_agr.agr_number_input, f"№-{base.get_timestamp()}")
@@ -31,6 +31,6 @@ def test_agreement_client_add_lkp(domain):
     add_agr.input_in_field(add_agr.agr_date_input, "01012045")
     add_agr.dropdown_click_input_click(add_agr.registers_auto_select, "Автоматическое формирование Реестров отключено")
     add_agr.click_button(add_agr.add_agr_button, do_assert=True)
-    add_agr.click_button(add_agr.confirm_add_button, wait="lst")
+    add_agr.click_button(add_agr.confirm_add_button)
 
-    sidebar.finish_test()
+    sidebar.test_finish()

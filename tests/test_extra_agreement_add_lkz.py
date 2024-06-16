@@ -31,4 +31,4 @@ def test_extra_agreements_producer_add_lkz(domain):
     add_extra.click_button(add_extra.appoint_later_button, do_assert=True)
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
 
-    sidebar.finish_test()
+    sidebar.test_finish()

@@ -27,4 +27,4 @@ def test_delegation_to_lke_lkz(domain):
     contractor.dropdown_click_input_click(contractor.delegation_type_select, "Да, полное делегирование")
     contractor.click_button(contractor.save_button, do_assert=True)
 
-    sidebar.finish_test()
+    sidebar.test_finish()

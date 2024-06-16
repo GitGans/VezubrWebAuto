@@ -23,4 +23,3 @@ class Insurer(Base):
         "xpath": "//a[@class='vz-tabs-modern__item' and contains(text(), 'Застрахованные рейсы')]",
         "name": "insured_orders_list"
     }
-

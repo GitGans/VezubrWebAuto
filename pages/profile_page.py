@@ -67,7 +67,8 @@ class Profile(Base):
         "name": "groups_tab"
     }
     groups_delete_button = {
-        "xpath": "//*[@id='main']/div/div[3]/div[2]/div/div[2]/div[2]/div/div[1]/div/div/div/div/div[2]/div[2]/div/table/tbody/tr[5]/td/div/div/div/img",
+        "xpath": "//*[@id='main']/div/div[3]/div[2]/div/div[2]/div[2]/div/div[1]/div/div/div/div/div[2]/div[2]/div/"
+                 "table/tbody/tr[5]/td/div/div/div/img",
         "name": "groups_delete_button"
     }
     users_tab = {
@@ -76,9 +77,9 @@ class Profile(Base):
         "reference_xpath": "//h2[@class='bold' and text()='Пользователи']",
         "reference": "Пользователи"
     }
-    add_group_button = {
+    add_user_button = {
         "xpath": "//button[@class='mid element-button theme-primary']",
-        "name": "add_group_button"
+        "name": "add_user_button"
     }
     save_button = {
         "xpath": "//button[@class='semi-wide element-button theme-primary']",
@@ -88,7 +89,7 @@ class Profile(Base):
     }
     confirm_button = {
         "xpath": "//button[@class='ant-btn ant-btn-primary']",
-        "name": "create_button",
+        "name": "confirm_button",
         "reference_xpath": "//h2[@class='bold' and text()='Профиль']",
         "reference": "Профиль"
     }
@@ -96,12 +97,9 @@ class Profile(Base):
         "xpath": "//a[@class='link-back']",
         "name": "user_link"
     }
-    # second_user_link = {
-    #     "xpath": "(//a[@class='link-back'])[2]",
-    #     "name": "second_user_link"
-    # }
     delete_user_button = {
-        "xpath": "//*[@id='main']/div/div[3]/div[2]/div/div[2]/div[2]/div/div[1]/div/div/div/div/div[2]/div[2]/div/table/tbody/tr[1]/td/div/div[2]/div[1]/img",
+        "xpath": "//*[@id='main']/div/div[3]/div[2]/div/div[2]/div[2]/div/div[1]/div/div/div/div/div[2]/div[2]/div/"
+                 "table/tbody/tr[1]/td/div/div[2]/div[1]/img",
         "name": "delete_user_button"
     }
     password_input = {
@@ -114,5 +112,3 @@ class Profile(Base):
         "reference_xpath": "//h2[contains(@class, 'bold') and contains(text(), 'Пользователи')]",
         "reference": "Пользователи"
     }
-
-

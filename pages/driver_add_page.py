@@ -1,5 +1,3 @@
-from typing import NoReturn
-
 from base.base_class import Base
 
 
@@ -154,91 +152,132 @@ class DriverAdd(Base):
         "reference_xpath": "//span[contains(text(), 'Данные водителя успешно обновлены')]",
         "reference": "Данные водителя успешно обновлены"
     }
+    attach_button = {
+        "xpath": "//button[@class='semi-wide element-button theme-primary']",
+        "name": "attach_button"
+    }
+    select_button = {
+        "xpath": "//button[@type='button' and contains(@class, 'ant-btn')]",
+        "name": "select_button"
+    }
+    unselect_button = {
+        "xpath": "//button[.//img[@alt='xWhite']]",
+        "name": "unselect_button"
+    }
+    assign_selected_button = {
+        "xpath": "//button[.//span[text()='Назначить выбранных']]",
+        "name": "assign_selected_button"
+    }
+    action_menu_button = {
+        "xpath": "//span[@class='icon-content']",
+        "name": "action_menu_button"
+    }
+    suspend_work_button = {
+        "xpath": "//span[normalize-space()='Приостановить работу']",
+        "name": "suspend_button"
+    }
+    ready_to_work_button = {
+        "xpath": "//span[normalize-space()='Готов работать']",
+        "name": "ready_to_work_button"
+    }
+    fire_button = {
+        "xpath": "//span[normalize-space()='Уволить']",
+        "name": "fire_button"
+    }
+    yes_button = {
+        "xpath": "//button[.//span[text()='Да']]",
+        "name": "yes_button",
+        "reference_xpath": "//span[text()='OK']",
+        "reference": "OK"
+    }
+    ok_button = {
+        "xpath": "//button[.//span[text()='OK']]",
+        "name": "calendar_ok_button"
+    }
+    work_as_loader_toggl = {
+        "xpath": "//span[contains(text(), 'Готов работать как Грузчик')]",
+        "name": "work_as_loader_toggl"
+    }
+    never_delegate_toggl = {
+        "xpath": "//span[contains(text(), 'Никогда не делегировать')]",
+        "name": "never_delegate_toggl"
+    }
 
     # Methods
-    def add_base_driver(self) -> NoReturn:
+    def add_base_driver(self) -> str:
         """
         Добавляет информацию о водителе. Включает заполнение личных данных, идентификационных номеров и адресов, а
         также управление санитарной книжкой. Процесс завершается созданием и подтверждением создания записи о водителе.
 
-        Parameters
-        ----------
-        Нет входных параметров.
-
         Returns
         -------
-        NoReturn
-            Ничего не возвращает. Побочные эффекты: изменения на веб-странице.
+        str
+            Сгенерированная фамилия водителя.
         """
         # Ввод информации о водителе
-        self.input_in_field(self.surname_input, f"Ф-{self.get_timestamp()}")
+        surname = f"Ф-{self.get_timestamp()}"
+        self.input_in_field(self.surname_input, surname)
         self.input_in_field(self.name_input, f"И-{self.get_timestamp()}")
         self.input_in_field(self.patronymic_input, f"О-{self.get_timestamp()}")
-        self.input_in_field(self.passport_id_input, self.random_value_int_str(1000000000, 9999999999))
+        self.input_in_field(self.passport_id_input, self.random_value_float_str(1000000000, 9999999999))
         self.input_in_field(self.passport_by_input, "Верховный рулевой")
-        self.click_and_input_in_field(self.passport_code_input, self.random_value_int_str(100000, 999999))
-        self.input_in_field(self.license_id_input, self.random_value_int_str(1000000000, 9999999999))
+        self.input_in_field(self.passport_code_input, self.random_value_float_str(100000, 999999), click_first=True)
+        self.input_in_field(self.license_id_input, self.random_value_float_str(1000000000, 9999999999))
         self.click_button(self.license_date_input_close)
         self.backspace_len_and_input(self.license_date_input_open, '45')
+        
         # Ввод контактной информации
-        self.click_and_input_in_field(self.app_phone_input, self.random_value_int_str(9650000000, 9659999999))
-        self.click_and_input_in_field(self.contact_phone_input, self.random_value_int_str(9650000000, 9659999999))
+        self.input_in_field(self.app_phone_input, self.random_value_float_str(9650000000, 9659999999), click_first=True)
+        self.input_in_field(self.contact_phone_input, self.random_value_float_str(9650000000, 9659999999),
+                            click_first=True)
         self.input_in_field(self.reg_address_input, "Мой адрес – Не дом и не улица")
         self.input_in_field(self.fact_address_input, "Мой адрес – Советский Союз.")
+        
         # Управление настройками санитарной книжки и подтверждение создания водителя
-        buttons_to_click = [
-            {'button': self.sanitary_book_toggl, 'do_assert': False, 'wait': None},
-            {'button': self.create_driver_button, 'do_assert': True, 'wait': 'form'},
-            {'button': self.confirm_button, 'do_assert': False, 'wait': 'lst'}
-        ]
-        for button_info in buttons_to_click:
-            self.click_button(button_info['button'], do_assert=button_info.get('do_assert', False),
-                              wait=button_info.get('wait', None))
-
-    def add_base_inner_driver(self) -> NoReturn:
+        self.click_button(self.sanitary_book_toggl)
+        self.click_button(self.create_driver_button, do_assert=True)
+        self.click_button(self.confirm_button, wait="lst")
+        
+        return surname
+    
+    def add_base_inner_driver(self) -> str:
         """
-        Добавляет информацию о водителе внктреннего перевозчика. Включает выбор владельца, заполнение личных данных,
+        Добавляет информацию о водителе внутреннего перевозчика. Включает выбор владельца, заполнение личных данных,
         идентификационных номеров и адресов, а также управление санитарной книжкой. Процесс завершается созданием и
         подтверждением создания записи о водителе.
 
-        Parameters
-        ----------
-        Нет входных параметров.
-
         Returns
         -------
-        NoReturn
-            Ничего не возвращает. Побочные эффекты: изменения на веб-странице.
+        str
+            Сгенерированная фамилия водителя.
         """
         # Выбор владельца водителя
-        buttons_to_click = [
-            {'button': self.driver_owner_button, 'do_assert': False, 'wait': "lst"},
-            {'button': self.select_first_radio, 'do_assert': False, 'wait': None},
-            {'button': self.confirm_owner_button, 'do_assert': False, 'wait': None}
-        ]
-        for action in buttons_to_click:
-            self.click_button_located(action['button'], do_assert=action.get('do_assert', False),
-                                      wait=action.get('wait', None))
+        self.click_button(self.driver_owner_button, wait="lst")
+        self.click_button(self.select_first_radio, wait_type='located')
+        self.click_button(self.confirm_owner_button)
+        
         # Ввод информации о водителе
-        self.input_in_field(self.surname_input, f"ВФ-{self.get_timestamp()}")
+        surname = f"ВФ-{self.get_timestamp()}"
+        self.input_in_field(self.surname_input, surname)
         self.input_in_field(self.name_input, f"ВИ-{self.get_timestamp()}")
         self.input_in_field(self.patronymic_input, f"ВО-{self.get_timestamp()}")
-        self.input_in_field(self.passport_id_input, self.random_value_int_str(1000000000, 9999999999))
+        self.input_in_field(self.passport_id_input, self.random_value_float_str(1000000000, 9999999999))
         self.input_in_field(self.passport_by_input, "Верховный рулевой")
-        self.click_and_input_in_field(self.passport_code_input, self.random_value_int_str(100000, 999999))
-        self.input_in_field(self.license_id_input, self.random_value_int_str(1000000000, 9999999999))
+        self.input_in_field(self.passport_code_input, self.random_value_float_str(100000, 999999), click_first=True)
+        self.input_in_field(self.license_id_input, self.random_value_float_str(1000000000, 9999999999))
         self.click_button(self.license_date_input_close)
         self.backspace_len_and_input(self.license_date_input_open, '45')
+        
         # Ввод контактной информации
-        self.click_and_input_in_field(self.contact_phone_input, self.random_value_int_str(9650000000, 9659999999))
+        self.input_in_field(self.app_phone_input, self.random_value_float_str(9650000000, 9659999999), click_first=True)
+        self.input_in_field(self.contact_phone_input, self.random_value_float_str(9650000000, 9659999999),
+                            click_first=True)
         self.input_in_field(self.reg_address_input, "Мой адрес – Не дом и не улица")
         self.input_in_field(self.fact_address_input, "Мой адрес – Советский Союз.")
+        
         # Управление настройками санитарной книжки и подтверждение создания водителя
-        buttons_to_click = [
-            {'button': self.sanitary_book_toggl, 'do_assert': False, 'wait': None},
-            {'button': self.create_driver_button, 'do_assert': True, 'wait': 'form'},
-            {'button': self.confirm_button, 'do_assert': False, 'wait': 'lst'}
-        ]
-        for button_info in buttons_to_click:
-            self.click_button(button_info['button'], do_assert=button_info.get('do_assert', False),
-                              wait=button_info.get('wait', None))
+        self.click_button(self.sanitary_book_toggl)
+        self.click_button(self.create_driver_button, do_assert=True)
+        self.click_button(self.confirm_button, wait="lst")
+        
+        return surname
