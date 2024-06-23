@@ -7,7 +7,6 @@ from pages.extra_agreement_add_page import ExtraAgreementAdd
 from pages.producers_list_page import ProducersList
 
 
-@allure.epic("Нестабильные тесты")
 @allure.feature('Прикрепление тарифов')
 @allure.story("Smoke test")
 @allure.description('ЛКЭ. Тест прикрепления тарифа к ДУ c ГВ : создаем базовый ДУ и сразу прикрепляем существующий '
@@ -37,7 +36,6 @@ def test_tariff_attach_client_lke(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Нестабильные тесты")
 @allure.feature('Прикрепление тарифов')
 @allure.story("Smoke test")
 @allure.description('ЛКЭ. Тест прикрепления тарифа к ДУ c ПВ : создаем базовый ДУ и сразу прикрепляем существующий '
@@ -67,7 +65,6 @@ def test_tariff_attach_producer_lke(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Нестабильные тесты")
 @allure.feature('Прикрепление тарифов')
 @allure.story("Smoke test")
 @allure.description('ЛКЭ. Тест прикрепления тарифа к ДУ внутр. ПВ: создаем базовый ДУ и сразу прикрепляем существующий'

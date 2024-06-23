@@ -4,7 +4,6 @@ from tests.base_test import base_test_with_login
 from pages.request_ftl_add_page import FTLAdd
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Создание FTL заявок')
 @allure.description('ЛКЭ. Тест создания FTL заявки от ГВ: тип - Город, подача - Сейчас, ТС - Груз 0.5т, '

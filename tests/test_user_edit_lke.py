@@ -5,7 +5,6 @@ from pages.profile_page import Profile
 from pages.user_add_page import User
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Редактирование пользователей')
 @allure.description('ЛКЭ. Тест редактирования пользователя: пользователь - Первый в списке, ФИО - ФИО-timestamp, '
@@ -37,7 +36,6 @@ def test_first_user_edit_lke(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Extended test")
 @allure.feature('Редактирование пользователей')
 @allure.description('ЛКЭ. Тест управления ответственностью за КА: пользователь - Второй в списке, '
@@ -68,7 +66,6 @@ def test_user_responsible_fo_client_lke(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Extended test")
 @allure.feature('Редактирование пользователей')
 @allure.description('ЛКЭ. Тест управления ответственностью за КА: пользователь - Первый в списке, '

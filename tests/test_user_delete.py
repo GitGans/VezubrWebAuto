@@ -4,7 +4,6 @@ from tests.base_test import base_test_with_login
 from pages.profile_page import Profile
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Critical path test")
 @allure.feature('Удаление пользователей')
 @allure.description('ЛКЭ. Тест удаления пользователя: пользователь - Первый в списке')
@@ -22,7 +21,6 @@ def test_user_delete_lke(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Critical path test")
 @allure.feature('Удаление пользователей')
 @allure.description('ЛКП. Тест удаления пользователя: пользователь - Первый в списке')
@@ -40,7 +38,6 @@ def test_user_delete_lkp(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Critical path test")
 @allure.feature('Удаление пользователей')
 @allure.description('ЛКЗ. Тест удаления пользователя: пользователь - Первый в списке')

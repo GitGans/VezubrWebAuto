@@ -6,7 +6,6 @@ from pages.transport_add_page import TransportAdd
 from pages.transports_list_page import TransportsList
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Создание и операции с транспортными средствами')
 @allure.description('ЛКП. Тест создания ТС ПВ: номер - ТС-timestamp, модель - Монорамник, выпуск - 2023г, собственник '
@@ -58,7 +57,6 @@ def test_transport_add_lkp(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Critical path test")
 @allure.feature('Создание и операции с транспортными средствами')
 @allure.description('ЛКП. Тест создания ПП ПВ: номер - ПП-timestamp, модель - Полуприцеп, выпуск - 2023г, собственник '
@@ -103,7 +101,6 @@ def test_trailer_add_lkp(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Создание транспортных средств')
 @allure.description('ЛКП. Тест создания Тягача: номер - ТЯГ-timestamp, модель - Тягач, выпуск - 2023г, собственник'
@@ -144,7 +141,6 @@ def test_tractor1_add_lkp(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Critical path test")
 @allure.feature('Создание транспортных средств')
 @allure.description('ЛКП. Тест создания Тягача ПВ": номер - ТЯГ-timestamp, модель - Тягач, выпуск - 2023г, собственник'

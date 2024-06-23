@@ -1,3 +1,5 @@
+import time
+
 import allure
 from tests.base_test import base_test_with_login
 from pages.address_add_page import AddressAdd
@@ -21,10 +23,15 @@ def test_address_add_lkz(domain):
 
     add_address = AddressAdd(base.driver)
     # Установка статуса адреса в "Активный"
-    add_address.click_button(add_address.status_toggl)
+    add_address.click_button(add_address.address_toggl)
+    # Генирация фактического адреса
+    address = f"г Екатеринбург, пр-кт Ленина, д {base.random_value_float_str(1, 150)}"
     # Ввод фактического адреса
-    add_address.input_in_field(add_address.address_input,
-                               f"г Екатеринбург, пр-кт Ленина, д {base.random_value_float_str(1, 150)}")
+    add_address.input_in_field(add_address.address_input, address)
+    # Выбор фактического адреса из выпадающего списка
+    add_address.dropdown_click_input_click(add_address.address_input, address)
+    # Ожидание подгрузки данных от DaData
+    time.sleep(2)
     # Клик по кнопке создания адреса
     add_address.click_button(add_address.create_address_button, do_assert=True)
     # Клик по кнопке подтверждения добавления

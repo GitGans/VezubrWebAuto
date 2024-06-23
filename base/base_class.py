@@ -3,6 +3,7 @@ import time
 import random
 import re
 import allure
+import os
 from typing import Any, ClassVar, Dict, Type, NoReturn, Optional
 from selenium import webdriver
 from selenium.common import TimeoutException
@@ -15,7 +16,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 
 """Variable"""
-chrome_driver_path = 'C:\\Users\\Gans\\PycharmProjects\\VezubrWebAuto\\resource\\chromedriver.exe'
+chrome_driver_path = os.path.join('resource', 'chromedriver.exe')
 
 
 class Base:
@@ -375,7 +376,7 @@ class Base:
             button_dict['element'].click()
             print(f"Click on {button_dict['name']}")
             if do_assert:
-                time.sleep(1)
+                time.sleep(0.1)
                 self.assert_word(element_dict)
             if wait:
                 # Определяем, какой спиннер ожидать

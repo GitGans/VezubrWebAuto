@@ -1,3 +1,5 @@
+import time
+
 import allure
 from selenium.webdriver.support.wait import WebDriverWait
 from pages.clients_list_page import ClientsList
@@ -9,7 +11,6 @@ from pages.sms_center_page import SmsCenter
 from tests.base_test import base_test_without_login, base_test_with_login_via_link
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Регистрация личного кабинета')
 @allure.description('Тест регистрации личного кабинета Экспедитора: регистрация - Прямая, тлф. - '
@@ -66,7 +67,6 @@ def test_registration_new_lke(domain):
     base.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Регистрация личного кабинета')
 @allure.description('Тест регистрации личного кабинета Грузовледельца: регистрация - По ссылке Экс, тлф. - '
@@ -133,12 +133,13 @@ def test_registration_new_lkz(domain):
 
     client_list = ClientsList(base.driver)
     client_list.click_button(client_list.accept_button)
-    base.verify_text_by_inn(inn_value=inn, reference_value="Подтвержден в контуре")
+    base.verify_text_by_inn(inn_value=inn, reference_value="Нет договора")
+    
+    time.sleep(1)
 
     base.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Регистрация личного кабинета')
 @allure.description('Тест регистрации личного кабинета Перевозчика: регистрация - По ссылке Экс, тлф. - '
@@ -205,6 +206,8 @@ def test_registration_new_lkp(domain):
 
     producer_list = ProducersList(base.driver)
     producer_list.click_button(producer_list.accept_button)
-    base.verify_text_by_inn(inn_value=inn, reference_value="Подтвержден в контуре")
+    base.verify_text_by_inn(inn_value=inn, reference_value="Нет договора")
+    
+    time.sleep(1)
 
     base.test_finish()

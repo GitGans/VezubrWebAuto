@@ -5,7 +5,6 @@ from pages.tariff_ftl_add_page import FTLTariffAdd
 from pages.tariffs_list_page import TariffsList
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Critical path test")
 @allure.feature('Создание тарифов')
 @allure.description('ЛКЗ. Тест создания FTL тарифа: тип - Почасовой, округление - Час, название - ПЧ-timestamp, '
@@ -33,7 +32,6 @@ def test_ftl_h_tariff_add_lkz(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Critical path test")
 @allure.feature('Создание тарифов')
 @allure.description('ЛКЗ. Тест создания FTL тарифа: тип - Фиксированный, маршрут - Екб-Уфа, название - ГГ-timestamp, '
@@ -70,7 +68,6 @@ def test_ftl_cc_tariff_add_lkz(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Critical path test")
 @allure.feature('Создание тарифов')
 @allure.description('ЛКЗ. Тест создания FTL тарифа: тип - Фиксированный, маршрут - Точка-Точка, '
@@ -110,7 +107,6 @@ def test_ftl_pp_tariff_add_lkz(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Critical path test")
 @allure.feature('Создание тарифов')
 @allure.description('ЛКЗ. Тест создания FTL тарифа: тип - Пробег, маршрут - Екб-Члб, название - ПБ-timestamp, '

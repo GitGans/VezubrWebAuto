@@ -24,7 +24,7 @@ class ProducersList(Base):
         "name": "producer_lke_inn"
     }
     action_button_lkp = {
-        "xpath": "(//button[.//span[contains(text(), 'Действия')]])[4]",
+        "xpath": "(//button[.//span[contains(text(), 'Действия')]])[2]",
         "name": "action_button_lkp"
     }
     action_button_vaz = {

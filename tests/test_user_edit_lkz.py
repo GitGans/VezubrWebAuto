@@ -4,7 +4,6 @@ from pages.profile_page import Profile
 from pages.user_add_page import User
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Critical path test")
 @allure.feature('Редактирование пользователей')
 @allure.description('ЛКЗ. Тест редактирования пользователя: пользователь - Первый в списке, ФИО - ФИО-timestamp, '

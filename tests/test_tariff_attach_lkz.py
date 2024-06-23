@@ -6,7 +6,6 @@ from pages.extra_agreement_add_page import ExtraAgreementAdd
 from pages.producers_list_page import ProducersList
 
 
-@allure.epic("Нестабильные тесты")
 @allure.story("Critical path test")
 @allure.feature('Прикрепление тарифов')
 @allure.description('ЛКЗ. Тест прикрепления тарифа к ДУ c ПВ : создаем базовый ДУ и сразу прикрепляем существующий '

@@ -4,7 +4,6 @@ from pages.tariff_ltl_add_page import LTLTariffAdd
 from pages.tariffs_list_page import TariffsList
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Critical path test")
 @allure.feature('Создание тарифов')
 @allure.description('ЛКП. Тест создания LTL тарифа: название - LTL-timestamp, тип - Короб, мин.вес/объем вес/сбор '

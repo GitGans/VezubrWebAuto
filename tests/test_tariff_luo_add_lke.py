@@ -4,7 +4,6 @@ from pages.tariff_luo_add_page import LUOTariffAdd
 from pages.tariffs_list_page import TariffsList
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Создание тарифов')
 @allure.description('ЛКЭ. Тест создания ПРР тарифа: название - ПРР-timestamp, спец. - Грузчик, '

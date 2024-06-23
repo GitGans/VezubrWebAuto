@@ -17,6 +17,10 @@ class LTLAdd(Base):
         "xpath": "//button[@class='ant-btn order-assignments__add  ant-btn-primary ant-btn-lg']",
         "name": "attach_cargo_place_button"
     }
+    existing_cargo_place_button = {
+        "xpath": "//button[.//span[text()='Прикрепить существующие ГМ']]",
+        "name": "existing_cargo_place_button"
+    }
     start_at_from_button = {
         "xpath": "//span[@class='vz-form-item__label ' and contains(text(),'Дата и время начала от')]",
         "name": "start_at_from_button"

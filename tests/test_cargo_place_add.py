@@ -110,6 +110,8 @@ def test_cargo_place_own_add_lke(domain):
     # Клик по кнопке подтверждения добавления
     add_cp.click_button(add_cp.confirm_add_button, wait="lst")
     
+    # Сброс фильтров
+    cp_list.click_button(cp_list.reset_button, wait="lst")
     # Ввод штрихкода грузоместа в поле фильтрации
     cp_list.input_in_field(cp_list.barcode_filter, value=cp_stamp, wait="lst")
     # Клик по ссылке первого грузоместа в списке
@@ -172,6 +174,8 @@ def test_cargo_place_add_lkz(domain):
     # Клик по кнопке подтверждения добавления
     add_cp.click_button(add_cp.confirm_add_button, wait="lst")
     
+    # Сброс фильтров
+    cp_list.click_button(cp_list.reset_button, wait="lst")
     # Ввод штрихкода грузоместа в поле фильтрации
     cp_list.input_in_field(cp_list.barcode_filter, value=cp_stamp, wait="lst")
     # Клик по ссылке первого грузоместа в списке

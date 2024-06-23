@@ -72,7 +72,7 @@ class SideBar(Base):
     }
     ltl_active_list_button = {
         "xpath": "//*[@id='requests-ltl-side']",
-        "name": "ftl_active_list_button",
+        "name": "ltl_active_list_button",
         "reference_xpath": base_reference_xpath,
         "reference": "Заявки на доставку Груза"
     }

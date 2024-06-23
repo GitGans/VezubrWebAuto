@@ -8,21 +8,21 @@ class AddressAdd(Base):
 
     # Locators
     address_input = {
-        "xpath": "//*[@id='address_main_form_addressString']/div/div/ul/li/div/input",
+        "xpath": "//input[@class='ant-input ant-select-search__field']",
         "name": "address_input"
     }
-    status_toggl = {
-        "xpath": "//button[@id='address_main_form_status']",
-        "name": "status_toggl"
+    address_toggl = {
+        "xpath": "//button[@role='switch']",
+        "name": "address_toggl"
     }
     create_address_button = {
-        "xpath": "//button[text()='Добавить']",
+        "xpath": "//button[.//span[text()='Сохранить']]",
         "name": "create_address_button",
         "reference_xpath": "//div[@class='ant-modal-confirm-content' and text()='Адрес успешно создан']",
         "reference": "Адрес успешно создан"
     }
     confirm_add_button = {
-        "xpath": "//button[@class='ant-btn ant-btn-primary']",
+        "xpath": "//button[.//span[text()='OK']]",
         "name": "create_button"
     }
     

@@ -2,7 +2,6 @@ import allure
 from tests.base_test import base_test_with_login
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Боковое меню')
 @allure.description('ЛКЭ. Тест бокового меню: переход по всем вкладкам, ожидание прогрузки, '
@@ -88,7 +87,6 @@ def test_sidebar_lke(domain):
     sidebar.test_finish()
     
     
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Боковое меню')
 @allure.description('ЛКП. Тест бокового меню: '
@@ -148,7 +146,6 @@ def test_sidebar_lkp(domain):
     sidebar.test_finish()
     
     
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Боковое меню')
 @allure.description('ЛКЗ. Тест бокового меню: переход по всем вкладкам, '

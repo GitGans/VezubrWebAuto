@@ -6,7 +6,6 @@ from pages.request_ltl_add_page import LTLAdd
 from tests.base_test import base_test_with_login
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Создание LTL заявок')
 @allure.description('ЛКЗ. Тест создания LTL заявки: дата - Сейчас +30мин, гм - Первое в списке, публикация - Позже')
@@ -28,7 +27,8 @@ def test_ltl_request_no_publish_add_lkz(domain):
 
     ltl = LTLAdd(base.driver)
     ltl.dropdown_click_input_click(ltl.request_type_select, "Доставку ГМ (LTL)")
-    ltl.click_button(ltl.attach_cargo_place_button, wait="lst")
+    ltl.click_button(ltl.attach_cargo_place_button)
+    ltl.click_button(ltl.existing_cargo_place_button, wait="lst")
 
     cpl = CargoPlaceList(base.driver)
     cpl.click_button(cpl.cp_list_checkbox, 2)
@@ -41,7 +41,6 @@ def test_ltl_request_no_publish_add_lkz(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Создание LTL заявок')
 @allure.description('ЛКЗ. Тест создания LTL заявки: дата - Сейчас +30мин, гм - Первое в списке, публикация - Ставка, '
@@ -64,7 +63,8 @@ def test_ltl_request_rate_add_lkz(domain):
 
     ltl = LTLAdd(base.driver)
     ltl.dropdown_click_input_click(ltl.request_type_select, "Доставку ГМ (LTL)")
-    ltl.click_button(ltl.attach_cargo_place_button, wait="lst")
+    ltl.click_button(ltl.attach_cargo_place_button)
+    ltl.click_button(ltl.existing_cargo_place_button, wait="lst")
 
     cpl = CargoPlaceList(base.driver)
     cpl.click_button(cpl.cp_list_checkbox, 2)
@@ -85,7 +85,6 @@ def test_ltl_request_rate_add_lkz(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Создание LTL заявок')
 @allure.description('ЛКЗ. Тест создания LTL заявки: дата - Сейчас +30мин, гм - Первое в списке, публикация - Тариф')
@@ -107,7 +106,8 @@ def test_ltl_request_tariff_add_lkz(domain):
 
     ltl = LTLAdd(base.driver)
     ltl.dropdown_click_input_click(ltl.request_type_select, "Доставку ГМ (LTL)")
-    ltl.click_button(ltl.attach_cargo_place_button, wait="lst")
+    ltl.click_button(ltl.attach_cargo_place_button)
+    ltl.click_button(ltl.existing_cargo_place_button, wait="lst")
 
     cpl = CargoPlaceList(base.driver)
     cpl.click_button(cpl.cp_list_checkbox, 2)

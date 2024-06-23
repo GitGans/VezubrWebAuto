@@ -4,7 +4,6 @@ from pages.transport_add_page import TransportAdd
 from pages.transports_list_page import TransportsList
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Создание и редактирование транспортных средств')
 @allure.description('ЛКЭ. Тест создания и редактирования ТС внутр ПВ: '
@@ -71,7 +70,6 @@ def test_transport_inner_edit_lke(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Создание и редактирование транспортных средств')
 @allure.description('ЛКЭ. Тест создания и редактирования ПП внутр ПВ: '
@@ -129,7 +127,6 @@ def test_semitrailer_inner_edit_lke(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Extended test")
 @allure.feature('Создание и редактирование транспортных средств')
 @allure.description('ЛКЭ. Тест создания и редактирования ПП Экс: '
@@ -178,7 +175,6 @@ def test_semitrailer_edit_lke(domain):
     sidebar.test_finish()
 
 
-@allure.epic("Стабильные тесты")
 @allure.story("Smoke test")
 @allure.feature('Создание и редактирование транспортных средств')
 @allure.description('ЛКЭ. Тест создания и редактирования Тягача внутр. ПВ Экс: '
