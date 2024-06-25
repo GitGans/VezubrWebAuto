@@ -12,8 +12,8 @@ RUN apt-get update && apt-get install -y \
     xvfb \
     libxi6 \
     libgconf-2-4 \
-    default-jdk \
     libnss3 \
+    default-jdk \
     && apt-get clean
 
 # Install Google Chrome and ChromeDriver
@@ -36,10 +36,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 RUN rm -rf /app/*
 
 # Clone the latest version of the repository
-RUN git clone https://github.com/GitGans/WebAuto.git .
+RUN git clone https://github.com/GitGans/VezubrWebAuto.git .
+
+# Copy Linux ChromeDriver to the correct directory
+COPY ./resource/linux/chromedriver /app/resource/linux/chromedriver
+RUN chmod +x /app/resource/linux/chromedriver
 
 # Copy specific files (if needed)
 COPY ./pages/login.py ./pages/login.py
 
-# Run the tests
-ENTRYPOINT ["pytest"]
+# Run Xvfb and then the tests
+CMD ["sh", "-c", "Xvfb :99 -ac & export DISPLAY=:99 && pytest ${PYTEST_TARGET}"]

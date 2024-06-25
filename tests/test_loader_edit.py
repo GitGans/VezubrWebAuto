@@ -349,11 +349,11 @@ def test_loader2_edit_lkp(domain):
                                        add_loader.random_value_float_str(100000, 999999), click_first=True)
     # Удаление предыдущих типов специалиста и установка новых
     add_loader.move_and_click(move_to=add_loader.loader_type_select,
-                              move_index=3, click_to=add_loader.close_circle_button, click_index=6)
+                              move_index=4, click_to=add_loader.close_circle_button, click_index=6)
     add_loader.move_and_click(move_to=add_loader.loader_type_select,
-                              move_index=2, click_to=add_loader.close_circle_button, click_index=5)
+                              move_index=3, click_to=add_loader.close_circle_button, click_index=5)
     add_loader.move_and_click(move_to=add_loader.loader_type_select,
-                              move_index=1, click_to=add_loader.close_circle_button, click_index=4)
+                              move_index=2, click_to=add_loader.close_circle_button, click_index=4)
     add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Упаковщик", 2, 1)
     add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Стропальщик", 3, 2)
     # Ввод новых контактных данных и адреса

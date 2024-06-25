@@ -36,7 +36,7 @@ def test_ltl_request_no_publish_add_lkz(domain):
 
     ltl.add_base_ltl()
     time.sleep(1)
-    ltl.click_button(ltl.publish_later_button, do_assert=True, wait="lst")
+    ltl.click_button(ltl.publish_later_button, do_assert=True)
 
     sidebar.test_finish()
 

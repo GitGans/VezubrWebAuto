@@ -4,6 +4,7 @@ import random
 import re
 import allure
 import os
+import platform
 from typing import Any, ClassVar, Dict, Type, NoReturn, Optional
 from selenium import webdriver
 from selenium.common import TimeoutException
@@ -16,8 +17,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 
 """Variable"""
-chrome_driver_path = os.path.join('resource', 'chromedriver.exe')
-
+# Define paths to the drivers
+WINDOWS_DRIVER_PATH = os.path.join('resource', 'windows', 'chromedriver.exe')
+LINUX_DRIVER_PATH = os.path.join('resource', 'linux', 'chromedriver')
 
 class Base:
     """
@@ -61,6 +63,17 @@ class Base:
         """
         with allure.step(title="Start test"):
             options = webdriver.ChromeOptions()
+            # options.add_argument('--headless')  # Запуск в режиме headless (закомментировано)
+            options.add_argument('--no-sandbox')
+            options.add_argument('--disable-dev-shm-usage')
+            options.add_argument('--disable-gpu')
+            options.add_argument('--window-size=1920x1080')
+            
+            if platform.system() == 'Windows':
+                chrome_driver_path = WINDOWS_DRIVER_PATH
+            else:
+                chrome_driver_path = LINUX_DRIVER_PATH
+            
             service = Service(chrome_driver_path)
             driver = webdriver.Chrome(options=options, service=service)
             print("Start test")
@@ -69,17 +82,17 @@ class Base:
     """Headless - Включение режима без графического интерфейса"""
     # @classmethod
     # def get_driver(cls):
-    # """
-    # Создает и возвращает экземпляр класса с драйвером Chrome, работающим в фоновом режиме.
+    #     """
+    #     Создает и возвращает экземпляр класса с драйвером Chrome, работающим в фоновом режиме.
     #
-    # Этот метод инициализирует веб-драйвер Chrome с опцией "--headless",
-    # что позволяет выполнять тесты без открытия браузера.
+    #     Этот метод инициализирует веб-драйвер Chrome с опцией "--headless",
+    #     что позволяет выполнять тесты без открытия браузера.
     #
-    # Returns
-    # -------
-    # Base
-    #     Экземпляр класса Base с инициализированным веб-драйвером Chrome, работающим в фоновом режиме.
-    # """
+    #     Returns
+    #     -------
+    #     Base
+    #         Экземпляр класса Base с инициализированным веб-драйвером Chrome, работающим в фоновом режиме.
+    #     """
     #     with allure.step(title="Start test"):
     #         chrome_options = Options()
     #         chrome_options.add_argument("--headless")

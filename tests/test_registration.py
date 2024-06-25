@@ -135,7 +135,7 @@ def test_registration_new_lkz(domain):
     client_list.click_button(client_list.accept_button)
     base.verify_text_by_inn(inn_value=inn, reference_value="Нет договора")
     
-    time.sleep(1)
+    time.sleep(2)
 
     base.test_finish()
 
@@ -208,6 +208,6 @@ def test_registration_new_lkp(domain):
     producer_list.click_button(producer_list.accept_button)
     base.verify_text_by_inn(inn_value=inn, reference_value="Нет договора")
     
-    time.sleep(1)
+    time.sleep(2)
 
     base.test_finish()
