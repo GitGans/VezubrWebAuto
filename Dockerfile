@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Install necessary packages
 RUN apt-get update && apt-get install -y \
-    gnupg \
+    gnupg2 \
     wget \
     unzip \
     xvfb \
@@ -16,14 +16,20 @@ RUN apt-get update && apt-get install -y \
     default-jdk \
     && apt-get clean
 
-# Install Google Chrome and ChromeDriver
+# Install Google Chrome
 RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list \
+    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list' \
     && apt-get update \
     && apt-get install -y google-chrome-stable \
-    && apt-get clean \
-    && apt-get install -y chromium-driver \
     && apt-get clean
+
+# Install ChromeDriver
+RUN CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
+    wget -N http://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip && \
+    unzip chromedriver_linux64.zip && \
+    rm chromedriver_linux64.zip && \
+    mv chromedriver /usr/local/bin/chromedriver && \
+    chmod +x /usr/local/bin/chromedriver
 
 # Install git
 RUN apt-get update && apt-get install -y git && apt-get clean

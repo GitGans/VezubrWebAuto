@@ -19,7 +19,7 @@ from selenium.webdriver.chrome.options import Options
 """Variable"""
 # Define paths to the drivers
 WINDOWS_DRIVER_PATH = os.path.join('resource', 'windows', 'chromedriver.exe')
-LINUX_DRIVER_PATH = os.path.join('resource', 'linux', 'chromedriver')
+LINUX_DRIVER_PATH = '/app/resource/linux/chromedriver'
 
 class Base:
     """
