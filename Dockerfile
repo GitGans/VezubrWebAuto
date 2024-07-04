@@ -5,16 +5,18 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Install necessary packages
-RUN apt-get update && apt-get install -y \
-    gnupg2 \
-    wget \
-    unzip \
-    xvfb \
-    libxi6 \
-    libgconf-2-4 \
-    libnss3 \
-    default-jdk \
-    && apt-get clean
+RUN apt-get update && apt-get install -y gnupg2
+RUN apt-get install -y wget
+RUN apt-get install -y unzip
+RUN apt-get install -y xvfb
+RUN apt-get install -y libxi6
+RUN apt-get install -y libgconf-2-4
+RUN apt-get install -y libnss3
+RUN apt-get install -y default-jdk
+RUN apt-get install -y curl
+RUN apt-get install -y nodejs
+RUN apt-get install -y npm
+RUN apt-get clean
 
 # Install Google Chrome
 RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
@@ -23,13 +25,8 @@ RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add
     && apt-get install -y google-chrome-stable \
     && apt-get clean
 
-# Install ChromeDriver
-RUN CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
-    wget -N http://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip && \
-    unzip chromedriver_linux64.zip && \
-    rm chromedriver_linux64.zip && \
-    mv chromedriver /usr/local/bin/chromedriver && \
-    chmod +x /usr/local/bin/chromedriver
+# Install ChromeDriver using npm
+RUN npm install -g chromedriver
 
 # Install git
 RUN apt-get update && apt-get install -y git && apt-get clean
@@ -50,6 +47,9 @@ RUN chmod +x /app/resource/linux/chromedriver
 
 # Copy specific files (if needed)
 COPY ./pages/login.py ./pages/login.py
+
+# Set environment variable for Pytest target
+ENV PYTEST_TARGET=tests/test_user_add_lkp.py
 
 # Run Xvfb and then the tests
 CMD ["sh", "-c", "Xvfb :99 -ac & export DISPLAY=:99 && pytest ${PYTEST_TARGET}"]

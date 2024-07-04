@@ -51,3 +51,12 @@ class ProducersList(Base):
         "xpath": "//button[@class='filter-button rounded box-shadow primary default']",
         "name": "add_internal_contractor"
     }
+    first_radio_button = {
+        "xpath": "(//input[@type='radio' and @class='ant-radio-input'])[3]",
+        "name": "first_radio_button"
+    }
+    confirm_choice_button = {
+        "xpath": "//button[@class='ant-btn margin-left-15 ant-btn-primary']",
+        "name": "confirm_choice_button"
+    }
+

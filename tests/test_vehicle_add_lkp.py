@@ -1,5 +1,4 @@
 import time
-
 import allure
 from tests.base_test import base_test_with_login
 from pages.transport_add_page import TransportAdd
@@ -12,16 +11,21 @@ from pages.transports_list_page import TransportsList
                     '- Подрядчик, тип - Грузовой, кузов - Тент, грузоподемность/объем/палеты/высота - Рандом, '
                     'добавить/убрать - 2 и 1 водителя, эксплуотация - останавливаем/востанавливаем/завершаем')
 def test_transport_add_lkp(domain):
+    # Инициализация базовых объектов и авторизация под ролью 'lkp'
     base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
+    # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
                            do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
+    # Клик по кнопке добавления транспортного средства
     transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
+    # Выбор типа транспортного средства
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Монорамное ТС")
+    # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ТС-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Монорамник")
     add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
@@ -32,8 +36,10 @@ def test_transport_add_lkp(domain):
     add_ts.input_in_field(add_ts.volume_input, base.random_value_float_str(0.5, 120.0))
     add_ts.input_in_field(add_ts.pallets_input, base.random_value_float_str(0, 35))
     add_ts.input_in_field(add_ts.height_from_ground_input, base.random_value_float_str(1.0, 4.0))
+    # Создание транспортного средства
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
+    # Прикрепление водителей
     add_ts.click_button(add_ts.attach_button)
     time.sleep(4)
     add_ts.click_button(add_ts.select_button)
@@ -44,9 +50,10 @@ def test_transport_add_lkp(domain):
     time.sleep(2)
     add_ts.click_button(add_ts.unselect_button)
     add_ts.click_button(add_ts.assign_selected_button, wait="form")
+    # Операции с транспортным средством
     time.sleep(1)
     add_ts.click_button(add_ts.action_menu_button)
-    add_ts.click_button(add_ts.suspend_button)
+    add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
     add_ts.click_button(add_ts.resume_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
@@ -54,6 +61,7 @@ def test_transport_add_lkp(domain):
     add_ts.click_button(add_ts.yes_button, do_assert=True)
     add_ts.click_button(add_ts.ok_button)
 
+    # Завершение теста
     sidebar.test_finish()
 
 
@@ -63,16 +71,21 @@ def test_transport_add_lkp(domain):
                     '- Подрядчик, тип - Грузовой, кузов - Тент, грузоподемность/объем/палеты/высота - Рандом, '
                     'добавить/заменить - Тягач, эксплуотация - останавливаем/востанавливаем')
 def test_trailer_add_lkp(domain):
+    # Инициализация базовых объектов и авторизация под ролью 'lkp'
     base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
+    # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
                            do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
+    # Клик по кнопке добавления транспортного средства
     transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
+    # Выбор типа транспортного средства
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Полуприцеп")
+    # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ПП-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Полуприцеп")
     add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
@@ -83,8 +96,10 @@ def test_trailer_add_lkp(domain):
     add_ts.input_in_field(add_ts.volume_input, base.random_value_float_str(0.5, 120.0))
     add_ts.input_in_field(add_ts.pallets_input, base.random_value_float_str(0, 35))
     add_ts.input_in_field(add_ts.height_from_ground_input, base.random_value_float_str(1.0, 4.0))
+    # Создание транспортного средства
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
+    # Прикрепление тягача
     add_ts.click_button(add_ts.attach_button, wait="form")
     time.sleep(4)
     add_ts.click_button(add_ts.select_button, wait="form")
@@ -92,12 +107,14 @@ def test_trailer_add_lkp(domain):
     add_ts.click_button(add_ts.attach_button, wait="form")
     time.sleep(2)
     add_ts.click_button(add_ts.select_button, wait="form")
+    # Операции с транспортным средством
     time.sleep(1)
     add_ts.click_button(add_ts.action_menu_button)
     add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
     add_ts.click_button(add_ts.resume_button, wait="form")
 
+    # Завершение теста
     sidebar.test_finish()
 
 
@@ -106,22 +123,29 @@ def test_trailer_add_lkp(domain):
 @allure.description('ЛКП. Тест создания Тягача: номер - ТЯГ-timestamp, модель - Тягач, выпуск - 2023г, собственник'
                     ' - Подрядчик, добавить/убрать - 2 и 1 водителя, эксплуотация - останавливаем/востанавливаем')
 def test_tractor1_add_lkp(domain):
+    # Инициализация базовых объектов и авторизация под ролью 'lkp'
     base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
+    # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
                            do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
+    # Клик по кнопке добавления транспортного средства
     transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
+    # Выбор типа транспортного средства
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Тягач")
+    # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ТЯГ-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Тягач")
     add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
     add_ts.dropdown_click_input_click(add_ts.year_select, "2023")
+    # Создание транспортного средства
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
+    # Прикрепление водителей
     add_ts.click_button(add_ts.attach_button)
     time.sleep(4)
     add_ts.click_button(add_ts.select_button)
@@ -132,12 +156,14 @@ def test_tractor1_add_lkp(domain):
     time.sleep(2)
     add_ts.click_button(add_ts.unselect_button)
     add_ts.click_button(add_ts.assign_selected_button, wait="form")
+    # Операции с транспортным средством
     time.sleep(1)
     add_ts.click_button(add_ts.action_menu_button)
     add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
     add_ts.click_button(add_ts.resume_button, wait="form")
 
+    # Завершение теста
     sidebar.test_finish()
 
 
@@ -146,22 +172,29 @@ def test_tractor1_add_lkp(domain):
 @allure.description('ЛКП. Тест создания Тягача ПВ": номер - ТЯГ-timestamp, модель - Тягач, выпуск - 2023г, собственник'
                     ' - Подрядчик, добавить/заменить - ПП, эксплуотация - останавливаем/востанавливаем')
 def test_tractor2_add_lkp(domain):
+    # Инициализация базовых объектов и авторизация под ролью 'lkp'
     base, sidebar = base_test_with_login(domain=domain, role='lkp')
 
+    # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
                            do_assert=True, wait="lst")
 
     transports_list = TransportsList(base.driver)
+    # Клик по кнопке добавления транспортного средства
     transports_list.click_button(transports_list.add_transport_button)
 
     add_ts = TransportAdd(base.driver)
+    # Выбор типа транспортного средства
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Тягач")
+    # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ТЯГ-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Тягач")
     add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
     add_ts.dropdown_click_input_click(add_ts.year_select, "2023")
+    # Создание транспортного средства
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
+    # Прикрепление полуприцепа
     add_ts.click_button(add_ts.attach_button, index=2, wait="form")
     time.sleep(4)
     add_ts.click_button(add_ts.select_button, wait="form")
@@ -169,10 +202,12 @@ def test_tractor2_add_lkp(domain):
     add_ts.click_button(add_ts.attach_button, index=2, wait="form")
     time.sleep(2)
     add_ts.click_button(add_ts.select_button, wait="form")
+    # Операции с транспортным средством
     time.sleep(1)
     add_ts.click_button(add_ts.action_menu_button)
     add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
     add_ts.click_button(add_ts.resume_button, wait="form")
 
+    # Завершение теста
     sidebar.test_finish()

@@ -153,4 +153,176 @@ def test_cargo_place_routing_lkz(domain):
     
     # Завершение теста
     sidebar.test_finish()
+
+
+@allure.story("Critical path test")
+@allure.feature('Массовое редактирование грузомест')
+@allure.description('ЛКЭ. Тест массового редактирования ГМ ГВ: создаем - родительское ГМ ГВ, выбираем - 2-е и 3-е ГМ в '
+                    'списке, статус - Принято, адреса к статусу/отправления/доставки - Первый в списке, родительске ГМ '
+                    '- Созданное ГМ с баркодом - cp_stamp')
+def test_cargo_place_multi_edit_lke(domain):
+    # Инициализация базовых объектов и авторизация под ролью 'lke'
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
+    
+    # Переход к списку грузомест
+    sidebar.move_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.cargo_place_list_button,
+                           do_assert=True, wait="lst")
+    time.sleep(1.5)
+    cp_list = CargoPlaceList(base.driver)
+    # Клик по кнопке добавления грузоместа
+    cp_list.click_button(cp_list.add_cargo_place_button, wait="form")
+    
+    add_cp = CargoPlaceAdd(base.driver)
+    # Выбор владельца грузоместа "Auto LKZ"
+    add_cp.dropdown_click_input_click(add_cp.cargo_place_owner_select, "Auto LKZ")
+    # Выбор типа грузоместа "Короб"
+    add_cp.dropdown_click_input_click(add_cp.lke_cp_type_select, "Короб")
+    # Ввод рандомизированных данных для количества, веса, объема и стоимости груза
+    add_cp.input_in_field(add_cp.cp_quantity_input, add_cp.random_value_float_str(1, 10))
+    add_cp.input_in_field(add_cp.cp_weight_input, add_cp.random_value_float_str(10, 20000))
+    add_cp.input_in_field(add_cp.cp_value_input, add_cp.random_value_float_str(0.1, 35.0))
+    add_cp.input_in_field(add_cp.cp_cost_input, add_cp.random_value_float_str(100, 1000000))
+    # Выбор статуса грузоместа "Новое"
+    add_cp.dropdown_click_input_click(add_cp.lke_cp_status_select, "Новое")
+    # Генерация уникального идентификатора для грузоместа
+    cp_stamp = f"ГМ-{add_cp.get_timestamp()}"
+    # Ввод штрихкода грузоместа
+    add_cp.input_in_field(add_cp.lke_bar_code_input, cp_stamp)
+    # Ввод адресов отправления и доставки
+    add_cp.dropdown_click_input_wait_enter(add_cp.departure_address_select, "Auto LKZ")
+    add_cp.dropdown_click_input_wait_enter(add_cp.delivery_address_select, "Auto LKZ")
+    # Клик по кнопке создания грузоместа
+    add_cp.click_button(add_cp.create_cargo_place_button, do_assert=True)
+    # Клик по кнопке подтверждения добавления
+    add_cp.click_button(add_cp.confirm_add_button, wait="lst")
+    
+    cp_list = CargoPlaceList(base.driver)
+    # Сброс фильтров
+    cp_list.click_button(cp_list.reset_button, wait="lst")
+    # Клик по кнопке экшен меню
+    cp_list.click_button(cp_list.action_menu_button)
+    # Клик по кнопке мультивыбор ГМ
+    cp_list.click_button(cp_list.multi_select_button)
+    # Выбор второго чек-бокса
+    cp_list.click_button(cp_list.cp_list_checkbox, index=4)
+    # Выбор третьего чек-бокса
+    cp_list.click_button(cp_list.cp_list_checkbox, index=3)
+    # Клик по кнопке редактировать
+    cp_list.click_button(cp_list.multi_edit_button)
+    # Изменение статуса грузомест
+    cp_list.dropdown_click_input_click(cp_list.field_change_select, "Статус")
+    cp_list.dropdown_click_input_click(cp_list.new_value_select, "Принято")
+    cp_list.click_button(cp_list.ok_button, wait="lst")
+    # Клик по кнопке редактировать
+    cp_list.click_button(cp_list.multi_edit_button)
+    # Изменение адреса к статусу
+    cp_list.dropdown_click_input_click(cp_list.field_change_select, "Адрес к статусу")
+    cp_list.dropdown_click_input_click(cp_list.new_value_select, "15680 / г Екатеринбург, пр-кт Ленина, д 125")
+    cp_list.click_button(cp_list.ok_button, wait="lst")
+    # Клик по кнопке редактировать
+    cp_list.click_button(cp_list.multi_edit_button)
+    # Изменение адреса отправления
+    cp_list.dropdown_click_input_click(cp_list.field_change_select, "Адрес отправления")
+    cp_list.dropdown_click_input_click(cp_list.new_value_select, "15680 / г Екатеринбург, пр-кт Ленина, д 125")
+    cp_list.click_button(cp_list.ok_button, wait="lst")
+    # Клик по кнопке редактировать
+    cp_list.click_button(cp_list.multi_edit_button)
+    # Изменение адреса доставки
+    cp_list.dropdown_click_input_click(cp_list.field_change_select, "Адрес доставки")
+    cp_list.dropdown_click_input_click(cp_list.new_value_select, "15680 / г Екатеринбург, пр-кт Ленина, д 125")
+    cp_list.click_button(cp_list.ok_button, wait="lst")
+    # Клик по кнопке редактировать
+    cp_list.click_button(cp_list.multi_edit_button)
+    # Изменение баркода родительского ГМ
+    cp_list.dropdown_click_input_click(cp_list.field_change_select, "Баркод родительского ГМ")
+    cp_list.input_in_field(cp_list.parent_barcode_input, cp_stamp)
+    cp_list.click_button(cp_list.ok_button, wait="lst", do_assert=True)
+    
+    # Завершение теста
+    sidebar.test_finish()
+
+
+@allure.story("Critical path test")
+@allure.feature('Массовое редактирование грузомест')
+@allure.description('ЛКЗ. Тест массового редактирования ГМ: создаем - родительское ГМ, выбираем - 2-е и 3-е ГМ в '
+                    'списке, статус - Принято, адреса к статусу/отправления/доставки - Первый в списке, родительске ГМ '
+                    '- Созданное ГМ с баркодом - cp_stamp')
+def test_cargo_place_multi_edit_lkz(domain):
+    # Инициализация базовых объектов и авторизация под ролью 'lkz'
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
+    
+    # Переход к списку грузомест
+    sidebar.move_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.cargo_place_list_button,
+                           do_assert=True, wait="lst")
+    time.sleep(1.5)
+    cp_list = CargoPlaceList(base.driver)
+    # Клик по кнопке добавления грузоместа
+    cp_list.click_button(cp_list.add_cargo_place_button, wait="form")
+    
+    add_cp = CargoPlaceAdd(base.driver)
+    # Выбор типа грузоместа "Короб"
+    add_cp.dropdown_click_input_click(add_cp.lkz_cp_type_select, "Короб")
+    # Ввод рандомизированных данных для количества, веса, объема и стоимости груза
+    add_cp.input_in_field(add_cp.cp_quantity_input, add_cp.random_value_float_str(1, 10))
+    add_cp.input_in_field(add_cp.cp_weight_input, add_cp.random_value_float_str(10, 20000))
+    add_cp.input_in_field(add_cp.cp_value_input, add_cp.random_value_float_str(0.1, 35.0))
+    add_cp.input_in_field(add_cp.cp_cost_input, add_cp.random_value_float_str(100, 1000000))
+    # Выбор статуса грузоместа "Новое"
+    add_cp.dropdown_click_input_click(add_cp.lkz_cp_status_select, "Новое")
+    # Генерация уникального идентификатора для грузоместа
+    cp_stamp = f"ГМ-{add_cp.get_timestamp()}"
+    # Ввод штрихкода грузоместа
+    add_cp.input_in_field(add_cp.lkz_bar_code_input, cp_stamp)
+    # Ввод адресов отправления и доставки
+    add_cp.dropdown_click_input_wait_enter(add_cp.departure_address_select, "Екатеринбург")
+    add_cp.dropdown_click_input_wait_enter(add_cp.delivery_address_select, "Екатеринбург")
+    # Клик по кнопке создания грузоместа
+    add_cp.click_button(add_cp.create_cargo_place_button, do_assert=True)
+    # Клик по кнопке подтверждения добавления
+    add_cp.click_button(add_cp.confirm_add_button, wait="lst")
+    
+    cp_list = CargoPlaceList(base.driver)
+    # Сброс фильтров
+    cp_list.click_button(cp_list.reset_button, wait="lst")
+    # Клик по кнопке экшен меню
+    cp_list.click_button(cp_list.action_menu_button)
+    # Клик по кнопке мультивыбор ГМ
+    cp_list.click_button(cp_list.multi_select_button)
+    # Выбор второго чек-бокса
+    cp_list.click_button(cp_list.cp_list_checkbox, index=4)
+    # Выбор третьего чек-бокса
+    cp_list.click_button(cp_list.cp_list_checkbox, index=3)
+    # Клик по кнопке редактировать
+    cp_list.click_button(cp_list.multi_edit_button)
+    # Изменение статуса грузомест
+    cp_list.dropdown_click_input_click(cp_list.field_change_select, "Статус")
+    cp_list.dropdown_click_input_click(cp_list.new_value_select, "Принято")
+    cp_list.click_button(cp_list.ok_button, wait="lst")
+    # Клик по кнопке редактировать
+    cp_list.click_button(cp_list.multi_edit_button)
+    # Изменение адреса к статусу
+    cp_list.dropdown_click_input_click(cp_list.field_change_select, "Адрес к статусу")
+    cp_list.dropdown_click_input_click(cp_list.new_value_select, "15680 / г Екатеринбург, пр-кт Ленина, д 125")
+    cp_list.click_button(cp_list.ok_button, wait="lst")
+    # Клик по кнопке редактировать
+    cp_list.click_button(cp_list.multi_edit_button)
+    # Изменение адреса отправления
+    cp_list.dropdown_click_input_click(cp_list.field_change_select, "Адрес отправления")
+    cp_list.dropdown_click_input_click(cp_list.new_value_select, "15680 / г Екатеринбург, пр-кт Ленина, д 125")
+    cp_list.click_button(cp_list.ok_button, wait="lst")
+    # Клик по кнопке редактировать
+    cp_list.click_button(cp_list.multi_edit_button)
+    # Изменение адреса доставки
+    cp_list.dropdown_click_input_click(cp_list.field_change_select, "Адрес доставки")
+    cp_list.dropdown_click_input_click(cp_list.new_value_select, "15680 / г Екатеринбург, пр-кт Ленина, д 125")
+    cp_list.click_button(cp_list.ok_button, wait="lst")
+    # Клик по кнопке редактировать
+    cp_list.click_button(cp_list.multi_edit_button)
+    # Изменение баркода родительского ГМ
+    cp_list.dropdown_click_input_click(cp_list.field_change_select, "Баркод родительского ГМ")
+    cp_list.input_in_field(cp_list.parent_barcode_input, cp_stamp)
+    cp_list.click_button(cp_list.ok_button, wait="lst", do_assert=True)
+    
+    # Завершение теста
+    sidebar.test_finish()
     

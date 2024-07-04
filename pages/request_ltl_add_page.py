@@ -1,5 +1,5 @@
 from typing import NoReturn
-
+import time
 from base.base_class import Base
 
 
@@ -94,6 +94,7 @@ class LTLAdd(Base):
 
     # Methods
     """ Base request LTL"""
+    
     def add_base_ltl(self) -> NoReturn:
         """
         Создание базовой LTL заявки. Метод включает выбор даты и времени доставки - текущее время + 30 минут,
@@ -110,20 +111,16 @@ class LTLAdd(Base):
         """
         # Получение нового времени с учетом изменений
         new_time = self.naw_time_change(30)
-        # Последовательный клик по кнопкам для выбора даты
-        buttons_to_click_before_input = [
-            self.start_at_from_button,
-            self.today_button,
-            self.start_at_from_button,
-        ]
-        for button in buttons_to_click_before_input:
-            self.click_button(button)
+        # Клик по кнопке выбора даты и времени начала подачи
+        self.click_button(self.start_at_from_button)
+        # Клик по кнопке выбора сегодняшней даты
+        self.click_button(self.today_button)
+        # Еще раз клик по кнопке выбора даты и времени начала подачи
+        self.click_button(self.start_at_from_button)
         # Ввод новой временной метки в соответствующее поле
         self.backspace_num_and_input(self.start_at_from_input, 5, new_time)
-        # Клик по кнопкам для подтверждения и создания LTL
-        buttons_to_click_after_input = [
-            self.calendar_ok_button,
-            self.create_button,
-        ]
-        for button in buttons_to_click_after_input:
-            self.click_button(button)
+        # Клик по кнопке подтверждения выбора даты и времени
+        self.click_button(self.calendar_ok_button)
+        time.sleep(1)
+        # Клик по кнопке создания заявки
+        self.click_button(self.create_button)

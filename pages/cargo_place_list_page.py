@@ -91,5 +91,19 @@ class CargoPlaceList(Base):
     }
     ok_button = {
         "xpath": "//button[@class='ant-btn ant-btn-primary']",
-        "name": "ok_button"
+        "name": "ok_button",
+        "reference_xpath": "//h2[@class='big-title title-bold']",
+        "reference": "Задания"
+    }
+    field_change_select = {
+        "xpath": "(//div[@class='ant-select-selection__rendered'])[5]",
+        "name": "field_change_select"
+    }
+    new_value_select = {
+        "xpath": "(//div[@class='ant-select-selection__rendered'])[6]",
+        "name": "new_value_select"
+    }
+    parent_barcode_input = {
+        "xpath": "(//input[@type='text' and @class='ant-input'])[11]",
+        "name": "parent_barcode_input"
     }

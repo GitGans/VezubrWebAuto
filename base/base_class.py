@@ -61,46 +61,25 @@ class Base:
         Base
             Экземпляр класса Base с инициализированным веб-драйвером.
         """
-        with allure.step(title="Start test"):
-            options = webdriver.ChromeOptions()
-            # options.add_argument('--headless')  # Запуск в режиме headless (закомментировано)
+        options = webdriver.ChromeOptions()
+        
+        if platform.system() == 'Windows':
+            # Настройки для Windows
+            chrome_driver_path = WINDOWS_DRIVER_PATH
+        else:
+            # Настройки для Linux (например, в контейнерах)
+            chrome_driver_path = LINUX_DRIVER_PATH
             options.add_argument('--no-sandbox')
             options.add_argument('--disable-dev-shm-usage')
             options.add_argument('--disable-gpu')
-            options.add_argument('--window-size=1920x1080')
-            
-            if platform.system() == 'Windows':
-                chrome_driver_path = WINDOWS_DRIVER_PATH
-            else:
-                chrome_driver_path = LINUX_DRIVER_PATH
-            
-            service = Service(chrome_driver_path)
-            driver = webdriver.Chrome(options=options, service=service)
-            print("Start test")
-            return cls(driver)
-
-    """Headless - Включение режима без графического интерфейса"""
-    # @classmethod
-    # def get_driver(cls):
-    #     """
-    #     Создает и возвращает экземпляр класса с драйвером Chrome, работающим в фоновом режиме.
-    #
-    #     Этот метод инициализирует веб-драйвер Chrome с опцией "--headless",
-    #     что позволяет выполнять тесты без открытия браузера.
-    #
-    #     Returns
-    #     -------
-    #     Base
-    #         Экземпляр класса Base с инициализированным веб-драйвером Chrome, работающим в фоновом режиме.
-    #     """
-    #     with allure.step(title="Start test"):
-    #         chrome_options = Options()
-    #         chrome_options.add_argument("--headless")
-    #         service = Service(chrome_driver_path)
-    #         driver = webdriver.Chrome(service=service, options=chrome_options)
-    #
-    #         print("Start test")
-    #         return cls(driver)
+        
+        options.add_argument('--window-size=1920x1080')  # Устанавливает размер окна браузера
+        # options.add_argument('--headless')  # Можно использовать для безголового режима, если не нужен графический интерфейс
+        
+        service = Service(chrome_driver_path)
+        driver = webdriver.Chrome(options=options, service=service)
+        print("Start test")
+        return cls(driver)
 
     """Test finish"""
     def test_finish(self) -> None:
@@ -193,7 +172,7 @@ class Base:
             Текущее время в формате "ГГГГ.ММ.ДД.ЧЧ.ММ.СС".
         """
         return datetime.datetime.utcnow().strftime("%Y.%m.%d.%H.%M.%S")
-
+    
     """ Assert word fix reference"""
     def assert_word(self, element_dict: Dict[str, str], wait_type: str = 'clickable') -> NoReturn:
         """
@@ -214,8 +193,8 @@ class Base:
             Если текст элемента не соответствует ожидаемому значению.
         """
         if 'reference_xpath' in element_dict:
-            reference_element = WebDriverWait(self.driver, 60).until(
-                EC.presence_of_element_located((By.XPATH, element_dict['reference_xpath'])))
+            reference_element = self.get_element({'name': 'Reference element', 'xpath': element_dict['reference_xpath']},
+                                                 wait_type='located')['element']
             value_word = reference_element.text
         else:
             element = self.get_element(element_dict, wait_type=wait_type)['element']
@@ -226,7 +205,7 @@ class Base:
                                 value_word), f"Expected '{element_dict['reference']}', but found '{value_word}'."
             print(f"Assert \"{value_word}\" == \"{element_dict['reference']}\"")
 
-    """ Assert word input reference"""
+        """ Assert word input reference"""
     def flexible_assert_word(self, element_dict: Dict[str, str], reference_value: str,
                              wait_type: str = 'clickable') -> NoReturn:
         """
@@ -389,7 +368,6 @@ class Base:
             button_dict['element'].click()
             print(f"Click on {button_dict['name']}")
             if do_assert:
-                time.sleep(0.1)
                 self.assert_word(element_dict)
             if wait:
                 # Определяем, какой спиннер ожидать
@@ -426,7 +404,7 @@ class Base:
             if wait_presence:
                 WebDriverWait(self.driver, 60).until(
                     EC.presence_of_element_located(
-                        (By.XPATH, f".//li[@role='option' and normalize-space(.)='{option_text}']")
+                        (By.XPATH, f".//li[@role='option' and contains(normalize-space(.), '{option_text}')]")
                     )
                 )
             if press_enter:
@@ -434,7 +412,6 @@ class Base:
             print(f"Selected '{option_text}' from dropdown {dropdown_dict['name']}")
 
     """In dropdown click input + index click"""
-    
     def dropdown_click_input_click(self, element_dict: Dict[str, str], option_text: str, dd_index: int = 1,
                                    index: int = 1) -> None:
         """
@@ -468,7 +445,7 @@ class Base:
             dropdown_dict = self.get_element({"name": element_dict['name'], "xpath": xpath_dropdown})
             dropdown_dict['element'].click()
             
-            xpath_expression = f"(.//li[@role='option' and normalize-space(text())='{option_text}'])[{index}]"
+            xpath_expression = f"(.//li[@role='option' and normalize-space(.)='{option_text}'])[{index}]"
             option_to_select = WebDriverWait(self.driver, 60).until(
                 EC.element_to_be_clickable((By.XPATH, xpath_expression)))
             option_to_select.click()
@@ -559,7 +536,6 @@ class Base:
                 self.get_element(loading_spinner, wait_type="invisibility")  # Ожидание исчезновения спиннера
     
     """ Backspace len and input with optional click, enter"""
-    
     def backspace_len_and_input(self, element_dict: Dict[str, str], value: str,
                                 click_first: bool = False, press_enter: Optional[bool] = False) -> None:
         """
@@ -589,8 +565,8 @@ class Base:
                 field_dict['element'].send_keys(Keys.ENTER)
             print(f"{'Click and ' if click_first else ''}Backspace and input in {element_name}: {value}")
     
+   
     """ Backspace all and input with optional click, enter"""
-    
     def backspace_all_and_input(self, element_dict: Dict[str, str], value: str,
                                 click_first: bool = False, press_enter: Optional[bool] = False) -> None:
         """
@@ -623,7 +599,6 @@ class Base:
             print(f"{'Click and ' if click_first else ''}Backspaced and input in {element_name}: {value}")
     
     """ Backspace num times and input with optional click, enter"""
-    
     def backspace_num_and_input(self, element_dict: Dict[str, str], num: int, value: str,
                                 click_first: bool = False, press_enter: Optional[bool] = False) -> None:
         """

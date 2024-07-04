@@ -93,6 +93,10 @@ class Profile(Base):
         "reference_xpath": "//h2[@class='bold' and text()='Профиль']",
         "reference": "Профиль"
     }
+    surname_filter = {
+        "xpath": "//input[@placeholder='Ф.И.О пользователя']",
+        "name": "surname_filter"
+    }
     user_link = {
         "xpath": "//a[@class='link-back']",
         "name": "user_link"

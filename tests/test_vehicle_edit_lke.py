@@ -1,4 +1,5 @@
 import allure
+from pages.producers_list_page import ProducersList
 from tests.base_test import base_test_with_login
 from pages.transport_add_page import TransportAdd
 from pages.transports_list_page import TransportsList
@@ -13,21 +14,29 @@ from pages.transports_list_page import TransportsList
                     '2) редактируем ТС: тип - Грузовая + Манипуль, кузов - Бортовой, грузоподемность/палеты/'
                     'высота - Макс, доп.парам - Все')
 def test_transport_inner_edit_lke(domain):
+    # Инициализация базовых объектов и авторизация под ролью 'lke'
     base, sidebar = base_test_with_login(domain=domain, role='lke')
-
+    
+    # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
                            do_assert=True, wait="lst")
-
+    
     transports_list = TransportsList(base.driver)
+    # Клик по кнопке добавления транспортного средства
     transports_list.click_button(transports_list.add_transport_button)
-
+    
     add_ts = TransportAdd(base.driver)
+    # Выбор типа транспортного средства
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Монорамное ТС")
+    # Выбор владельца транспортного средства
     add_ts.click_button(add_ts.vehicle_owner_select, wait="lst")
-
-    transports_list.click_button(transports_list.first_radio_button, wait_type="located")
-    transports_list.click_button(transports_list.confirm_choice_button)
-
+    
+    producer_list = ProducersList(base.driver)
+    # Выбор первого перевозчика в списке
+    producer_list.click_button(producer_list.first_radio_button, wait_type="located")
+    producer_list.click_button(producer_list.confirm_choice_button)
+    
+    # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ВТС-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Монорамник")
     add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
@@ -37,9 +46,10 @@ def test_transport_inner_edit_lke(domain):
     add_ts.input_in_field(add_ts.capacity_input, "1")
     add_ts.input_in_field(add_ts.height_from_ground_input, "1")
     add_ts.dropdown_click_input_click(add_ts.number_passengers_select, "4")
+    # Создание транспортного средства
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
-
+    # Редактирование транспортного средства
     add_ts.click_button(add_ts.edit_button)
     add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Грузопассажирская")
     add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Грузовая")
@@ -66,7 +76,8 @@ def test_transport_inner_edit_lke(domain):
     add_ts.click_button(add_ts.side_loading_toggl)
     add_ts.click_button(add_ts.top_loading_toggl)
     add_ts.click_button(add_ts.edit_confirm_button, do_assert=True)
-
+    
+    # Завершение теста
     sidebar.test_finish()
 
 
@@ -79,21 +90,29 @@ def test_transport_inner_edit_lke(domain):
                     '2) редактируем ПП: тип - Грузовая, кузов - Фургон, грузоподемность/объем/паллет/высота - Мин, '
                     'доп.парам - Нет')
 def test_semitrailer_inner_edit_lke(domain):
+    # Инициализация базовых объектов и авторизация под ролью 'lke'
     base, sidebar = base_test_with_login(domain=domain, role='lke')
-
+    
+    # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
                            do_assert=True, wait="lst")
-
+    
     transports_list = TransportsList(base.driver)
+    # Клик по кнопке добавления транспортного средства
     transports_list.click_button(transports_list.add_transport_button)
-
+    
     add_ts = TransportAdd(base.driver)
+    # Выбор типа транспортного средства
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Полуприцеп")
+    # Выбор владельца транспортного средства
     add_ts.click_button(add_ts.vehicle_owner_select, wait="lst")
-
-    transports_list.click_button(transports_list.first_radio_button, wait_type="located")
-    transports_list.click_button(transports_list.confirm_choice_button)
-
+    
+    producer_list = ProducersList(base.driver)
+    # Выбор первого перевозчика в списке
+    producer_list.click_button(producer_list.first_radio_button, wait_type="located")
+    producer_list.click_button(producer_list.confirm_choice_button)
+    
+    # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ВПП-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Полуприцеп")
     add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
@@ -110,9 +129,10 @@ def test_semitrailer_inner_edit_lke(domain):
     add_ts.all_additional_params_without_gps()
     add_ts.click_button(add_ts.side_loading_toggl)
     add_ts.click_button(add_ts.top_loading_toggl)
+    # Создание транспортного средства
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
-
+    # Редактирование транспортного средства
     add_ts.click_button(add_ts.edit_button)
     add_ts.backspace_all_and_input(add_ts.capacity_input, "100")
     add_ts.backspace_all_and_input(add_ts.volume_input, "120")
@@ -122,8 +142,10 @@ def test_semitrailer_inner_edit_lke(domain):
     add_ts.all_additional_params_without_gps()
     add_ts.click_button(add_ts.side_loading_toggl)
     add_ts.click_button(add_ts.top_loading_toggl)
+    # Сохранение внесенных изменений транспортного средства
     add_ts.click_button(add_ts.edit_confirm_button, do_assert=True)
-
+    
+    # Завершение теста
     sidebar.test_finish()
 
 
@@ -135,16 +157,21 @@ def test_semitrailer_inner_edit_lke(domain):
                     '2) редактируем ПП: тип - Автовоз, кузов - Автовоз, грузоподемность/высота/машин - Макс, '
                     'доп.парам - Все')
 def test_semitrailer_edit_lke(domain):
+    # Инициализация базовых объектов и авторизация под ролью 'lke'
     base, sidebar = base_test_with_login(domain=domain, role='lke')
-
+    
+    # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
                            do_assert=True, wait="lst")
-
+    
     transports_list = TransportsList(base.driver)
+    # Клик по кнопке добавления транспортного средства
     transports_list.click_button(transports_list.add_transport_button)
-
+    
     add_ts = TransportAdd(base.driver)
+    # Выбор типа транспортного средства
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Полуприцеп")
+    # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ПП-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Полуприцеп")
     add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
@@ -154,9 +181,10 @@ def test_semitrailer_edit_lke(domain):
     add_ts.input_in_field(add_ts.volume_input, "20")
     add_ts.input_in_field(add_ts.height_from_ground_input, "1")
     add_ts.input_in_field(add_ts.compartment_count_input, "1")
+    # Создание транспортного средства
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
-
+    # Редактирование транспортного средства
     add_ts.click_button(add_ts.edit_button)
     add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Аренда")
     add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Автовоз")
@@ -170,8 +198,10 @@ def test_semitrailer_edit_lke(domain):
     add_ts.click_button(add_ts.side_loading_toggl)
     add_ts.click_button(add_ts.top_loading_toggl)
     add_ts.all_additional_params_without_gps()
+    # Сохранение внесенных изменений транспортного средства
     add_ts.click_button(add_ts.edit_confirm_button, do_assert=True)
-
+    
+    # Завершение теста
     sidebar.test_finish()
 
 
@@ -182,21 +212,29 @@ def test_semitrailer_edit_lke(domain):
                     'доп.парам - Все'
                     '2) редактируем Тяг: выпуск - 2021г, собственник - Лизинг, доп.парам - Нет')
 def test_tractor_inner_edit_lke(domain):
+    # Инициализация базовых объектов и авторизация под ролью 'lke'
     base, sidebar = base_test_with_login(domain=domain, role='lke')
-
+    
+    # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
                            do_assert=True, wait="lst")
-
+    
     transports_list = TransportsList(base.driver)
+    # Клик по кнопке добавления транспортного средства
     transports_list.click_button(transports_list.add_transport_button)
-
+    
     add_ts = TransportAdd(base.driver)
+    # Выбор типа транспортного средства
     add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Тягач")
+    # Выбор владельца транспортного средства
     add_ts.click_button(add_ts.vehicle_owner_select, wait="lst")
-
-    transports_list.click_button(transports_list.first_radio_button, wait_type="located")
-    transports_list.click_button(transports_list.confirm_choice_button)
-
+    
+    producer_list = ProducersList(base.driver)
+    # Выбор первого перевозчика в списке
+    producer_list.click_button(producer_list.first_radio_button, wait_type="located")
+    producer_list.click_button(producer_list.confirm_choice_button)
+    
+    # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ВТЯГ-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Тягач")
     add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Аренда")
@@ -211,9 +249,10 @@ def test_tractor_inner_edit_lke(domain):
     add_ts.click_button(add_ts.tractor_third_pass_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
     add_ts.click_button(add_ts.gps_monitoring_toggl)
+    # Создание транспортного средства
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
-
+    # Редактирование транспортного средства
     add_ts.click_button(add_ts.edit_button)
     add_ts.dropdown_click_input_click(add_ts.year_select, "2021")
     add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Лизинг")
@@ -221,6 +260,8 @@ def test_tractor_inner_edit_lke(domain):
     add_ts.move_and_click(move_to=add_ts.second_pass_type_select, click_to=add_ts.close_circle_button, click_index=7)
     add_ts.move_and_click(move_to=add_ts.first_pass_type_select, click_to=add_ts.close_circle_button, click_index=5)
     add_ts.click_button(add_ts.gps_monitoring_toggl)
+    # Сохранение внесенных изменений транспортного средства
     add_ts.click_button(add_ts.edit_confirm_button, do_assert=True)
-
+    
+    # Завершение теста
     sidebar.test_finish()

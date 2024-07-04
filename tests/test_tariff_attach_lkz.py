@@ -8,27 +8,38 @@ from pages.producers_list_page import ProducersList
 
 @allure.story("Critical path test")
 @allure.feature('Прикрепление тарифов')
-@allure.description('ЛКЗ. Тест прикрепления тарифа к ДУ c ПВ : создаем базовый ДУ и сразу прикрепляем существующий '
+@allure.description('ЛКЗ. Тест прикрепления тарифа к ДУ c ПВ: создаем базовый ДУ и сразу прикрепляем существующий '
                     'тариф - Первый в списке')
 def test_tariff_attach_producer_lkz(domain):
+    # Инициализация базовых объектов и авторизация под ролью 'lkz'
     base, sidebar = base_test_with_login(domain=domain, role='lkz')
 
+    # Переход к списку перевозчиков
     sidebar.click_button(sidebar.producers_list_button, do_assert=True, wait="lst")
 
     producer_list = ProducersList(base.driver)
+    # Выбор перевозчика по ИНН
     producer_list.click_button(producer_list.producer_logo_inn, wait="lst")
 
     contractor = Contractor(base.driver)
+    # Переход к договорам
     contractor.click_button(contractor.agreements_link, wait="form")
 
     agreement = Agreement(base.driver)
+    # Переход на вкладку дополнительных соглашений
     agreement.click_button(agreement.extra_agreement_tab)
+    # Клик по кнопке добавления дополнительного соглашения
     agreement.click_button(agreement.add_extra_agr_button)
 
     add_extra = ExtraAgreementAdd(base.driver)
+    # Создание базового дополнительного соглашения
     add_extra.add_base_extra_agreements()
+    # Выбор тарифа
     add_extra.click_button(add_extra.radio_button, wait_type="located")
+    # Подтверждение выбора тарифа
     add_extra.click_button(add_extra.confirm_tariff_button, do_assert=True)
+    # Подтверждение добавления дополнительного соглашения
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
 
+    # Завершение теста
     sidebar.test_finish()
