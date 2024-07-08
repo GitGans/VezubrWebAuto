@@ -182,7 +182,7 @@ class LoaderAdd(Base):
         self.input_in_field(self.reg_address_input, "Мой адрес – Не дом и не улица")
         self.input_in_field(self.fact_address_input, "Мой адрес – Советский Союз.")
         self.click_button(self.create_loader_button, do_assert=True)
-        self.click_button(self.confirm_add_button, wait="lst")
+        self.click_button(self.confirm_button, wait="lst")
 
         return surname
     

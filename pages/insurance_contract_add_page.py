@@ -55,5 +55,5 @@ class InsuranceAdd(Base):
     }
     confirm_add_button = {
         "xpath": "//button[@class='ant-btn ant-btn-primary']",
-        "name": "confirm_add_button"
+        "name": "confirm_button"
     }

@@ -77,7 +77,7 @@ class User(Base):
     }
     confirm_add_button = {
         "xpath": "//button[@class='ant-btn ant-btn-primary']",
-        "name": "confirm_add_button"
+        "name": "confirm_button"
     }
     add_responsible_button = {
         "xpath": "//button[@class='filter-button rounded box-shadow primary default']",

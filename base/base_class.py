@@ -193,44 +193,50 @@ class Base:
             Если текст элемента не соответствует ожидаемому значению.
         """
         if 'reference_xpath' in element_dict:
-            reference_element = self.get_element({'name': 'Reference element', 'xpath': element_dict['reference_xpath']},
-                                                 wait_type='located')['element']
+            reference_element = \
+            self.get_element({'name': 'Reference element', 'xpath': element_dict['reference_xpath']},
+                             wait_type='located')['element']
+            time.sleep(0.5)  # Фиксированная задержка
             value_word = reference_element.text
         else:
             element = self.get_element(element_dict, wait_type=wait_type)['element']
+            time.sleep(0.5)  # Фиксированная задержка
             value_word = element.text
-
+        
         with allure.step(title=f"Assert \"{value_word}\" == \"{element_dict['reference']}\""):
             assert re.fullmatch(element_dict['reference'],
                                 value_word), f"Expected '{element_dict['reference']}', but found '{value_word}'."
             print(f"Assert \"{value_word}\" == \"{element_dict['reference']}\"")
-
+        
         """ Assert word input reference"""
+    
     def flexible_assert_word(self, element_dict: Dict[str, str], reference_value: str,
-                             wait_type: str = 'clickable') -> NoReturn:
+                             wait_type: str = 'clickable') -> None:
         """
-        Проверяет, что текст элемента соответствует заданному значению.
+        Проверяет, что текст элемента или значение его атрибута 'value' соответствует заданному значению.
 
         Parameters
         ----------
         element_dict : dict
             Словарь с информацией о локаторе элемента.
         reference_value : str
-            Ожидаемый текст для проверки соответствия тексту элемента.
+            Ожидаемый текст или значение для проверки соответствия тексту элемента или его атрибуту 'value'.
         wait_type : str, optional
             Тип ожидания элемента ('clickable', 'visible', 'located', 'find').
 
         Raises
         ------
         AssertionError
-            Если текст элемента не соответствует ожидаемому значению.
+            Если текст элемента или его атрибут 'value' не соответствует ожидаемому значению.
         """
         element = self.get_element(element_dict, wait_type=wait_type)['element']
-        value_word = element.text
-        with allure.step(title=f"Assert \"{value_word}\" == \"{reference_value}\""):
-            assert re.fullmatch(reference_value, value_word), f"Expected '{reference_value}', but found '{value_word}'."
-            print(f"Assert \"{value_word}\" == \"{reference_value}\"")
-
+        time.sleep(0.5)  # Фиксированная задержка
+        actual_text = element.text or element.get_attribute('value')  # Получаем текст или значение атрибута 'value'
+        with allure.step(title=f"Assert \"{actual_text}\" == \"{reference_value}\""):
+            assert re.fullmatch(reference_value,
+                                actual_text), f"Expected '{reference_value}', but found '{actual_text}'."
+            print(f"Assert \"{actual_text}\" == \"{reference_value}\"")
+    
     """ Assert text extraction by INN wait clickable"""
     def verify_text_by_inn(self, inn_value: str, reference_value: str, wait_type: str = 'located') -> NoReturn:
         """
@@ -256,11 +262,12 @@ class Base:
             "xpath": f"//tr[.//a[contains(text(), '{inn_value}')]]//div[contains(text(), '{reference_value}')]"
         }
         element = self.get_element(element_info, wait_type=wait_type)['element']
+        time.sleep(0.5)  # Фиксированная задержка
         value_word = element.text
         with allure.step(title=f"Assert \"{value_word}\" == \"{reference_value}\""):
             assert value_word == reference_value, f"Expected '{reference_value}', but found '{value_word}'."
             print(f"Assert \"{value_word}\" == \"{reference_value}\"")
-
+    
     """ Get random value float to str"""
     @staticmethod
     def random_value_float_str(of: float, to: float, precision: int = 0) -> str:

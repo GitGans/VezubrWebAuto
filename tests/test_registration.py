@@ -1,5 +1,3 @@
-import time
-
 import allure
 from selenium.webdriver.support.wait import WebDriverWait
 from pages.clients_list_page import ClientsList
