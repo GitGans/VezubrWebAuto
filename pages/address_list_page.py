@@ -11,4 +11,16 @@ class AddressesList(Base):
         "xpath": "//button[@class='filter-button rounded box-shadow primary default']",
         "name": "add_address_button"
     }
+    name_filter = {
+        "xpath": "//input[@placeholder='Название адреса']",
+        "name": "name_filter"
+    }
+    reset_button = {
+        "xpath": "//button[contains(., 'Сбросить')]",
+        "name": "reset_button"
+    }
+    first_address_link = {
+        "xpath": "//a[@class='link-back']",
+        "name": "first_address_link"
+    }
     

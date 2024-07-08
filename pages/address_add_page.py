@@ -95,14 +95,64 @@ class AddressAdd(Base):
         "xpath": "(//input[@type='text' and @class='ant-input'])[8]",
         "name": "additional_second_input"
     }
+    edit_contact_person_input = {
+        "xpath": "(//input[@type='text' and @class='ant-input'])[1]",
+        "name": "edit_contact_person_input"
+    }
+    edit_mobile_phone_input = {
+        "xpath": "(//input[@type='text' and @class='ant-input'])[2]",
+        "name": "edit_mobile_phone_input"
+    }
+    edit_additional_first_input = {
+        "xpath": "(//input[@type='text' and @class='ant-input'])[3]",
+        "name": "edit_additional_first_input"
+    }
+    edit_email_input = {
+        "xpath": "(//input[@type='text' and @class='ant-input'])[4]",
+        "name": "edit_email_input"
+    }
+    edit_work_phone_input = {
+        "xpath": "(//input[@type='text' and @class='ant-input'])[5]",
+        "name": "edit_work_phone_input"
+    }
+    edit_additional_second_input = {
+        "xpath": "(//input[@type='text' and @class='ant-input'])[6]",
+        "name": "edit_additional_second_input"
+    }
     create_address_button = {
         "xpath": "//button[.//span[text()='Сохранить']]",
         "name": "create_address_button",
         "reference_xpath": "//div[@class='ant-modal-confirm-content' and text()='Адрес успешно создан']",
         "reference": "Адрес успешно создан"
     }
-    confirm_add_button = {
+    confirm_button = {
         "xpath": "//button[.//span[text()='OK']]",
         "name": "create_button"
+    }
+    delete_button = {
+        "xpath": "//button[contains(., 'Удалить')]",
+        "name": "delete_button",
+        "reference_xpath": "//span[@class='ant-modal-confirm-title' and text()='Адрес удален']",
+        "reference": "Адрес удален"
+    }
+    edit_button = {
+        "xpath": "//button[contains(., 'Редакировать')]",
+        "name": "edit_button"
+    }
+    general_tab = {
+        "xpath": "//a[@class='vz-tabs-modern__item matched' and contains(text(), 'Общая информация')]",
+        "name": "general_tab"
+    }
+    contacts_tab = {
+        "xpath": "//a[@class='vz-tabs-modern__item' and contains(text(), 'Контакты')]",
+        "name": "contacts_tab"
+    }
+    schedule_tab = {
+        "xpath": "//a[@class='vz-tabs-modern__item' and contains(text(), 'График приема/работы')]",
+        "name": "schedule_tab"
+    }
+    history_tab = {
+        "xpath": "//a[@class='vz-tabs-modern__item' and contains(text(), 'История')]",
+        "name": "history_tab"
     }
     
