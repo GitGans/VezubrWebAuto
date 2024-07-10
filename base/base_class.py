@@ -14,12 +14,12 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.chrome.options import Options
 
 """Variable"""
-# Define paths to the drivers
+# Определение пути к драйверам
 WINDOWS_DRIVER_PATH = os.path.join('resource', 'windows', 'chromedriver.exe')
 LINUX_DRIVER_PATH = '/app/resource/linux/chromedriver'
+
 
 class Base:
     """
@@ -66,19 +66,21 @@ class Base:
         if platform.system() == 'Windows':
             # Настройки для Windows
             chrome_driver_path = WINDOWS_DRIVER_PATH
+            options.add_argument('--window-size=1920x1080')  # Устанавливает размер окна браузера
         else:
             # Настройки для Linux (например, в контейнерах)
             chrome_driver_path = LINUX_DRIVER_PATH
             options.add_argument('--no-sandbox')
             options.add_argument('--disable-dev-shm-usage')
             options.add_argument('--disable-gpu')
-        
-        options.add_argument('--window-size=1920x1080')  # Устанавливает размер окна браузера
-        # options.add_argument('--headless')  # Можно использовать для безголового режима, если не нужен графический интерфейс
+            # options.add_argument('--headless')  # Режим без графического интерфейса
         
         service = Service(chrome_driver_path)
         driver = webdriver.Chrome(options=options, service=service)
-        print("Start test")
+        
+        with allure.step(title="Start test"):
+            print("Start test")
+        
         return cls(driver)
 
     """Test finish"""
@@ -193,14 +195,13 @@ class Base:
             Если текст элемента не соответствует ожидаемому значению.
         """
         if 'reference_xpath' in element_dict:
-            reference_element = \
-            self.get_element({'name': 'Reference element', 'xpath': element_dict['reference_xpath']},
-                             wait_type='located')['element']
-            time.sleep(0.5)  # Фиксированная задержка
+            reference_element = self.get_element(
+                {'name': 'Reference element', 'xpath': element_dict['reference_xpath']}, wait_type='located')['element']
+            time.sleep(0.3)  # Фиксированная задержка
             value_word = reference_element.text
         else:
             element = self.get_element(element_dict, wait_type=wait_type)['element']
-            time.sleep(0.5)  # Фиксированная задержка
+            time.sleep(0.3)  # Фиксированная задержка
             value_word = element.text
         
         with allure.step(title=f"Assert \"{value_word}\" == \"{element_dict['reference']}\""):
@@ -209,7 +210,6 @@ class Base:
             print(f"Assert \"{value_word}\" == \"{element_dict['reference']}\"")
         
         """ Assert word input reference"""
-    
     def flexible_assert_word(self, element_dict: Dict[str, str], reference_value: str,
                              wait_type: str = 'clickable') -> None:
         """
@@ -230,7 +230,7 @@ class Base:
             Если текст элемента или его атрибут 'value' не соответствует ожидаемому значению.
         """
         element = self.get_element(element_dict, wait_type=wait_type)['element']
-        time.sleep(0.5)  # Фиксированная задержка
+        time.sleep(0.3)  # Фиксированная задержка
         actual_text = element.text or element.get_attribute('value')  # Получаем текст или значение атрибута 'value'
         with allure.step(title=f"Assert \"{actual_text}\" == \"{reference_value}\""):
             assert re.fullmatch(reference_value,
@@ -262,7 +262,7 @@ class Base:
             "xpath": f"//tr[.//a[contains(text(), '{inn_value}')]]//div[contains(text(), '{reference_value}')]"
         }
         element = self.get_element(element_info, wait_type=wait_type)['element']
-        time.sleep(0.5)  # Фиксированная задержка
+        time.sleep(0.3)  # Фиксированная задержка
         value_word = element.text
         with allure.step(title=f"Assert \"{value_word}\" == \"{reference_value}\""):
             assert value_word == reference_value, f"Expected '{reference_value}', but found '{value_word}'."
@@ -572,7 +572,6 @@ class Base:
                 field_dict['element'].send_keys(Keys.ENTER)
             print(f"{'Click and ' if click_first else ''}Backspace and input in {element_name}: {value}")
     
-   
     """ Backspace all and input with optional click, enter"""
     def backspace_all_and_input(self, element_dict: Dict[str, str], value: str,
                                 click_first: bool = False, press_enter: Optional[bool] = False) -> None:
@@ -627,7 +626,8 @@ class Base:
         """
         element_name = element_dict['name']
         with allure.step(
-                title=f"{'Click and ' if click_first else ''}Backspace {num} times and input in {element_name}: {value}"):
+                title=f"{'Click and ' if click_first else ''}Backspace {num} times and input in {element_name}: {value}"
+        ):
             field_dict = self.get_element(element_dict)
             if click_first:
                 field_dict['element'].click()

@@ -25,8 +25,8 @@ def test_delegation_client_lke(domain):
     contractor = Contractor(base.driver)
     # Переход на вкладку настроек
     contractor.click_button(contractor.settings_tab)
-    # Делегирование пользователю (2-й в списке) права управления ЛК
-    contractor.click_button(contractor.user_checkbox_empty, 2)
+    # Делегирование пользователю (3-й в списке) права управления ЛК
+    contractor.click_button(contractor.user_checkbox_empty, 3)
     contractor.click_button(contractor.save_delegation_button, do_assert=True)
     contractor.click_button(contractor.ok_button)
     # Отмена делегирования пользователю (3-й в списке)
@@ -57,8 +57,8 @@ def test_delegation_producer_lke(domain):
     contractor = Contractor(base.driver)
     # Переход на вкладку настроек
     contractor.click_button(contractor.settings_tab)
-    # Делегирование пользователю (2-й в списке) права управления ЛК
-    contractor.click_button(contractor.user_checkbox_empty, 2, wait_type="located")
+    # Делегирование пользователю (3-й в списке) права управления ЛК
+    contractor.click_button(contractor.user_checkbox_empty, 3, wait_type="located")
     contractor.click_button(contractor.save_delegation_button, do_assert=True)
     contractor.click_button(contractor.ok_button)
     # Отмена делегирования пользователю (3-й в списке)
@@ -89,8 +89,8 @@ def test_delegation_inner_producer_lke(domain):
     contractor = Contractor(base.driver)
     # Переход на вкладку настроек
     contractor.click_button(contractor.settings_tab)
-    # Делегирование пользователю (2-й в списке) права управления ЛК
-    contractor.click_button(contractor.user_checkbox_empty, 2, wait_type="visible")
+    # Делегирование пользователю (3-й в списке) права управления ЛК
+    contractor.click_button(contractor.user_checkbox_empty, 3, wait_type="visible")
     contractor.click_button(contractor.save_delegation_button, do_assert=True)
     contractor.click_button(contractor.ok_button)
     # Отмена делегирования пользователю (3-й в списке)

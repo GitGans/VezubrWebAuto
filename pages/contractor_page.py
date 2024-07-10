@@ -20,7 +20,7 @@ class Contractor(Base):
         "name": "delegation_type_select"
     }
     agreements_link = {
-        "xpath": "(//div[@class='cell-text-overflow-content'])[1]",
+        "xpath": "//div[@class='cell-text-overflow-content']",
         "name": "agreements_link"
     }
     save_button = {

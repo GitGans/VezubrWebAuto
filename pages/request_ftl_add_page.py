@@ -120,3 +120,7 @@ class FTLAdd(Base):
         "xpath": "//button[@class='ant-btn ant-btn-primary' and span[contains(text(), 'OK')]]",
         "name": "create_button"
     }
+    cancel_button = {
+        "xpath": "//button[@class='ant-btn ant-btn-ghost' and span[contains(text(), 'Отмена')]]",
+        "name": "cancel_button"
+    }
