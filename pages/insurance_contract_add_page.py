@@ -53,7 +53,17 @@ class InsuranceAdd(Base):
         "reference_xpath": "//div[@class='ant-modal-confirm-content' and text()='Договор был успешно создан']",
         "reference": "Договор был успешно создан"
     }
-    confirm_add_button = {
+    confirm_button = {
         "xpath": "//button[@class='ant-btn ant-btn-primary']",
-        "name": "confirm_button"
+        "name": "confirm_button",
+        "reference_xpath": "//span[@class='ant-modal-confirm-title' and text()='Договор был успешно деактивирован']",
+        "reference": "Договор был успешно деактивирован"
+    }
+    action_menu_button = {
+        "xpath": "//span[@class='icon-content']",
+        "name": "action_menu_button"
+    }
+    close_contract_button = {
+        "xpath": "//span[contains(@class, 'text-big') and text()='Прекратить договор']",
+        "name": "close_contract_button"
     }

@@ -15,12 +15,24 @@ class Contractor(Base):
         "xpath": "//a[contains(text(), 'Настройки')]",
         "name": "settings_tab"
     }
+    insurance_expandable_list = {
+        "xpath": "//div[@class='ant-collapse-header']",
+        "name": "insurance_expandable_list"
+    }
+    insurance_company_select = {
+        "xpath": "(//div[@class='ant-select-selection__rendered'])[1]",
+        "name": "insurance_company_select"
+    }
+    insurance_contract_select = {
+        "xpath": "(//div[@class='ant-select-selection__rendered'])[2]",
+        "name": "insurance_contract_select"
+    }
     delegation_type_select = {
         "xpath": "//div[@class='ant-select-selection-selected-value']",
         "name": "delegation_type_select"
     }
     agreements_link = {
-        "xpath": "(//div[@class='cell-text-overflow-content'])[1]",
+        "xpath": "//div[@class='cell-text-overflow-content']",
         "name": "agreements_link"
     }
     save_button = {
@@ -46,5 +58,21 @@ class Contractor(Base):
     ok_button = {
         "xpath": "//button[.//span[text()='OK']]",
         "name": "calendar_ok_button"
+    }
+    confirm_button = {
+        "xpath": "//button[@class='ant-btn ant-btn-primary']",
+        "name": "confirm_button",
+        "reference_xpath": "//div[@class='ant-modal-confirm-content']",
+        "reference": "Страховая компания и Договор страхования были успешно назначены для Контрагента.*"
+    }
+    delete_button = {
+        "xpath": "//button[@class='ant-btn ant-btn-primary']",
+        "name": "delete_button",
+        "reference_xpath": "//div[@class='ant-modal-confirm-content']",
+        "reference": ".*успешно удалены Страховая компания и Договор Страхования"
+    }
+    clear_button = {
+        "xpath": "//i[@aria-label='icon: close-circle']",
+        "name": "clear_button"
     }
     

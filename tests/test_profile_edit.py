@@ -16,8 +16,7 @@ def test_profile_edit_lke(domain):
     sidebar.click_button(sidebar.profile_button, do_assert=True)
 
     profile = Profile(base.driver)
-    # Изменение фактического и почтового адресов
-    profile.backspace_len_and_input(profile.fact_address_input, f"ФА-{base.get_timestamp()}")
+    # Изменение почтового адресов
     profile.backspace_len_and_input(profile.post_address_input, f"ПА-{base.get_timestamp()}")
     # Изменение номера телефона
     profile.backspace_len_and_input(profile.phone_input, base.random_value_float_str(9000000000, 9999999999))
@@ -68,8 +67,7 @@ def test_profile_edit_lkp(domain):
     sidebar.click_button(sidebar.profile_button, do_assert=True)
 
     profile = Profile(base.driver)
-    # Изменение фактического и почтового адресов
-    profile.backspace_len_and_input(profile.fact_address_input, f"ФА-{base.get_timestamp()}")
+    # Изменение почтового адресов
     profile.backspace_len_and_input(profile.post_address_input, f"ПА-{base.get_timestamp()}")
     # Изменение номера телефона
     profile.backspace_len_and_input(profile.phone_input, base.random_value_float_str(9000000000, 9999999999))
@@ -120,8 +118,7 @@ def test_profile_edit_lkz(domain):
     sidebar.click_button(sidebar.profile_button, do_assert=True)
 
     profile = Profile(base.driver)
-    # Изменение фактического и почтового адресов
-    profile.backspace_len_and_input(profile.fact_address_input, f"ФА-{base.get_timestamp()}")
+    # Изменение почтового адресов
     profile.backspace_len_and_input(profile.post_address_input, f"ПА-{base.get_timestamp()}")
     # Изменение номера телефона
     profile.backspace_len_and_input(profile.phone_input, base.random_value_float_str(9000000000, 9999999999))

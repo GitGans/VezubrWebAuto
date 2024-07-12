@@ -23,3 +23,7 @@ class Insurer(Base):
         "xpath": "//a[@class='vz-tabs-modern__item' and contains(text(), 'Застрахованные рейсы')]",
         "name": "insured_orders_list"
     }
+    first_contract_link = {
+        "xpath": "//div[@class='cell-text-overflow-content']",
+        "name": "first_contract_link"
+    }
