@@ -7,7 +7,7 @@ import os
 import platform
 from typing import Any, ClassVar, Dict, Type, NoReturn, Optional
 from selenium import webdriver
-from selenium.common import TimeoutException
+from selenium.common import TimeoutException, ElementClickInterceptedException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -48,6 +48,14 @@ class Base:
     loading_list = {
         "xpath": "//span[@class='ant-spin-dot ant-spin-dot-spin']",
         "name": "loading_list"
+    }
+    sorting_button = {
+        "xpath": "//span[@class='ant-table-column-sorter']/div[@title='Сортировка']",
+        "name": "sorting_button"
+    }
+    reset_button = {
+        "xpath": "//button[contains(., 'Сбросить')]",
+        "name": "reset_button"
     }
 
     """ Get driver"""
@@ -817,3 +825,47 @@ class Base:
             raise ValueError("Неизвестный тип сущности. Допустимые значения: 'individual', 'entity'.")
 
         return inn
+    
+    """ Multiple click buttons"""
+    def click_multiple_buttons(self, button_element: Dict[str, str], num_buttons: int, num_clicks: int = 1,
+                               wait: Optional[str] = None, wait_type: str = 'clickable', start_index: int = 1):
+        """
+        Нажимает на каждую из N кнопок по num_clicks раз, с опциональным ожиданием прогрузки после каждого клика,
+        начиная с заданного индекса.
+
+        Parameters
+        ----------
+        button_element : Dict[str, str]
+            Словарь с информацией о кнопке для клика.
+        num_buttons : int
+            Количество кнопок, на которые нужно кликнуть.
+        num_clicks : int, optional
+            Количество кликов на одну кнопку, по умолчанию 1.
+        wait : str, optional
+            Определяет, какой спиннер ожидать после клика ('lst' для списка или 'form' для формы), если None,
+            ожидание не выполняется.
+        wait_type : str, optional
+            Тип ожидания элемента перед кликом ('clickable', 'visible', 'located', 'find'), по умолчанию 'clickable'.
+        start_index : int, optional
+            Начальный индекс кнопки для кликов, по умолчанию 1.
+        """
+        for i in range(start_index, num_buttons + 1):
+            for _ in range(num_clicks):
+                try:
+                    # Обновляем локатор элемента с учетом индекса
+                    element_locator = {"name": f"{button_element['name']} index {i}",
+                                       "xpath": f"({button_element['xpath']})[{i}]"}
+                    
+                    # Получаем элемент с использованием метода get_element
+                    element_info = self.get_element(element_locator, wait_type='visible')
+                    element = element_info['element']
+                    
+                    # Скроллим к элементу перед кликом
+                    self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
+                    
+                    if wait:
+                        self.click_button(button_element, index=i, wait=wait, wait_type=wait_type)
+                    else:
+                        self.click_button(button_element, index=i, wait_type=wait_type)
+                except ElementClickInterceptedException:
+                    print(f"ElementClickInterceptedException: unable to click button at index {i}")
