@@ -59,6 +59,7 @@ class Base:
     }
 
     """ Get driver"""
+    
     @classmethod
     def get_driver(cls: Type['Base']) -> 'Base':
         """
@@ -81,7 +82,11 @@ class Base:
             options.add_argument('--no-sandbox')
             options.add_argument('--disable-dev-shm-usage')
             options.add_argument('--disable-gpu')
-            # options.add_argument('--headless')  # Режим без графического интерфейса
+            options.add_argument('--headless')  # Режим без графического интерфейса
+            options.add_argument('--remote-debugging-port=9222')
+            options.add_argument('--disable-software-rasterizer')
+            options.add_argument('--disable-setuid-sandbox')
+            options.add_argument('--window-size=1920x1080')
         
         service = Service(chrome_driver_path)
         driver = webdriver.Chrome(options=options, service=service)
@@ -205,11 +210,11 @@ class Base:
         if 'reference_xpath' in element_dict:
             reference_element = self.get_element(
                 {'name': 'Reference element', 'xpath': element_dict['reference_xpath']}, wait_type='located')['element']
-            time.sleep(0.3)  # Фиксированная задержка
+            time.sleep(0.1)  # Фиксированная задержка
             value_word = reference_element.text
         else:
             element = self.get_element(element_dict, wait_type=wait_type)['element']
-            time.sleep(0.3)  # Фиксированная задержка
+            time.sleep(0.1)  # Фиксированная задержка
             value_word = element.text
         
         with allure.step(title=f"Assert \"{value_word}\" == \"{element_dict['reference']}\""):
@@ -238,7 +243,7 @@ class Base:
             Если текст элемента или его атрибут 'value' не соответствует ожидаемому значению.
         """
         element = self.get_element(element_dict, wait_type=wait_type)['element']
-        time.sleep(0.3)  # Фиксированная задержка
+        time.sleep(0.1)  # Фиксированная задержка
         actual_text = element.text or element.get_attribute('value')  # Получаем текст или значение атрибута 'value'
         with allure.step(title=f"Assert \"{actual_text}\" == \"{reference_value}\""):
             assert re.fullmatch(reference_value,
@@ -270,7 +275,7 @@ class Base:
             "xpath": f"//tr[.//a[contains(text(), '{inn_value}')]]//div[contains(text(), '{reference_value}')]"
         }
         element = self.get_element(element_info, wait_type=wait_type)['element']
-        time.sleep(0.3)  # Фиксированная задержка
+        time.sleep(0.1)  # Фиксированная задержка
         value_word = element.text
         with allure.step(title=f"Assert \"{value_word}\" == \"{reference_value}\""):
             assert value_word == reference_value, f"Expected '{reference_value}', but found '{value_word}'."

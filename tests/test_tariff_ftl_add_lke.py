@@ -143,8 +143,9 @@ def test_ftl_pp_tariff_add_lke(domain):
     add_tariff.click_button(add_tariff.free_downtime_input)
     add_tariff.input_in_field(add_tariff.fixed_params_input, base.random_value_float_str(10, 60))
     # Подтверждение и сохранение тарифа
-    add_tariff.click_button(add_tariff.add_fm_tariff_button, do_assert=True)
-    add_tariff.click_button(add_tariff.confirm_button, wait="lst")
+    # add_tariff.click_button(add_tariff.add_fm_tariff_button, do_assert=True)
+    # add_tariff.click_button(add_tariff.confirm_button, wait="lst")
+    # после vz-7047 расскоментировать
 
     # Завершение теста
     sidebar.test_finish()
