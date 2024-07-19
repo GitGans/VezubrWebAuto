@@ -7,7 +7,7 @@ import os
 import platform
 from typing import Any, ClassVar, Dict, Type, NoReturn, Optional
 from selenium import webdriver
-from selenium.common import TimeoutException
+from selenium.common import TimeoutException, ElementClickInterceptedException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -49,8 +49,17 @@ class Base:
         "xpath": "//span[@class='ant-spin-dot ant-spin-dot-spin']",
         "name": "loading_list"
     }
+    sorting_button = {
+        "xpath": "//span[@class='ant-table-column-sorter']/div[@title='Сортировка']",
+        "name": "sorting_button"
+    }
+    reset_button = {
+        "xpath": "//button[contains(., 'Сбросить')]",
+        "name": "reset_button"
+    }
 
     """ Get driver"""
+    
     @classmethod
     def get_driver(cls: Type['Base']) -> 'Base':
         """
@@ -73,7 +82,11 @@ class Base:
             options.add_argument('--no-sandbox')
             options.add_argument('--disable-dev-shm-usage')
             options.add_argument('--disable-gpu')
-            # options.add_argument('--headless')  # Режим без графического интерфейса
+            options.add_argument('--headless')  # Режим без графического интерфейса
+            options.add_argument('--remote-debugging-port=9222')
+            options.add_argument('--disable-software-rasterizer')
+            options.add_argument('--disable-setuid-sandbox')
+            options.add_argument('--window-size=1920x1080')
         
         service = Service(chrome_driver_path)
         driver = webdriver.Chrome(options=options, service=service)
@@ -197,11 +210,11 @@ class Base:
         if 'reference_xpath' in element_dict:
             reference_element = self.get_element(
                 {'name': 'Reference element', 'xpath': element_dict['reference_xpath']}, wait_type='located')['element']
-            time.sleep(0.3)  # Фиксированная задержка
+            time.sleep(0.1)  # Фиксированная задержка
             value_word = reference_element.text
         else:
             element = self.get_element(element_dict, wait_type=wait_type)['element']
-            time.sleep(0.3)  # Фиксированная задержка
+            time.sleep(0.1)  # Фиксированная задержка
             value_word = element.text
         
         with allure.step(title=f"Assert \"{value_word}\" == \"{element_dict['reference']}\""):
@@ -230,7 +243,7 @@ class Base:
             Если текст элемента или его атрибут 'value' не соответствует ожидаемому значению.
         """
         element = self.get_element(element_dict, wait_type=wait_type)['element']
-        time.sleep(0.3)  # Фиксированная задержка
+        time.sleep(0.1)  # Фиксированная задержка
         actual_text = element.text or element.get_attribute('value')  # Получаем текст или значение атрибута 'value'
         with allure.step(title=f"Assert \"{actual_text}\" == \"{reference_value}\""):
             assert re.fullmatch(reference_value,
@@ -262,7 +275,7 @@ class Base:
             "xpath": f"//tr[.//a[contains(text(), '{inn_value}')]]//div[contains(text(), '{reference_value}')]"
         }
         element = self.get_element(element_info, wait_type=wait_type)['element']
-        time.sleep(0.3)  # Фиксированная задержка
+        time.sleep(0.1)  # Фиксированная задержка
         value_word = element.text
         with allure.step(title=f"Assert \"{value_word}\" == \"{reference_value}\""):
             assert value_word == reference_value, f"Expected '{reference_value}', but found '{value_word}'."
@@ -817,3 +830,47 @@ class Base:
             raise ValueError("Неизвестный тип сущности. Допустимые значения: 'individual', 'entity'.")
 
         return inn
+    
+    """ Multiple click buttons"""
+    def click_multiple_buttons(self, button_element: Dict[str, str], num_buttons: int, num_clicks: int = 1,
+                               wait: Optional[str] = None, wait_type: str = 'clickable', start_index: int = 1):
+        """
+        Нажимает на каждую из N кнопок по num_clicks раз, с опциональным ожиданием прогрузки после каждого клика,
+        начиная с заданного индекса.
+
+        Parameters
+        ----------
+        button_element : Dict[str, str]
+            Словарь с информацией о кнопке для клика.
+        num_buttons : int
+            Количество кнопок, на которые нужно кликнуть.
+        num_clicks : int, optional
+            Количество кликов на одну кнопку, по умолчанию 1.
+        wait : str, optional
+            Определяет, какой спиннер ожидать после клика ('lst' для списка или 'form' для формы), если None,
+            ожидание не выполняется.
+        wait_type : str, optional
+            Тип ожидания элемента перед кликом ('clickable', 'visible', 'located', 'find'), по умолчанию 'clickable'.
+        start_index : int, optional
+            Начальный индекс кнопки для кликов, по умолчанию 1.
+        """
+        for i in range(start_index, num_buttons + 1):
+            for _ in range(num_clicks):
+                try:
+                    # Обновляем локатор элемента с учетом индекса
+                    element_locator = {"name": f"{button_element['name']} index {i}",
+                                       "xpath": f"({button_element['xpath']})[{i}]"}
+                    
+                    # Получаем элемент с использованием метода get_element
+                    element_info = self.get_element(element_locator, wait_type='visible')
+                    element = element_info['element']
+                    
+                    # Скроллим к элементу перед кликом
+                    self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
+                    
+                    if wait:
+                        self.click_button(button_element, index=i, wait=wait, wait_type=wait_type)
+                    else:
+                        self.click_button(button_element, index=i, wait_type=wait_type)
+                except ElementClickInterceptedException:
+                    print(f"ElementClickInterceptedException: unable to click button at index {i}")
