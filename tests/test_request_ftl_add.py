@@ -14,7 +14,7 @@ def test_ftl_request_add_lke(domain):
 
     # Переход к созданию новой FTL заявки
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
-                           do_assert=True, wait="form")
+                           do_assert=True)
 
     ftl = FTLAdd(base.driver)
     # Сброс ранее введенных и сохраненных данных
@@ -22,7 +22,7 @@ def test_ftl_request_add_lke(domain):
     
     # Переход к созданию новой FTL заявки
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
-                           do_assert=True, wait="form")
+                           do_assert=True)
     
     # Выбор владельца заявки
     ftl.dropdown_click_input_click(ftl.request_owner_select, "Auto LKZ")
@@ -73,7 +73,7 @@ def test_ftl_request_add_lkz(domain):
 
     # Переход к созданию новой FTL заявки
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
-                           do_assert=True, wait="form")
+                           do_assert=True)
     
     ftl = FTLAdd(base.driver)
     # Сброс ранее введенных и сохраненных данных
@@ -81,7 +81,7 @@ def test_ftl_request_add_lkz(domain):
     
     # Переход к созданию новой FTL заявки
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
-                           do_assert=True, wait="form")
+                           do_assert=True)
     
     # Установка даты подачи заявки на сегодня
     ftl.click_button(ftl.start_date_field)

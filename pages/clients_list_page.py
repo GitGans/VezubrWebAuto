@@ -16,7 +16,7 @@ class ClientsList(Base):
         "name": "client_lkz_inn"
     }
     action_button = {
-        "xpath": "(//button[.//span[contains(text(), 'Действия')]])[2]",
+        "xpath": "//button[.//span[contains(text(), 'Действия')]]",
         "name": "action_button"
     }
     go_to_account_button = {

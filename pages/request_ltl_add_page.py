@@ -75,6 +75,10 @@ class LTLAdd(Base):
         "xpath": "//span[@title='Auto LKE']",
         "name": "producer_lke_button"
     }
+    producer_lkp_button = {
+        "xpath": "//span[@title='Auto LKP']",
+        "name": "producer_lkp_button"
+    }
     publish_button = {
         "xpath": "//button[.//span[text()='Опубликовать']]",
         "name": "publish_button",

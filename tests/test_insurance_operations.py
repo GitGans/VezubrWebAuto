@@ -67,7 +67,7 @@ def test_insurance_contract_attach_lkp(domain):
     contractor.dropdown_click_input_click(contractor.insurance_company_select, "Энергогарант")
     # Выбор конкретного договора страхования
     contractor.dropdown_click_input_click(contractor.insurance_contract_select,
-                                          "Договор №№-20231229111544 «Н-20231229111545» от 29.12.2023")
+                                          "Договор №№-20240222215011 «Н-20240222215011» от 23.02.2024")
     # Подтверждение привязки договора
     contractor.click_button(contractor.confirm_button, do_assert=True)
     # Подтверждение успешного выполнения действия

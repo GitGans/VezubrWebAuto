@@ -155,7 +155,7 @@ def test_ltl_request_tariff_add_lkz(domain):
     ltl.click_button(ltl.tariff_button, wait="form")
     time.sleep(1)
     ltl.click_button(ltl.producer_select)
-    ltl.click_button(ltl.producer_lke_button)
+    ltl.click_button(ltl.producer_lkp_button)
     ltl.click_button(ltl.text_to_click)
     ltl.click_button(ltl.publish_button, do_assert=True)
     ltl.click_button(ltl.ok_button, wait="lst")

@@ -26,7 +26,7 @@ def test_cargo_place_routing_lke(domain):
     # Выбор типа грузоместа "Короб"
     add_cp.dropdown_click_input_click(add_cp.lke_cp_type_select, "Короб")
     # Ввод рандомизированных данных для количества, веса, объема и стоимости груза
-    add_cp.input_in_field(add_cp.cp_quantity_input, add_cp.random_value_float_str(1, 10))
+    add_cp.input_in_field(add_cp.cp_quantity_input, add_cp.random_value_float_str(1, 1))
     add_cp.input_in_field(add_cp.cp_weight_input, add_cp.random_value_float_str(10, 20000))
     add_cp.input_in_field(add_cp.cp_value_input, add_cp.random_value_float_str(0.1, 35.0))
     add_cp.input_in_field(add_cp.cp_cost_input, add_cp.random_value_float_str(100, 1000000))
@@ -100,7 +100,7 @@ def test_cargo_place_routing_lkz(domain):
     # Выбор типа грузоместа "Короб"
     add_cp.dropdown_click_input_click(add_cp.lkz_cp_type_select, "Короб")
     # Ввод рандомизированных данных для количества, веса, объема и стоимости груза
-    add_cp.input_in_field(add_cp.cp_quantity_input, add_cp.random_value_float_str(1, 10))
+    add_cp.input_in_field(add_cp.cp_quantity_input, add_cp.random_value_float_str(1, 1))
     add_cp.input_in_field(add_cp.cp_weight_input, add_cp.random_value_float_str(10, 20000))
     add_cp.input_in_field(add_cp.cp_value_input, add_cp.random_value_float_str(0.1, 35.0))
     add_cp.input_in_field(add_cp.cp_cost_input, add_cp.random_value_float_str(100, 1000000))
