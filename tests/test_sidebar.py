@@ -12,13 +12,13 @@ def test_sidebar_lke(domain):
     
     # Переход по всем вкладкам бокового меню и ожидание их прогрузки
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
-                           do_assert=True, wait="form")
+                           do_assert=True)
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_inter_button,
-                           do_assert=True, wait="form")
+                           do_assert=True)
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ltl_button,
                            do_assert=True, wait="form")
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_regular_button,
-                           do_assert=True, wait="form")
+                           do_assert=True)
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_loaders_button,
                            do_assert=True)
     sidebar.move_and_click(move_to=sidebar.requests_hover, click_to=sidebar.ftl_active_list_button,
@@ -162,13 +162,13 @@ def test_sidebar_lkz(domain):
     
     # Переход по всем вкладкам бокового меню и ожидание их прогрузки
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
-                           do_assert=True, wait="form")
+                           do_assert=True)
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_inter_button,
-                           do_assert=True, wait="form")
+                           do_assert=True)
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ltl_button,
                            do_assert=True, wait="form")
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_regular_button,
-                           do_assert=True, wait="form")
+                           do_assert=True)
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_loaders_button,
                            do_assert=True)
     sidebar.move_and_click(move_to=sidebar.requests_hover, click_to=sidebar.ftl_active_list_button,

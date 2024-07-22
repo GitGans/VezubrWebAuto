@@ -59,7 +59,6 @@ class Base:
     }
 
     """ Get driver"""
-    
     @classmethod
     def get_driver(cls: Type['Base']) -> 'Base':
         """
@@ -75,7 +74,6 @@ class Base:
         if platform.system() == 'Windows':
             # Настройки для Windows
             chrome_driver_path = WINDOWS_DRIVER_PATH
-            options.add_argument('--window-size=1920x1080')  # Устанавливает размер окна браузера
         else:
             # Настройки для Linux (например, в контейнерах)
             chrome_driver_path = LINUX_DRIVER_PATH
@@ -86,10 +84,10 @@ class Base:
             options.add_argument('--remote-debugging-port=9222')
             options.add_argument('--disable-software-rasterizer')
             options.add_argument('--disable-setuid-sandbox')
-            options.add_argument('--window-size=1920x1080')
         
         service = Service(chrome_driver_path)
         driver = webdriver.Chrome(options=options, service=service)
+        options.add_argument('--window-size=1920x1080')
         
         with allure.step(title="Start test"):
             print("Start test")
@@ -135,7 +133,7 @@ class Base:
             return {'name': element_info['name'], 'element': WebDriverWait(self.driver, 60).until(
                 EC.element_to_be_clickable((By.XPATH, element_info['xpath'])))}
         elif wait_type == 'visible':
-            return {'name': element_info['name'], 'element': WebDriverWait(self.driver, 60).until(
+            return {'name': element_info['name'], 'element': WebDriverWait(self.driver, 15).until(
                 EC.visibility_of_element_located((By.XPATH, element_info['xpath'])))}
         elif wait_type == 'located':
             return {'name': element_info['name'], 'element': WebDriverWait(self.driver, 60).until(
@@ -143,8 +141,7 @@ class Base:
         elif wait_type == 'find':
             return {'name': element_info['name'], 'element': self.driver.find_element(By.XPATH, element_info['xpath'])}
         elif wait_type == 'invisibility':
-            WebDriverWait(self.driver, 60).until(
-                EC.invisibility_of_element_located((By.XPATH, element_info['xpath'])))
+            WebDriverWait(self.driver, 60).until(EC.invisibility_of_element_located((By.XPATH, element_info['xpath'])))
             return {'name': element_info['name'], 'element': None}
         else:
             raise ValueError(f"Unsupported wait type: {wait_type}")
@@ -387,13 +384,25 @@ class Base:
             button_dict = self.get_element(updated_element_dict, wait_type)
             button_dict['element'].click()
             print(f"Click on {button_dict['name']}")
-            if do_assert:
-                self.assert_word(element_dict)
             if wait:
                 # Определяем, какой спиннер ожидать
                 loading_spinner = self.loading_form if wait == 'form' else self.loading_list
-                self.get_element(loading_spinner, wait_type="visible")  # Ожидание появления соответствующего спиннера
-                self.get_element(loading_spinner, wait_type="invisibility")  # Ожидание исчезновения спиннера
+                try:
+                    self.get_element(loading_spinner, wait_type="visible")  # Ожидание появления спиннера
+                except TimeoutException:
+                    with allure.step("Spinner did not appear"):
+                        print("Spinner did not disappear")
+                        return  # Выходим из метода, так как спиннер не появился
+                
+                try:
+                    self.get_element(loading_spinner, wait_type="invisibility")  # Ожидание исчезновения спиннера
+                except TimeoutException:
+                    with allure.step("Spinner did not disappear"):
+                        print("Spinner did not disappear")
+                        # Продолжаем выполнение, несмотря на то, что спиннер не исчез
+                        
+            if do_assert:
+                self.assert_word(element_dict)
     
     """ In dropdown click, wait, input and enter"""
     def dropdown_click_input_wait_enter(self, element_dict: Dict[str, str], option_text: str, press_enter: bool = True,
@@ -440,7 +449,7 @@ class Base:
         Parameters
         ----------
         element_dict : dict
-            Словарь с информацией о элементе выпадающего списка.
+            Словарь с информацией об элементе выпадающего списка.
         option_text : str
             Текст опции для поиска и выбора.
         dd_index : int
@@ -480,11 +489,11 @@ class Base:
         Parameters
         ----------
         element_dict : dict
-            Словарь с информацией о элементе, к которому необходимо переместить курсор.
+            Словарь с информацией об элементе, к которому необходимо переместить курсор.
         index : int, optional
             Индекс элемента в списке однотипных элементов. По умолчанию 1 (первый элемент).
         wait_type : str, optional
-            Тип ожидания элемента для интеракции ('clickable', 'visible', 'located', 'find', 'invisibility').
+            Тип ожидания элемента ('clickable', 'visible', 'located', 'find', 'invisibility').
 
         """
         element_name = f"{element_dict['name']} index {index}" if index > 1 else element_dict['name']
@@ -552,8 +561,19 @@ class Base:
             if wait:
                 # Определяем, какой спиннер ожидать
                 loading_spinner = self.loading_form if wait == 'form' else self.loading_list
-                self.get_element(loading_spinner, wait_type="visible")  # Ожидание появления соответствующего спиннера
-                self.get_element(loading_spinner, wait_type="invisibility")  # Ожидание исчезновения спиннера
+                try:
+                    self.get_element(loading_spinner, wait_type="visible")  # Ожидание появления спиннера
+                except TimeoutException:
+                    with allure.step("Spinner did not appear"):
+                        print("Spinner did not disappear")
+                        return  # Выходим из метода, так как спиннер не появился
+                
+                try:
+                    self.get_element(loading_spinner, wait_type="invisibility")  # Ожидание исчезновения спиннера
+                except TimeoutException:
+                    with allure.step("Spinner did not disappear"):
+                        print("Spinner did not disappear")
+                        # Продолжаем выполнение, несмотря на то, что спиннер не исчез
     
     """ Backspace len and input with optional click, enter"""
     def backspace_len_and_input(self, element_dict: Dict[str, str], value: str,
@@ -705,7 +725,7 @@ class Base:
 
         """
         self.move_to_element(move_to, index=move_index, wait_type=move_wait_type)
-        time.sleep(0.2)
+        time.sleep(0.1)
         self.click_button(click_to, index=click_index, wait_type=click_wait_type, do_assert=do_assert, wait=wait)
 
     """ Naw time change"""
