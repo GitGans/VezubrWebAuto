@@ -129,22 +129,47 @@ class Base:
         dict
             Словарь с информацией о найденном элементе.
         """
-        if wait_type == 'clickable':
-            return {'name': element_info['name'], 'element': WebDriverWait(self.driver, 60).until(
-                EC.element_to_be_clickable((By.XPATH, element_info['xpath'])))}
-        elif wait_type == 'visible':
-            return {'name': element_info['name'], 'element': WebDriverWait(self.driver, 15).until(
-                EC.visibility_of_element_located((By.XPATH, element_info['xpath'])))}
-        elif wait_type == 'located':
-            return {'name': element_info['name'], 'element': WebDriverWait(self.driver, 60).until(
-                EC.presence_of_element_located((By.XPATH, element_info['xpath'])))}
-        elif wait_type == 'find':
-            return {'name': element_info['name'], 'element': self.driver.find_element(By.XPATH, element_info['xpath'])}
-        elif wait_type == 'invisibility':
-            WebDriverWait(self.driver, 60).until(EC.invisibility_of_element_located((By.XPATH, element_info['xpath'])))
-            return {'name': element_info['name'], 'element': None}
-        else:
-            raise ValueError(f"Unsupported wait type: {wait_type}")
+        try:
+            if wait_type == 'clickable':
+                element = WebDriverWait(self.driver, 60).until(
+                    EC.element_to_be_clickable((By.XPATH, element_info['xpath'])))
+            elif wait_type == 'visible':
+                element = WebDriverWait(self.driver, 15).until(
+                    EC.visibility_of_element_located((By.XPATH, element_info['xpath'])))
+            elif wait_type == 'located':
+                element = WebDriverWait(self.driver, 60).until(
+                    EC.presence_of_element_located((By.XPATH, element_info['xpath'])))
+            elif wait_type == 'find':
+                element = self.driver.find_element(By.XPATH, element_info['xpath'])
+            elif wait_type == 'invisibility':
+                WebDriverWait(self.driver, 60).until(
+                    EC.invisibility_of_element_located((By.XPATH, element_info['xpath'])))
+                element = None
+            else:
+                raise ValueError(f"Unsupported wait type: {wait_type}")
+            
+            return {'name': element_info['name'], 'element': element}
+        
+        except TimeoutException:
+            message = ""
+            if wait_type == 'clickable':
+                message = f"Element '{element_info['name']}' is not clickable"
+            elif wait_type == 'visible':
+                message = f"Element '{element_info['name']}' is not visible"
+                with allure.step(message):
+                    print(message)
+                # Возвращаем None, чтобы тест продолжился
+                return {'name': element_info['name'], 'element': None}
+            elif wait_type == 'located':
+                message = f"Element '{element_info['name']}' is not located"
+            elif wait_type == 'find':
+                message = f"Element '{element_info['name']}' is not found"
+            elif wait_type == 'invisibility':
+                message = f"Element '{element_info['name']}' is not invisible"
+            
+            with allure.step(message):
+                print(message)
+            raise TimeoutException(message)
 
     """ Get timestamp"""
     @staticmethod
