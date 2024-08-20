@@ -24,34 +24,9 @@ def test_cargo_place_from_lkz_add_lke(domain):
     add_cp = CargoPlaceAdd(base.driver)
     # Выбор владельца грузоместа "Auto LKZ"
     add_cp.dropdown_click_input_click(add_cp.cargo_place_owner_select, "Auto LKZ")
-    # Выбор типа грузоместа "Короб"
-    add_cp.dropdown_click_input_click(add_cp.lke_cp_type_select, "Короб")
-    # Ввод рандомизированных данных для количества, веса, объема и стоимости груза
-    add_cp.input_in_field(add_cp.cp_quantity_input, add_cp.random_value_float_str(1, 10))
-    add_cp.input_in_field(add_cp.cp_weight_input, add_cp.random_value_float_str(10, 20000))
-    add_cp.input_in_field(add_cp.cp_value_input, add_cp.random_value_float_str(0.1, 35.0))
-    add_cp.input_in_field(add_cp.cp_cost_input, add_cp.random_value_float_str(100, 1000000))
-    # Выбор статуса грузоместа "Новое"
-    add_cp.dropdown_click_input_click(add_cp.lke_cp_status_select, "Новое")
-    # Генерация уникального идентификатора для грузоместа
-    cp_stamp = f"ГМ-{add_cp.get_timestamp()}"
-    # Ввод уникальных данных для грузоместа
-    add_cp.input_in_field(add_cp.lke_cp_title_input, cp_stamp)  # Название
-    add_cp.input_in_field(add_cp.lke_invoice_number_input, cp_stamp)  # Номер накладной
-    add_cp.input_in_field(add_cp.lke_bar_code_input, cp_stamp)  # Штрихкод
-    add_cp.input_in_field(add_cp.lke_seal_number_input, cp_stamp)  # Номер пломбы
-    add_cp.input_in_field(add_cp.temp_from_input, add_cp.random_value_float_str(-5, 0))  # Температура от
-    add_cp.input_in_field(add_cp.temp_until_input, add_cp.random_value_float_str(0, 5))  # Температура до
-    add_cp.input_in_field(add_cp.lke_external_id_input, cp_stamp)  # Внешний ID
-    add_cp.input_in_field(add_cp.lke_comment_input, cp_stamp)  # Комментарий
-    # Ввод адресов отправления и доставки
-    add_cp.dropdown_click_input_wait_enter(add_cp.departure_address_select, "Auto LKZ")
-    add_cp.dropdown_click_input_wait_enter(add_cp.delivery_address_select, "Auto LKZ")
-    # Клик по кнопке создания грузоместа
-    add_cp.click_button(add_cp.create_cargo_place_button, do_assert=True)
-    # Клик по кнопке подтверждения добавления
-    add_cp.click_button(add_cp.confirm_add_button, wait="lst")
-    
+    # Добавление полного базового грузоместа
+    add_cp.add_full_cargo_place_lke()
+
     # Завершение теста
     sidebar.test_finish()
 
@@ -82,33 +57,8 @@ def test_cargo_place_own_add_lke(domain):
     cp_list.move_and_click(move_to=cp_list.date_hover, click_to=cp_list.date_clear_button, wait="lst")
     cp_list.click_button(cp_list.cp_list_checkbox, index=2)
     cp_list.click_button(cp_list.confirm_button)
-    # Выбор типа грузоместа "Короб"
-    add_cp.dropdown_click_input_click(add_cp.lke_cp_type_select, "Короб")
-    # Ввод рандомизированных данных для количества, веса, объема и стоимости груза
-    add_cp.backspace_len_and_input(add_cp.cp_quantity_input, base.random_value_float_str(1, 10))
-    add_cp.backspace_len_and_input(add_cp.cp_weight_input, base.random_value_float_str(10, 20000))
-    add_cp.backspace_len_and_input(add_cp.cp_value_input, base.random_value_float_str(0.1, 35.0))
-    add_cp.backspace_len_and_input(add_cp.cp_cost_input, base.random_value_float_str(100, 1000000))
-    # Выбор статуса грузоместа "Новое"
-    add_cp.dropdown_click_input_click(add_cp.lke_cp_status_select, "Новое")
-    # Генерация уникального идентификатора для грузоместа
-    cp_stamp = f"ГМ-{add_cp.get_timestamp()}"
-    # Ввод уникальных данных для грузоместа
-    add_cp.input_in_field(add_cp.lke_cp_title_input, cp_stamp)  # Название
-    add_cp.input_in_field(add_cp.lke_invoice_number_input, cp_stamp)  # Номер накладной
-    add_cp.input_in_field(add_cp.lke_bar_code_input, cp_stamp)  # Штрихкод
-    add_cp.input_in_field(add_cp.lke_seal_number_input, cp_stamp)  # Номер пломбы
-    add_cp.input_in_field(add_cp.temp_from_input, add_cp.random_value_float_str(-5, 0))  # Температура от
-    add_cp.input_in_field(add_cp.temp_until_input, add_cp.random_value_float_str(0, 5))  # Температура до
-    add_cp.input_in_field(add_cp.lke_external_id_input, cp_stamp)  # Внешний ID
-    add_cp.input_in_field(add_cp.lke_comment_input, cp_stamp)  # Комментарий
-    # Ввод адресов отправления и доставки
-    add_cp.dropdown_click_input_wait_enter(add_cp.departure_address_select, "Auto LKE")
-    add_cp.dropdown_click_input_wait_enter(add_cp.delivery_address_select, "Auto LKE")
-    # Клик по кнопке создания грузоместа
-    add_cp.click_button(add_cp.create_cargo_place_button, do_assert=True)
-    # Клик по кнопке подтверждения добавления
-    add_cp.click_button(add_cp.confirm_add_button, wait="lst")
+    # Добавление полного базового грузоместа
+    cp_stamp = add_cp.add_full_cargo_place_lke()
     
     # Сброс фильтров
     cp_list.click_button(cp_list.reset_button, wait="lst")
@@ -146,33 +96,8 @@ def test_cargo_place_add_lkz(domain):
     cp_list.click_button(cp_list.add_cargo_place_button, wait="form")
     
     add_cp = CargoPlaceAdd(base.driver)
-    # Выбор типа грузоместа "Короб"
-    add_cp.dropdown_click_input_click(add_cp.lkz_cp_type_select, "Короб")
-    # Ввод рандомизированных данных для количества, веса, объема и стоимости груза
-    add_cp.input_in_field(add_cp.cp_quantity_input, add_cp.random_value_float_str(1, 10))
-    add_cp.input_in_field(add_cp.cp_weight_input, add_cp.random_value_float_str(10, 20000))
-    add_cp.input_in_field(add_cp.cp_value_input, add_cp.random_value_float_str(0.1, 35.0))
-    add_cp.input_in_field(add_cp.cp_cost_input, add_cp.random_value_float_str(100, 1000000))
-    # Выбор статуса грузоместа "Новое"
-    add_cp.dropdown_click_input_click(add_cp.lkz_cp_status_select, "Новое")
-    # Генерация уникального идентификатора для грузоместа
-    cp_stamp = f"ГМ-{add_cp.get_timestamp()}"
-    # Ввод уникальных данных для грузоместа
-    add_cp.input_in_field(add_cp.lkz_cp_title_input, cp_stamp)  # Название
-    add_cp.input_in_field(add_cp.lkz_invoice_number_input, cp_stamp)  # Номер накладной
-    add_cp.input_in_field(add_cp.lkz_bar_code_input, cp_stamp)  # Штрихкод
-    add_cp.input_in_field(add_cp.lkz_seal_number_input, cp_stamp)  # Номер пломбы
-    add_cp.input_in_field(add_cp.temp_from_input, add_cp.random_value_float_str(-5, 0))  # Температура от
-    add_cp.input_in_field(add_cp.temp_until_input, add_cp.random_value_float_str(0, 5))  # Температура до
-    add_cp.input_in_field(add_cp.lkz_external_id_input, cp_stamp)  # Внешний ID
-    add_cp.input_in_field(add_cp.lkz_comment_input, cp_stamp)  # Комментарий
-    # Ввод адресов отправления и доставки
-    add_cp.dropdown_click_input_wait_enter(add_cp.departure_address_select, "Екатеринбург")
-    add_cp.dropdown_click_input_wait_enter(add_cp.delivery_address_select, "Екатеринбург")
-    # Клик по кнопке создания грузоместа
-    add_cp.click_button(add_cp.create_cargo_place_button, do_assert=True)
-    # Клик по кнопке подтверждения добавления
-    add_cp.click_button(add_cp.confirm_add_button, wait="lst")
+    # Добавление полного базового грузоместа
+    cp_stamp = add_cp.add_full_cargo_place_lkz()
     
     # Сброс фильтров
     cp_list.click_button(cp_list.reset_button, wait="lst")

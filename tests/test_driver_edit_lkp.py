@@ -5,7 +5,7 @@ from pages.driver_list_page import DriverList
 
 
 @allure.story("Critical path test")
-@allure.feature('Редактирование водителей')
+@allure.feature('Создание и редактирование водителей')
 @allure.description('ЛКП. Тест редактирования водителя: ФИО - ФИО-timestamp, паспорт/права - Другой/Другой, '
                     'страна - Албания, город - Тирана, № паспорт/код/права/тлф.апп/тлф. - Рандом, книжка - Да')
 def test_own_driver1_edit_lkp(domain):
@@ -84,7 +84,7 @@ def test_own_driver1_edit_lkp(domain):
 
 
 @allure.story("Critical path test")
-@allure.feature('Редактирование водителей')
+@allure.feature('Создание и редактирование водителей')
 @allure.description('ЛКП. Тест редактирования водителя: ФИО - ФИО-timestamp, паспорт/права - РФ/Другой, '
                     'права - Тирана/10.10.10, № паспорт/код/права/тлф.апп/тлф. - Рандом, книжка - Да')
 def test_own_driver2_edit_lkp(domain):

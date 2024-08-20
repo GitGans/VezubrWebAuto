@@ -24,7 +24,7 @@ def test_ltl_request_no_publish_add_lkz(domain):
 
     add_cp = CargoPlaceAdd(base.driver)
     # Добавление базового грузоместа
-    add_cp.add_base_cargo_place()
+    add_cp.add_base_cargo_place_lkz()
 
     # Переход к созданию новой LTL заявки
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ltl_button,
@@ -71,7 +71,7 @@ def test_ltl_request_rate_add_lkz(domain):
 
     add_cp = CargoPlaceAdd(base.driver)
     # Добавление базового грузоместа
-    add_cp.add_base_cargo_place()
+    add_cp.add_base_cargo_place_lkz()
 
     # Переход к созданию новой LTL заявки
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ltl_button,
@@ -128,7 +128,7 @@ def test_ltl_request_tariff_add_lkz(domain):
 
     add_cp = CargoPlaceAdd(base.driver)
     # Добавление базового грузоместа
-    add_cp.add_base_cargo_place()
+    add_cp.add_base_cargo_place_lkz()
 
     # Переход к созданию новой LTL заявки
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ltl_button,

@@ -431,7 +431,8 @@ class Base:
     
     """ In dropdown click, wait, input and enter"""
     def dropdown_click_input_wait_enter(self, element_dict: Dict[str, str], option_text: str, press_enter: bool = True,
-                                        wait_presence: bool = False, wait_type: str = 'clickable') -> None:
+                                        wait_presence: bool = False, wait_type: str = 'clickable',
+                                        dd_index: int = 1, index: int = 1) -> None:
         """
         Выбирает текст в выпадающем списке, вводит текст и, опционально, ожидает появления опции,
         после чего может нажимать Enter. Позволяет выбор типа ожидания для элемента.
@@ -448,23 +449,45 @@ class Base:
             Если True, ожидает появления текста перед нажатием Enter.
         wait_type : str, optional
             Тип ожидания элемента ('clickable', 'visible', 'located', 'find'), по умолчанию 'clickable'.
-
+        dd_index : int, optional
+            Индекс выпадающего списка для инициации клика, начиная с 1.
+        index : int, optional
+            Индекс опции в списке, начиная с 1, который нужно выбрать.
         """
-        with allure.step(title=f"Select '{option_text}' from dropdown {element_dict['name']}"):
-            dropdown_dict = self.get_element(element_dict, wait_type=wait_type)
+        step_title = f"Select '{option_text}' from dropdown {element_dict['name']}"
+        print_message = f"Selected '{option_text}' from dropdown {element_dict['name']}"
+        
+        if dd_index != 1:
+            step_title += f" at dropdown index {dd_index}"
+            print_message += f" at dropdown index {dd_index}"
+        
+        if index != 1:
+            step_title += f" at option index {index}"
+            print_message += f" at option index {index}"
+        
+        with allure.step(title=step_title):
+            xpath_dropdown = f"({element_dict['xpath']})[{dd_index}]" if dd_index > 1 else element_dict['xpath']
+            dropdown_dict = self.get_element({"name": element_dict['name'], "xpath": xpath_dropdown},
+                                             wait_type=wait_type)
             dropdown_dict['element'].click()
             option_to_select = dropdown_dict['element'].find_element(By.XPATH, "./../..//input")
             option_to_select.send_keys(option_text)
+            
+            option_xpath = f"(.//li[@role='option' and contains(normalize-space(.), '{option_text}')])[{index}]"
+            
             if wait_presence:
                 WebDriverWait(self.driver, 60).until(
-                    EC.presence_of_element_located(
-                        (By.XPATH, f".//li[@role='option' and contains(normalize-space(.), '{option_text}')]")
-                    )
+                    EC.presence_of_element_located((By.XPATH, option_xpath))
                 )
+            
             if press_enter:
                 option_to_select.send_keys(Keys.ENTER)
-            print(f"Selected '{option_text}' from dropdown {dropdown_dict['name']}")
-
+            else:
+                option_element = self.driver.find_element(By.XPATH, option_xpath)
+                option_element.click()
+            
+            print(print_message)
+    
     """In dropdown click input + index click"""
     def dropdown_click_input_click(self, element_dict: Dict[str, str], option_text: str, dd_index: int = 1,
                                    index: int = 1) -> None:
