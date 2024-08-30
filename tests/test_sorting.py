@@ -111,8 +111,7 @@ def test_sorting_orders_lke(domain):
     sidebar.move_and_click(move_to=sidebar.order_hover, click_to=sidebar.regular_list_button,
                            do_assert=True, wait="lst")
     # Последовательный клик по всем кнопкам сортировки всех столбцов
-    base.click_multiple_buttons(base.sorting_button, num_buttons=8, num_clicks=3, wait="lst")
-    # после vz-7296 исправить на 11
+    base.click_multiple_buttons(base.sorting_button, num_buttons=11, num_clicks=3, wait="lst")
     
     # Завершение теста
     sidebar.test_finish()
@@ -162,8 +161,7 @@ def test_sorting_orders_lkz(domain):
     sidebar.move_and_click(move_to=sidebar.order_hover, click_to=sidebar.regular_list_button,
                            do_assert=True, wait="lst")
     # Последовательный клик по всем кнопкам сортировки всех столбцов
-    base.click_multiple_buttons(base.sorting_button, num_buttons=8, num_clicks=3, wait="lst")
-    # после vz-7296 исправить на 11
+    base.click_multiple_buttons(base.sorting_button, num_buttons=11, num_clicks=3, wait="lst")
     
     # Завершение теста
     sidebar.test_finish()
@@ -182,7 +180,7 @@ def test_sorting_cargo_place_lke(domain):
     # Клик по кнопке сброса фильтров
     base.click_button(base.reset_button, wait="lst")
     # Последовательный клик по всем кнопкам сортировки всех столбцов
-    base.click_multiple_buttons(base.sorting_button, num_buttons=20, num_clicks=3, wait="lst")
+    base.click_multiple_buttons(base.sorting_button, num_buttons=19, num_clicks=3, wait="lst")
     
     # Завершение теста
     sidebar.test_finish()
@@ -201,7 +199,7 @@ def test_sorting_cargo_place_lkz(domain):
     # Клик по кнопке сброса фильтров
     base.click_button(base.reset_button, wait="lst")
     # Последовательный клик по всем кнопкам сортировки всех столбцов
-    base.click_multiple_buttons(base.sorting_button, num_buttons=20, num_clicks=3, wait="lst")
+    base.click_multiple_buttons(base.sorting_button, num_buttons=19, num_clicks=3, wait="lst")
     
     # Завершение теста
     sidebar.test_finish()
@@ -595,8 +593,7 @@ def test_sorting_transport_lke(domain):
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
                            do_assert=True, wait="lst")
     # Последовательный клик по всем кнопкам сортировки всех столбцов
-    base.click_multiple_buttons(base.sorting_button, num_buttons=10, num_clicks=3, wait="lst")
-    # после vz-7315 исправить на 19
+    base.click_multiple_buttons(base.sorting_button, num_buttons=17, num_clicks=3, wait="lst")
     
     # Переход к списку тягачей
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tractors_list_button,
@@ -625,8 +622,7 @@ def test_sorting_transport_lkp(domain):
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
                            do_assert=True, wait="lst")
     # Последовательный клик по всем кнопкам сортировки всех столбцов
-    base.click_multiple_buttons(base.sorting_button, num_buttons=10, num_clicks=3, wait="lst")
-    # после vz-7315 исправить на 19
+    base.click_multiple_buttons(base.sorting_button, num_buttons=16, num_clicks=3, wait="lst")
     
     # Переход к списку тягачей
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tractors_list_button,

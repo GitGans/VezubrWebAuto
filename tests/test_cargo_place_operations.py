@@ -1,5 +1,6 @@
 import time
 import allure
+from pages.request_ltl_add_page import LTLAdd
 from tests.base_test import base_test_with_login
 from pages.cargo_place_add_page import CargoPlaceAdd
 from pages.cargo_place_list_page import CargoPlaceList
@@ -15,7 +16,7 @@ def test_cargo_place_routing_lke(domain):
     # Переход к списку грузомест
     sidebar.move_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.cargo_place_list_button,
                            do_assert=True, wait="lst")
-    time.sleep(1.5)
+    time.sleep(2)
     cp_list = CargoPlaceList(base.driver)
     # Клик по кнопке добавления грузоместа
     cp_list.click_button(cp_list.add_cargo_place_button, wait="form")
@@ -47,7 +48,7 @@ def test_cargo_place_routing_lke(domain):
     cp_list.click_button(cp_list.calendar_picker_button)
     cp_list.click_button(cp_list.today_button)
     # Выбор временного периода для маршрутизации ГМ до сегодня + час
-    new_time = cp_list.naw_time_change(60)
+    new_time = cp_list.naw_time_change(300)
     cp_list.click_button(cp_list.calendar_picker_button, index=2)
     time.sleep(1)
     cp_list.click_button(cp_list.today_button)
@@ -73,7 +74,7 @@ def test_cargo_place_routing_lkz(domain):
     # Переход к списку грузомест
     sidebar.move_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.cargo_place_list_button,
                            do_assert=True, wait="lst")
-    time.sleep(1.5)
+    time.sleep(2)
     cp_list = CargoPlaceList(base.driver)
     # Клик по кнопке добавления грузоместа
     cp_list.click_button(cp_list.add_cargo_place_button, wait="form")
@@ -103,7 +104,7 @@ def test_cargo_place_routing_lkz(domain):
     cp_list.click_button(cp_list.calendar_picker_button)
     cp_list.click_button(cp_list.today_button)
     # Выбор временного периода для маршрутизации ГМ до сегодня + час
-    new_time = cp_list.naw_time_change(60)
+    new_time = cp_list.naw_time_change(300)
     cp_list.click_button(cp_list.calendar_picker_button, index=2)
     time.sleep(1)
     cp_list.click_button(cp_list.today_button)
@@ -252,6 +253,98 @@ def test_cargo_place_multi_edit_lkz(domain):
     cp_list.dropdown_click_input_click(cp_list.field_change_select, "Баркод родительского ГМ")
     cp_list.input_in_field(cp_list.parent_barcode_input, cp_stamp)
     cp_list.click_button(cp_list.ok_button, wait="lst", do_assert=True)
+    
+    # Завершение теста
+    sidebar.test_finish()
+    
+    
+@allure.story("Smoke test")
+@allure.feature('Передача грузомест экспедитору')
+@allure.description('ЛКЭ. Тест передачи ГМ Экспедитору: '
+                    'создаем - ГМ ГВ, передаем - Экс, создаем - LTL заявку, публикация - не публикуем')
+def test_cargo_place_transfer_lke(domain):
+    # Инициализация базовых объектов и авторизация под ролью 'lke'
+    base, sidebar = base_test_with_login(domain=domain, role='lke')
+    
+    # Переход к списку грузомест
+    sidebar.move_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.cargo_place_list_button,
+                           do_assert=True, wait="lst")
+    time.sleep(1.5)
+    cp_list = CargoPlaceList(base.driver)
+    # Клик по кнопке добавления грузоместа
+    cp_list.click_button(cp_list.add_cargo_place_button, wait="form")
+    
+    add_cp = CargoPlaceAdd(base.driver)
+    # Выбор владельца грузоместа "Auto LKZ"
+    add_cp.dropdown_click_input_click(add_cp.cargo_place_owner_select, "Auto LKZ")
+    # Добавление полного базового грузоместа
+    cp_stamp = add_cp.add_base_cargo_place_lke()
+    
+    cp_list = CargoPlaceList(base.driver)
+    # Сброс фильтров
+    cp_list.click_button(cp_list.reset_button, wait="lst")
+    # Ввод штрихкода грузоместа в поле фильтрации
+    cp_list.input_in_field(cp_list.barcode_filter, value=cp_stamp, wait="lst")
+    # Клик по кнопке экшен меню
+    cp_list.click_button(cp_list.action_menu_button)
+    # Клик по кнопке мультивыбор ГМ
+    cp_list.click_button(cp_list.multi_select_button)
+    # Выбор первого чек-бокса
+    cp_list.click_button(cp_list.cp_list_checkbox, index=3)
+    # Клик по кнопке передать экспедитору
+    cp_list.click_button(cp_list.multi_transfer_button)
+    
+    ltl = LTLAdd(base.driver)
+    # Заполнение базовой информации для LTL заявки
+    ltl.add_base_ltl()
+    time.sleep(1)
+    # Публикация заявки позже
+    ltl.click_button(ltl.publish_later_button, do_assert=True)
+
+    # Завершение теста
+    sidebar.test_finish()
+
+
+@allure.story("Smoke test")
+@allure.feature('Передача грузомест экспедитору')
+@allure.description('ЛКЗ. Тест передачи ГМ Экспедитору: '
+                    'создаем - ГМ ГВ, передаем - Экс, создаем - LTL заявку, публикация - не публикуем')
+def test_cargo_place_transfer_lkz(domain):
+    # Инициализация базовых объектов и авторизация под ролью 'lkz'
+    base, sidebar = base_test_with_login(domain=domain, role='lkz')
+    
+    # Переход к списку грузомест
+    sidebar.move_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.cargo_place_list_button,
+                           do_assert=True, wait="lst")
+    time.sleep(1.5)
+    cp_list = CargoPlaceList(base.driver)
+    # Клик по кнопке добавления грузоместа
+    cp_list.click_button(cp_list.add_cargo_place_button, wait="form")
+    
+    add_cp = CargoPlaceAdd(base.driver)
+    # Добавление полного базового грузоместа
+    cp_stamp = add_cp.add_base_cargo_place_lkz()
+    
+    cp_list = CargoPlaceList(base.driver)
+    # Сброс фильтров
+    cp_list.click_button(cp_list.reset_button, wait="lst")
+    # Ввод штрихкода грузоместа в поле фильтрации
+    cp_list.input_in_field(cp_list.barcode_filter, value=cp_stamp, wait="lst")
+    # Клик по кнопке экшен меню
+    cp_list.click_button(cp_list.action_menu_button)
+    # Клик по кнопке мультивыбор ГМ
+    cp_list.click_button(cp_list.multi_select_button)
+    # Выбор первого чек-бокса
+    cp_list.click_button(cp_list.cp_list_checkbox, index=3)
+    # Клик по кнопке передать экспедитору
+    cp_list.click_button(cp_list.multi_transfer_button)
+    
+    ltl = LTLAdd(base.driver)
+    # Заполнение базовой информации для LTL заявки
+    ltl.add_base_ltl()
+    time.sleep(1)
+    # Публикация заявки позже
+    ltl.click_button(ltl.publish_later_button, do_assert=True)
     
     # Завершение теста
     sidebar.test_finish()

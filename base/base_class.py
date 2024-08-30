@@ -74,6 +74,8 @@ class Base:
         if platform.system() == 'Windows':
             # Настройки для Windows
             chrome_driver_path = WINDOWS_DRIVER_PATH
+            options.add_argument('--window-size=1920x1080')
+            # options.add_argument('--headless')  # Режим без графического интерфейса
         else:
             # Настройки для Linux (например, в контейнерах)
             chrome_driver_path = LINUX_DRIVER_PATH
@@ -84,10 +86,10 @@ class Base:
             options.add_argument('--remote-debugging-port=9222')
             options.add_argument('--disable-software-rasterizer')
             options.add_argument('--disable-setuid-sandbox')
+            options.add_argument('--window-size=1920x1080')
         
         service = Service(chrome_driver_path)
         driver = webdriver.Chrome(options=options, service=service)
-        options.add_argument('--window-size=1920x1080')
         
         with allure.step(title="Start test"):
             print("Start test")

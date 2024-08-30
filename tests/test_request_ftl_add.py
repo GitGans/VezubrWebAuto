@@ -44,17 +44,22 @@ def test_ftl_request_add_lke(domain):
     ftl.click_button(ftl.body_type_closed_checkbox)
     # Выбор первого адреса из списка
     ftl.click_button(ftl.first_address_select, wait="lst")
+    ftl.input_in_field(ftl.address_filter, "Свердловская обл, г Верхняя Пышма, Успенский пр-кт, д 103а", wait="lst")
     ftl.click_button(ftl.select_first_radio)
     ftl.click_button(ftl.confirm_address_button)
     time.sleep(3)
     # Выбор второго адреса из списка
     ftl.click_button(ftl.second_address_select, wait="lst")
+    ftl.input_in_field(ftl.address_filter, "Свердловская обл, г Березовский, ул Театральная, д 13", wait="lst")
     ftl.click_button(ftl.select_first_radio)
     ftl.click_button(ftl.confirm_address_button)
     # Ожидание завершения расчета стоимости
     base.get_element(ftl.calculate_finish)
     # Публикация заявки с использованием тарифа
     ftl.click_button(ftl.tariff_button)
+    ftl.click_button(ftl.producer_select)
+    ftl.click_button(ftl.producer_check_box, index=2)
+    ftl.click_button(ftl.producer_select_text)
     ftl.click_button(ftl.publish_button)
     ftl.click_button(ftl.continue_button, do_assert=True)
     ftl.click_button(ftl.confirm_add_button, wait="lst")
@@ -102,12 +107,14 @@ def test_ftl_request_add_lkz(domain):
     ftl.click_button(ftl.body_type_closed_checkbox)
     # Выбор первого адреса из списка
     ftl.click_button(ftl.first_address_select, wait="lst")
+    ftl.input_in_field(ftl.address_filter, "Свердловская обл, г Верхняя Пышма, Успенский пр-кт, д 103а", wait="lst")
     ftl.click_button(ftl.select_first_radio)
     ftl.click_button(ftl.confirm_address_button)
     time.sleep(3)
     # Выбор второго адреса из списка
     ftl.click_button(ftl.second_address_select, wait="lst")
-    ftl.click_button(ftl.select_second_radio)
+    ftl.input_in_field(ftl.address_filter, "Свердловская обл, г Березовский, ул Театральная, д 13", wait="lst")
+    ftl.click_button(ftl.select_first_radio)
     ftl.click_button(ftl.confirm_address_button)
     # Ожидание завершения расчета стоимости
     base.get_element(ftl.calculate_finish)

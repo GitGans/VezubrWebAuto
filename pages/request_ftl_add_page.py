@@ -73,6 +73,10 @@ class FTLAdd(Base):
         "xpath": "(//span[@class='ant-radio'])[2]",
         "name": "select_first_radio"
     }
+    address_filter = {
+        "xpath": "//input[@placeholder='Введите Адрес']",
+        "name": "address_filter"
+    }
     confirm_address_button = {
         "xpath": "//button[@class='ant-btn ant-btn-primary' and span[contains(text(), 'Применить выбранный')]]",
         "name": "confirm_address_button"
@@ -118,9 +122,13 @@ class FTLAdd(Base):
     }
     confirm_add_button = {
         "xpath": "//button[@class='ant-btn ant-btn-primary' and span[contains(text(), 'OK')]]",
-        "name": "create_button"
+        "name": "confirm_add_button"
     }
     cancel_button = {
         "xpath": "//button[@class='ant-btn ant-btn-ghost' and span[contains(text(), 'Отмена')]]",
         "name": "cancel_button"
+    }
+    producer_check_box = {
+        "xpath": "//span[contains(@class, 'ant-select-tree-title') and contains(text(), 'Контур')]",
+        "name": "producer_check_box"
     }

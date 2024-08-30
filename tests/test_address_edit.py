@@ -40,7 +40,7 @@ def test_address_edit_lke(domain):
     add_address.dropdown_click_input_wait_enter(add_address.owner_inn_input, "77", wait_presence=True)
     # Ввод id адреса партнера
     add_address.input_in_field(add_address.external_id_input, address_stamp)
-    # Ввод требовании к ТС на адресе
+    # Ввод требований к ТС на адресе
     add_address.input_in_field(add_address.max_height_input, base.random_value_float_str(2.0, 5.0, precision=1))
     add_address.input_in_field(add_address.max_capacity_input, base.random_value_float_str(1000, 5000))
     add_address.dropdown_click_input_click(add_address.loading_type_select, "Верхняя")
@@ -53,13 +53,13 @@ def test_address_edit_lke(domain):
     add_address.input_in_field(add_address.contact_person_input, "Какой-то Василий")
     add_address.input_in_field(add_address.mobile_phone_input, base.random_value_float_str(1000000000, 9999999999),
                                click_first=True)
-    # add_address.input_in_field(add_address.additional_first_input, base.random_value_float_str(1, 999999),
-    #                            click_first=True)
+    add_address.input_in_field(add_address.additional_first_input, base.random_value_float_str(1, 999999),
+                               click_first=True)
     add_address.input_in_field(add_address.email_input, f"E{base.get_timestamp()}@mail.ru")
     add_address.input_in_field(add_address.work_phone_input, base.random_value_float_str(1000000000, 9999999999),
                                click_first=True)
-    # add_address.input_in_field(add_address.additional_second_input, base.random_value_float_str(1, 999999),
-    #                            click_first=True)
+    add_address.input_in_field(add_address.additional_second_input, base.random_value_float_str(1, 999999),
+                               click_first=True)
     # Клик по кнопке создания адреса
     add_address.click_button(add_address.create_address_button, do_assert=True)
     # Клик по кнопке подтверждения добавления
@@ -94,7 +94,7 @@ def test_address_edit_lke(domain):
     add_address.dropdown_click_input_wait_enter(add_address.owner_inn_input, "77", wait_presence=True)
     # Редактирование id адреса партнера
     add_address.backspace_all_and_input(add_address.external_id_input, address_stamp)
-    # Редактирование требовании к ТС на адресе
+    # Редактирование требований к ТС на адресе
     add_address.backspace_all_and_input(add_address.max_height_input,
                                         base.random_value_float_str(2.0, 5.0, precision=1))
     add_address.backspace_all_and_input(add_address.max_capacity_input, base.random_value_float_str(1000, 5000))
@@ -109,13 +109,13 @@ def test_address_edit_lke(domain):
     add_address.backspace_all_and_input(add_address.edit_contact_person_input, "Другой Василий")
     add_address.backspace_all_and_input(add_address.edit_mobile_phone_input,
                                         base.random_value_float_str(1000000000, 9999999999), click_first=True)
-    # add_address.backspace_all_and_input(add_address.edit_additional_first_input, base.random_value_float_str(1, 999999),
-    #                            click_first=True)
+    add_address.backspace_all_and_input(add_address.edit_additional_first_input,
+                                        base.random_value_float_str(1, 999999), click_first=True)
     add_address.backspace_all_and_input(add_address.edit_email_input, f"E{base.get_timestamp()}@mail.ru")
     add_address.backspace_all_and_input(add_address.edit_work_phone_input,
                                         base.random_value_float_str(1000000000, 9999999999), click_first=True)
-    # add_address.backspace_all_and_input(add_address.edit_additional_second_input, base.random_value_float_str(1, 999999),
-    #                            click_first=True)
+    add_address.backspace_all_and_input(add_address.edit_additional_second_input,
+                                        base.random_value_float_str(1, 999999), click_first=True)
     add_address.click_button(add_address.schedule_tab)
     add_address.click_button(add_address.history_tab)
     add_address.click_button(add_address.general_tab)
@@ -163,7 +163,7 @@ def test_address_edit_lkz(domain):
     add_address.dropdown_click_input_wait_enter(add_address.owner_inn_input, "77", wait_presence=True)
     # Ввод id адреса партнера
     add_address.input_in_field(add_address.external_id_input, address_stamp)
-    # Ввод требовании к ТС на адресе
+    # Ввод требований к ТС на адресе
     add_address.input_in_field(add_address.max_height_input, base.random_value_float_str(2.0, 5.0, precision=1))
     add_address.input_in_field(add_address.max_capacity_input, base.random_value_float_str(1000, 5000))
     add_address.dropdown_click_input_click(add_address.loading_type_select, "Боковая")
@@ -217,7 +217,7 @@ def test_address_edit_lkz(domain):
     add_address.dropdown_click_input_wait_enter(add_address.owner_inn_input, "77", wait_presence=True)
     # Редактирование id адреса партнера
     add_address.backspace_all_and_input(add_address.external_id_input, address_stamp)
-    # Редактирование требовании к ТС на адресе
+    # Редактирование требований к ТС на адресе
     add_address.backspace_all_and_input(add_address.max_height_input,
                                         base.random_value_float_str(2.0, 5.0, precision=1))
     add_address.backspace_all_and_input(add_address.max_capacity_input, base.random_value_float_str(1000, 5000))
@@ -232,13 +232,13 @@ def test_address_edit_lkz(domain):
     add_address.backspace_all_and_input(add_address.edit_contact_person_input, "Другой Василий")
     add_address.backspace_all_and_input(add_address.edit_mobile_phone_input,
                                         base.random_value_float_str(1000000000, 9999999999), click_first=True)
-    # add_address.backspace_all_and_input(add_address.edit_additional_first_input, base.random_value_float_str(1, 999999),
-    #                            click_first=True)
+    add_address.backspace_all_and_input(add_address.edit_additional_first_input,
+                                        base.random_value_float_str(1, 999999), click_first=True)
     add_address.backspace_all_and_input(add_address.edit_email_input, f"E{base.get_timestamp()}@mail.ru")
     add_address.backspace_all_and_input(add_address.edit_work_phone_input,
                                         base.random_value_float_str(1000000000, 9999999999), click_first=True)
-    # add_address.backspace_all_and_input(add_address.edit_additional_second_input, base.random_value_float_str(1, 999999),
-    #                            click_first=True)
+    add_address.backspace_all_and_input(add_address.edit_additional_second_input,
+                                        base.random_value_float_str(1, 999999), click_first=True)
     add_address.click_button(add_address.schedule_tab)
     add_address.click_button(add_address.history_tab)
     add_address.click_button(add_address.general_tab)

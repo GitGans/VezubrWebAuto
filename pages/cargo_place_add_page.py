@@ -282,8 +282,8 @@ class CargoPlaceAdd(Base):
         # Выбор типа грузоместа
         self.dropdown_click_input_click(self.lkz_cp_type_select, "Короб")
         # Ввод рандомизированных данных для веса, объема и стоимости груза
-        self.input_in_field(self.cp_weight_input, self.random_value_float_str(10, 20000))
-        self.input_in_field(self.cp_value_input, self.random_value_float_str(0.1, 35.0, precision=1))
+        self.input_in_field(self.cp_weight_input, self.random_value_float_str(10, 1500))
+        self.input_in_field(self.cp_value_input, self.random_value_float_str(0.1, 9.0, precision=1))
         self.input_in_field(self.cp_cost_input, self.random_value_float_str(100, 1000000))
         # Генерация уникального идентификатора для грузоместа
         cp_stamp = f"ГМ-{self.get_timestamp()}"
@@ -320,8 +320,8 @@ class CargoPlaceAdd(Base):
         # Выбор типа грузоместа "Короб"
         self.dropdown_click_input_click(self.lke_cp_type_select, "Короб")
         # Ввод рандомизированных данных для веса, объема и стоимости груза
-        self.backspace_len_and_input(self.cp_weight_input, self.random_value_float_str(10, 20000))
-        self.backspace_len_and_input(self.cp_value_input, self.random_value_float_str(0.1, 35.0, precision=1))
+        self.backspace_len_and_input(self.cp_weight_input, self.random_value_float_str(10, 1500))
+        self.backspace_len_and_input(self.cp_value_input, self.random_value_float_str(0.1, 9.0, precision=1))
         self.backspace_len_and_input(self.cp_cost_input, self.random_value_float_str(100, 1000000))
         # Генерация уникального идентификатора для грузоместа
         cp_stamp = f"ГМ-{self.get_timestamp()}"
