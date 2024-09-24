@@ -7,7 +7,7 @@ import os
 import platform
 from typing import Any, ClassVar, Dict, Type, NoReturn, Optional
 from selenium import webdriver
-from selenium.common import TimeoutException, ElementClickInterceptedException
+from selenium.common import TimeoutException, ElementClickInterceptedException, JavascriptException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -743,6 +743,18 @@ class Base:
                 if y is not None:
                     print(f" Y by {y} pixels", end="")
                 print()
+    
+    """Scroll to the bottom of the page"""
+    def scroll_to_bottom(self) -> NoReturn:
+        """
+        Прокручивает страницу до самого низа с помощью JavaScript.
+        """
+        try:
+            # Прокрутка страницы до низа
+            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            time.sleep(0.5)  # Немного подождем после прокрутки, чтобы убедиться, что все элементы загрузились
+        except JavascriptException as e:
+            print(f"JavascriptException: {e}")
 
     """ Move to and click button"""
     def move_and_click(self, move_to: Dict[str, str], click_to: Dict[str, str], move_index: int = 1,

@@ -25,7 +25,7 @@ class CargoPlaceList(Base):
     }
     confirm_button = {
         "xpath": "//button[@class='ant-btn margin-left-15 ant-btn-primary']",
-        "name": "create_button"
+        "name": "confirm_button"
     }
     first_cp_link = {
         "xpath": "//a[@class='link-back']",
@@ -34,6 +34,10 @@ class CargoPlaceList(Base):
     barcode_filter = {
         "xpath": "//*[@id='cargoplaces-barcode-filter']",
         "name": "barcode_filter"
+    }
+    barcode_filter_input = {
+        "xpath": "//input[@placeholder='Bar Code']",
+        "name": "barcode_filter_input"
     }
     reset_button = {
         "xpath": "//button[contains(., 'Сбросить')]",
@@ -106,4 +110,17 @@ class CargoPlaceList(Base):
     parent_barcode_input = {
         "xpath": "(//input[@type='text' and @class='ant-input'])[11]",
         "name": "parent_barcode_input"
+    }
+    add_address_button = {
+        "xpath": "//div[@class='order-select-address__text' and text()='Добавить адрес']",
+        "name": "add_address_button"
+    }
+    close_button = {
+        "xpath": "//button[@aria-label='Close']",
+        "name": "close_button"
+    }
+    auto_attachment_button = {
+        "xpath": "//button[@type='button' and @class='ant-btn ant-btn-primary' and "
+                 "span[text()='Автоприкрепление Заданий (ГМ)']]",
+        "name": "auto_attachment_button"
     }

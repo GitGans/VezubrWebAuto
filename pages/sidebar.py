@@ -41,9 +41,9 @@ class SideBar(Base):
         "reference_xpath": new_order_reference_xpath,
         "reference": "Новый Заказ FTL перевозки"
     }
-    new_ltl_button = {
+    new_delivery_request_button = {
         "xpath": "//*[@id='cargo-side']",
-        "name": "new_ltl_button",
+        "name": "new_delivery_request_button",
         "reference_xpath": "//div[@class='order-form__title']",
         "reference": "Создание Заявки"
     }

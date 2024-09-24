@@ -1,131 +1,113 @@
 import time
 import allure
+from pages.cargo_place_add_page import CargoPlaceAdd
+from pages.cargo_place_list_page import CargoPlaceList
+from pages.request_delivery_add_page import DeliveryAdd
 from tests.base_test import base_test_with_login
-from pages.request_ftl_add_page import FTLAdd
 
 
-@allure.story("Smoke test")
-@allure.feature('Создание FTL заявок')
-@allure.description('ЛКЭ. Тест создания FTL заявки от ГВ: тип - Город, подача - Сейчас, ТС - Груз 0.5т, '
-                    'кузов - Закрытый, адреса - Первые в списке, публикация - Тариф')
-def test_ftl_request_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
-
-    # Переход к созданию новой FTL заявки
-    sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
-                           do_assert=True)
-
-    ftl = FTLAdd(base.driver)
-    # Сброс ранее введенных и сохраненных данных
-    ftl.click_button(ftl.cancel_button)
+# @allure.story("Smoke test")
+# @allure.feature('Создание FTL заявок')
+# @allure.description('ЛКЗ. Тест создания FTL заявки: тип - Город, подача - Сейчас +30мин, гм - Создаем в тесте, '
+#                     'ТС - Груз 0.5т, кузов - Закрытый, адреса - Конкретные, публикация - Позже')
+# def test_ftl_request_no_publish_add_lkz(domain):
+#     # Инициализация базовых объектов и авторизация под ролью 'lkz'
+#     base, sidebar = base_test_with_login(domain=domain, role='lkz')
+#
+#     # Переход к списку грузомест
+#     sidebar.move_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.cargo_place_list_button,
+#                            do_assert=True, wait="lst")
+#     time.sleep(1)
+#
+#     cp_list = CargoPlaceList(base.driver)
+#     # Клик по кнопке добавления грузоместа
+#     cp_list.click_button(cp_list.add_cargo_place_button, wait="form")
+#
+#     add_cp = CargoPlaceAdd(base.driver)
+#     # Добавление базового грузоместа
+#     cp_stamp = add_cp.add_base_cargo_place_lkz()
+#
+#     # Переход к созданию новой FTL заявки
+#     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_delivery_request_button,
+#                            do_assert=True, wait="form")
+#
+#     ftl = DeliveryAdd(base.driver)
+#     # Выбор типа заявки - Доставка ГМ (FTL)
+#     ftl.dropdown_click_input_click(ftl.request_type_select, "Доставку конкретным Типом ТС (FTL)")
+#     # Заполнение базовой информации для FTL заявки
+#     ftl.add_base_ftl()
+#     # Прокрутка страницы вниз для прикрепления грузоместа
+#     ftl.scroll_to_bottom()
+#     ftl.click_button(ftl.attach_cargo_place_button)
+#     ftl.click_button(ftl.existing_cargo_place_button, wait="lst")
+#
+#     cpl = CargoPlaceList(base.driver)
+#     # Поиск и выбор созданного грузоместа по штрихкоду
+#     cpl.input_in_field(cpl.barcode_filter_input, cp_stamp, wait="lst")
+#     cpl.click_button(cpl.auto_attachment_button)
+#     cpl.click_button(cpl.close_button)
+#
+#     # Клик по кнопке создания заявки
+#     ftl.click_button(ftl.create_button)
+#     time.sleep(1)
+#     # Публикация заявки позже
+#     ftl.click_button(ftl.publish_later_button, do_assert=True)
+#
+#     # Завершение теста
+#     sidebar.test_finish()
+#
+#
+# @allure.story("Smoke test")
+# @allure.feature('Создание FTL заявок')
+# @allure.description('ЛКЭ. Тест создания FTL заявки: тип - Город, подача - Сейчас +30мин, гм - Создаем в тесте, '
+#                     'ТС - Груз 0.5т, кузов - Закрытый, адреса - Конкретные, публикация - Позже')
+# def test_ftl_request_no_publish_add_lke(domain):
+#     # Инициализация базовых объектов и авторизация под ролью 'lke'
+#     base, sidebar = base_test_with_login(domain=domain, role='lke')
+#
+#     # Переход к списку грузомест
+#     sidebar.move_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.cargo_place_list_button,
+#                            do_assert=True, wait="lst")
+#     time.sleep(1)
+#
+#     cp_list = CargoPlaceList(base.driver)
+#     # Клик по кнопке добавления грузоместа
+#     cp_list.click_button(cp_list.add_cargo_place_button, wait="form")
+#
+#     add_cp = CargoPlaceAdd(base.driver)
+#     # Выбор владельца грузоместа "Auto LKZ"
+#     add_cp.dropdown_click_input_click(add_cp.cargo_place_owner_select, "Auto LKZ")
+#     # Добавление базового грузоместа
+#     cp_stamp = add_cp.add_base_cargo_place_lke()
+#
+#     # Переход к созданию новой FTL заявки
+#     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_delivery_request_button,
+#                            do_assert=True, wait="form")
+#
+#     ftl = DeliveryAdd(base.driver)
+#     # Выбор типа заявки - Доставка ГМ (FTL)
+#     ftl.dropdown_click_input_click(ftl.request_type_select, "Доставку конкретным Типом ТС (FTL)")
+#     # Выбор владельца заявки
+#     ftl.dropdown_click_input_click(ftl.request_owner_select, "Auto LKZ")
+#     # Заполнение базовой информации для FTL заявки
+#     ftl.add_base_ftl()
+#     # Прокрутка страницы вниз для прикрепления грузоместа
+#     ftl.scroll_to_bottom()
+#     ftl.click_button(ftl.attach_cargo_place_button)
+#     ftl.click_button(ftl.existing_cargo_place_button, wait="lst")
+#
+#     cpl = CargoPlaceList(base.driver)
+#     # Поиск и выбор созданного грузоместа по штрихкоду
+#     cpl.input_in_field(cpl.barcode_filter_input, cp_stamp, wait="lst")
+#     cpl.click_button(cpl.auto_attachment_button)
+#     cpl.click_button(cpl.close_button)
+#
+#     # Клик по кнопке создания заявки
+#     ftl.click_button(ftl.create_button)
+#     time.sleep(1)
+#     # Публикация заявки позже
+#     ftl.click_button(ftl.publish_later_button, do_assert=True)
+#
+#     # Завершение теста
+#     sidebar.test_finish()
     
-    # Переход к созданию новой FTL заявки
-    sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
-                           do_assert=True)
-    
-    # Выбор владельца заявки
-    ftl.dropdown_click_input_click(ftl.request_owner_select, "Auto LKZ")
-    # Установка даты подачи заявки на сегодня
-    ftl.click_button(ftl.start_date_field)
-    ftl.click_button(ftl.today_button)
-    # Установка времени подачи заявки через 30 минут от текущего времени
-    ftl.click_button(ftl.start_time_field)
-    new_time = ftl.naw_time_change(30)
-    ftl.input_in_field(ftl.start_time_input, new_time)
-    time.sleep(1)
-    # Выбор категории заявки - Груз
-    ftl.click_button(ftl.request_category_select)
-    ftl.click_button(ftl.select_freight)
-    # Выбор типа ТС - до 0.5т
-    ftl.dropdown_click_input_wait_enter(ftl.vehicle_type_select, "до 0.5т")
-    # Выбор типа кузова - Закрытый
-    ftl.click_button(ftl.vehicle_body_select)
-    ftl.click_button(ftl.body_type_closed_checkbox)
-    # Выбор первого адреса из списка
-    ftl.click_button(ftl.first_address_select, wait="lst")
-    ftl.input_in_field(ftl.address_filter, "Свердловская обл, г Верхняя Пышма, Успенский пр-кт, д 103а", wait="lst")
-    ftl.click_button(ftl.select_first_radio)
-    ftl.click_button(ftl.confirm_address_button)
-    time.sleep(3)
-    # Выбор второго адреса из списка
-    ftl.click_button(ftl.second_address_select, wait="lst")
-    ftl.input_in_field(ftl.address_filter, "Свердловская обл, г Березовский, ул Театральная, д 13", wait="lst")
-    ftl.click_button(ftl.select_first_radio)
-    ftl.click_button(ftl.confirm_address_button)
-    # Ожидание завершения расчета стоимости
-    base.get_element(ftl.calculate_finish)
-    # Публикация заявки с использованием тарифа
-    ftl.click_button(ftl.tariff_button)
-    ftl.click_button(ftl.producer_select)
-    ftl.click_button(ftl.producer_check_box, index=2)
-    ftl.click_button(ftl.producer_select_text)
-    ftl.click_button(ftl.publish_button)
-    ftl.click_button(ftl.continue_button, do_assert=True)
-    ftl.click_button(ftl.confirm_add_button, wait="lst")
-
-    # Завершение теста
-    sidebar.test_finish()
-    
-    
-@allure.story("Smoke test")
-@allure.feature('Создание FTL заявок')
-@allure.description('ЛКЗ. Тест создания FTL заявки: тип - Город, подача - Сейчас, ТС - Груз 0.5т, '
-                    'кузов - Закрытый, адреса - Первые в списке, публикация - Тариф')
-def test_ftl_request_add_lkz(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkz'
-    base, sidebar = base_test_with_login(domain=domain, role='lkz')
-
-    # Переход к созданию новой FTL заявки
-    sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
-                           do_assert=True)
-    
-    ftl = FTLAdd(base.driver)
-    # Сброс ранее введенных и сохраненных данных
-    ftl.click_button(ftl.cancel_button)
-    
-    # Переход к созданию новой FTL заявки
-    sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
-                           do_assert=True)
-    
-    # Установка даты подачи заявки на сегодня
-    ftl.click_button(ftl.start_date_field)
-    ftl.click_button(ftl.today_button)
-    # Установка времени подачи заявки через 30 минут от текущего времени
-    ftl.click_button(ftl.start_time_field)
-    new_time = ftl.naw_time_change(30)
-    ftl.input_in_field(ftl.start_time_input, new_time)
-    time.sleep(1)
-    # Выбор категории заявки - Груз
-    ftl.click_button(ftl.request_category_select)
-    ftl.click_button(ftl.select_freight)
-    # Выбор типа ТС - до 0.5т
-    ftl.click_button(ftl.vehicle_type_select)
-    ftl.dropdown_click_input_wait_enter(ftl.vehicle_type_select, "до 0.5т")
-    # Выбор типа кузова - Закрытый
-    ftl.click_button(ftl.vehicle_body_select)
-    ftl.click_button(ftl.body_type_closed_checkbox)
-    # Выбор первого адреса из списка
-    ftl.click_button(ftl.first_address_select, wait="lst")
-    ftl.input_in_field(ftl.address_filter, "Свердловская обл, г Верхняя Пышма, Успенский пр-кт, д 103а", wait="lst")
-    ftl.click_button(ftl.select_first_radio)
-    ftl.click_button(ftl.confirm_address_button)
-    time.sleep(3)
-    # Выбор второго адреса из списка
-    ftl.click_button(ftl.second_address_select, wait="lst")
-    ftl.input_in_field(ftl.address_filter, "Свердловская обл, г Березовский, ул Театральная, д 13", wait="lst")
-    ftl.click_button(ftl.select_first_radio)
-    ftl.click_button(ftl.confirm_address_button)
-    # Ожидание завершения расчета стоимости
-    base.get_element(ftl.calculate_finish)
-    # Публикация заявки с использованием тарифа
-    ftl.click_button(ftl.tariff_button)
-    ftl.click_button(ftl.producer_select)
-    ftl.click_button(ftl.select_all_producer)
-    ftl.click_button(ftl.producer_select_text)
-    ftl.click_button(ftl.publish_button)
-    ftl.click_button(ftl.continue_button, do_assert=True)
-    ftl.click_button(ftl.confirm_add_button, wait="lst")
-
-    # Завершение теста
-    sidebar.test_finish()

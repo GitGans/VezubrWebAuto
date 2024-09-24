@@ -15,7 +15,7 @@ def test_sidebar_lke(domain):
                            do_assert=True)
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_inter_button,
                            do_assert=True)
-    sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ltl_button,
+    sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_delivery_request_button,
                            do_assert=True, wait="form")
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_regular_button,
                            do_assert=True)
@@ -165,7 +165,7 @@ def test_sidebar_lkz(domain):
                            do_assert=True)
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_inter_button,
                            do_assert=True)
-    sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ltl_button,
+    sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_delivery_request_button,
                            do_assert=True, wait="form")
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_regular_button,
                            do_assert=True)

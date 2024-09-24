@@ -1,6 +1,6 @@
 import time
 import allure
-from pages.request_ltl_add_page import LTLAdd
+from pages.request_delivery_add_page import DeliveryAdd
 from tests.base_test import base_test_with_login
 from pages.cargo_place_add_page import CargoPlaceAdd
 from pages.cargo_place_list_page import CargoPlaceList
@@ -294,7 +294,7 @@ def test_cargo_place_transfer_lke(domain):
     # Клик по кнопке передать экспедитору
     cp_list.click_button(cp_list.multi_transfer_button)
     
-    ltl = LTLAdd(base.driver)
+    ltl = DeliveryAdd(base.driver)
     # Заполнение базовой информации для LTL заявки
     ltl.add_base_ltl()
     time.sleep(1)
@@ -339,7 +339,7 @@ def test_cargo_place_transfer_lkz(domain):
     # Клик по кнопке передать экспедитору
     cp_list.click_button(cp_list.multi_transfer_button)
     
-    ltl = LTLAdd(base.driver)
+    ltl = DeliveryAdd(base.driver)
     # Заполнение базовой информации для LTL заявки
     ltl.add_base_ltl()
     time.sleep(1)
