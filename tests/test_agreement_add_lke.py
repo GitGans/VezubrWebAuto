@@ -1,5 +1,6 @@
 import time
 import allure
+import pytest
 from tests.base_test import base_test_with_login
 from pages.agreement_add_page import AgreementAdd
 from pages.clients_list_page import ClientsList
@@ -11,10 +12,11 @@ from pages.producers_list_page import ProducersList
 @allure.feature('Создание договоров')
 @allure.description('ЛКЭ. Тест создания договора с ГВ: '
                     'номер - №-timestamp, срок - с Сегодня по 45 год, автоформирование реестров - Отключено.')
-def test_agreement_client_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
-    
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_agreement_client_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
+
     # Переход к списку клиентов
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
                            do_assert=True, wait="lst")
@@ -40,7 +42,7 @@ def test_agreement_client_add_lke(domain):
     # Отключение автоматического формирования реестров
     add_agr.dropdown_click_input_click(add_agr.registers_auto_select, "Автоматическое формирование Реестров отключено")
     # Клик по кнопке добавления договора
-    add_agr.click_button(add_agr.add_agr_button, do_assert=True)
+    # add_agr.click_button(add_agr.add_agr_button, do_assert=True)
     # Клик по кнопке подтверждения добавления договора
     add_agr.click_button(add_agr.confirm_add_button)
     

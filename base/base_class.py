@@ -357,7 +357,7 @@ class Base:
         """
         name_screenshot = f'{self.get_timestamp_dot()}.png'
         self.driver.save_screenshot(
-            'C:\\Users\\Gans\\PycharmProjects\\VezubrAutomationProject\\screens\\{0}'.format(name_screenshot))
+            'C:\\Users\\Gans\\PycharmProjects\\VezubrWebAuto\\screens\\{0}'.format(name_screenshot))
         with allure.step(title="Screen taken:" + name_screenshot):
             print("Screen taken:" + name_screenshot)
 
