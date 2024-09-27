@@ -6,7 +6,6 @@ from tests.base_test import base_test_with_login, base_test_without_login, base_
 def pytest_addoption(parser):
     parser.addoption("--domain", choices=['dev', 'com', 'ru'], action="store", default="com",
                      help="Set the domain for tests")
-    # Убираем конфликтующую опцию --alluredir
 
 
 @pytest.fixture
@@ -60,4 +59,6 @@ def pytest_runtest_makereport(item, call):
         
         # Если тест завершился с ошибкой и base доступен
         if report.when == "call" and report.failed and base:
-            base.get_screenshot()
+            # Получаем имя теста
+            test_name = item.nodeid.replace("::", "_").replace("/", "_")
+            base.get_screenshot(test_name)  # Передаем имя теста в метод скриншота

@@ -349,7 +349,7 @@ class Base:
         return f'{prefix}{random_digits}'
 
     """ Get screenshot"""
-    def get_screenshot(self) -> NoReturn:
+    def get_screenshot(self, test_name: str) -> NoReturn:
         """
         Сохраняет скриншот текущего состояния браузера.
         Если найдена папка Allure, сохраняет скриншот туда.
@@ -367,8 +367,8 @@ class Base:
             screenshot_dir = 'C:\\Users\\Gans\\PycharmProjects\\VezubrWebAuto\\screens'
             print(f"Saving screenshot to default directory: {screenshot_dir}")
         
-        # Создаем имя файла скриншота
-        name_screenshot = f'{self.get_timestamp_dot()}.png'
+        # Создаем имя файла скриншота, добавляем название теста
+        name_screenshot = f'{test_name}_{self.get_timestamp_dot()}.png'
         # Полный путь для сохранения скриншота
         screenshot_path = os.path.join(screenshot_dir, name_screenshot)
         
