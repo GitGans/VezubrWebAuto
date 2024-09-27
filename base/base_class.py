@@ -352,35 +352,35 @@ class Base:
     def get_screenshot(self) -> NoReturn:
         """
         Сохраняет скриншот текущего состояния браузера.
-
-        Файл скриншота будет сохранен в специфичном для проекта каталоге с именем, включающим текущую дату и время.
+        Если найдена папка Allure, сохраняет скриншот туда.
+        Если Allure не используется, сохраняет скриншот в базовую папку.
         """
+        # Проверяем, указана ли директория для Allure
+        allure_dir = getattr(self, 'allure_dir', None)
+        
+        if allure_dir:
+            # Сохраняем скриншот в папку Allure
+            screenshot_dir = allure_dir
+            print(f"Saving screenshot to Allure directory: {screenshot_dir}")
+        else:
+            # Сохраняем скриншот в базовую папку
+            screenshot_dir = 'C:\\Users\\Gans\\PycharmProjects\\VezubrWebAuto\\screens'
+            print(f"Saving screenshot to default directory: {screenshot_dir}")
+        
+        # Создаем имя файла скриншота
         name_screenshot = f'{self.get_timestamp_dot()}.png'
-        self.driver.save_screenshot(
-            'C:\\Users\\Gans\\PycharmProjects\\VezubrWebAuto\\screens\\{0}'.format(name_screenshot))
-        with allure.step(title="Screen taken:" + name_screenshot):
-            print("Screen taken:" + name_screenshot)
-
-    """ Assert url"""
-    def assert_url(self, result: str) -> NoReturn:
-        """
-        Проверяет, соответствует ли текущий URL заданному значению.
-
-        Parameters
-        ----------
-        result : str
-            Ожидаемое значение URL.
-
-        Raises
-        ------
-        AssertionError
-            Если текущий URL не соответствует ожидаемому значению.
-        """
-        get_url = self.driver.current_url
-        with allure.step(title="Assert url true"):
-            assert get_url == result
-            print("Assert url true")
-    
+        # Полный путь для сохранения скриншота
+        screenshot_path = os.path.join(screenshot_dir, name_screenshot)
+        
+        # Проверяем, существует ли папка, и создаем ее, если не существует
+        if not os.path.exists(screenshot_dir):
+            os.makedirs(screenshot_dir)
+        
+        # Сохраняем скриншот
+        self.driver.save_screenshot(screenshot_path)
+        with allure.step(title="Screen taken: " + name_screenshot):
+            print(f"Screenshot saved successfully at: {screenshot_path}")
+            
     """ Click button"""
     def click_button(self, element_dict: Dict[str, str], index: int = 1, do_assert: Optional[bool] = False,
                      wait: Optional[str] = None, wait_type: str = 'clickable') -> NoReturn:

@@ -1,11 +1,12 @@
 import pytest
-from base.base_class import Base
-from tests.base_test import base_test_with_login
+import os
+from tests.base_test import base_test_with_login, base_test_without_login, base_test_with_login_via_link
 
 
 def pytest_addoption(parser):
     parser.addoption("--domain", choices=['dev', 'com', 'ru'], action="store", default="com",
                      help="Set the domain for tests")
+    # Убираем конфликтующую опцию --alluredir
 
 
 @pytest.fixture
@@ -15,14 +16,30 @@ def domain(request):
 
 @pytest.fixture
 def base_fixture(request, domain):
-    # Получаем роль из самого теста через параметризацию
+    # Ищем директорию, которая начинается с 'results_'
+    allure_dir = None
+    for dir_name in os.listdir('.'):
+        if dir_name.startswith('results_') and os.path.isdir(dir_name):
+            allure_dir = os.path.abspath(dir_name)  # Сохраняем путь к найденной директории
+            print(f"Allure directory found and set: {allure_dir}")
+            break
+    
+    # Получаем параметр из теста, который определяет тип теста и роль
     role = request.param
     
-    # Инициализируем базовый тест с логином через Base
-    base, sidebar = base_test_with_login(domain, role)
-    
-    # Возвращаем объект base для дальнейшего использования в тесте
-    yield base, sidebar
+    # Логика для выбора базового теста
+    if role == 'without_login':
+        base, login = base_test_without_login(domain)
+        base.allure_dir = allure_dir  # Устанавливаем директорию в base
+        yield base, login  # Возвращаем base и login вместо sidebar
+    elif role == 'via_link':
+        base, login = base_test_with_login_via_link(domain)
+        base.allure_dir = allure_dir  # Устанавливаем директорию в base
+        yield base, login  # Возвращаем base и login вместо sidebar
+    else:
+        base, sidebar = base_test_with_login(domain, role)
+        base.allure_dir = allure_dir  # Устанавливаем директорию в base
+        yield base, sidebar  # Возвращаем base и sidebar
     
     # Завершаем сессию драйвера после выполнения теста
     base.test_finish()

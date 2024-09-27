@@ -42,12 +42,10 @@ def test_agreement_client_add_lke(base_fixture, domain):
     # Отключение автоматического формирования реестров
     add_agr.dropdown_click_input_click(add_agr.registers_auto_select, "Автоматическое формирование Реестров отключено")
     # Клик по кнопке добавления договора
-    # add_agr.click_button(add_agr.add_agr_button, do_assert=True)
+    add_agr.click_button(add_agr.add_agr_button, do_assert=True)
     # Клик по кнопке подтверждения добавления договора
     add_agr.click_button(add_agr.confirm_add_button)
-    
-    # Завершение теста
-    sidebar.driver.quit()
+    # Конец теста
 
 
 @allure.story("Smoke test")
@@ -88,7 +86,7 @@ def test_agreement_producer_add_lke(domain):
     add_agr.click_button(add_agr.confirm_add_button)
     
     # Завершение теста
-    sidebar.driver.quit()
+    sidebar.test_finish()
 
 
 @allure.story("Smoke test")
