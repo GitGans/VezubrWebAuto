@@ -39,7 +39,7 @@ class Login(Base):
 
     # Methods
     """Authorization"""
-    def authorization(self, role: str) -> NoReturn:
+    def authorization(self, role: str) -> None:
         """
         Выполняет авторизацию пользователя на основе предоставленной роли.
 

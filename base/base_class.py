@@ -246,7 +246,7 @@ class Base:
                                 value_word), f"Expected '{element_dict['reference']}', but found '{value_word}'."
             print(f"Assert \"{value_word}\" == \"{element_dict['reference']}\"")
         
-        """ Assert word input reference"""
+    """ Assert word input reference"""
     def flexible_assert_word(self, element_dict: Dict[str, str], reference_value: str,
                              wait_type: str = 'clickable') -> None:
         """
@@ -349,26 +349,23 @@ class Base:
         return f'{prefix}{random_digits}'
 
     """ Get screenshot"""
-    def get_screenshot(self, test_name: str) -> NoReturn:
+    def get_screenshot(self, test_name: str = None) -> NoReturn:
         """
-        Сохраняет скриншот текущего состояния браузера.
-        Если найдена папка Allure, сохраняет скриншот туда.
-        Если Allure не используется, сохраняет скриншот в базовую папку.
+        Сохраняет скриншот текущего состояния браузера в папку screens внутри проекта.
+        Если тест запускается с Allure, прикрепляет скриншот к отчету Allure.
         """
-        # Проверяем, указана ли директория для Allure
-        allure_dir = getattr(self, 'allure_dir', None)
+        # Определяем относительный путь к папке screens внутри проекта
+        project_root = os.path.dirname(os.path.abspath(__file__))  # Получаем корневую папку проекта
+        screenshot_dir = os.path.join(project_root, 'screens')  # Папка screens внутри проекта
+        print(f"Saving screenshot to relative directory: {screenshot_dir}")
         
-        if allure_dir:
-            # Сохраняем скриншот в папку Allure
-            screenshot_dir = allure_dir
-            print(f"Saving screenshot to Allure directory: {screenshot_dir}")
+        # Создаем имя файла скриншота с таймштампом и названием теста (если указано)
+        timestamp = self.get_timestamp_dot()
+        if test_name:
+            name_screenshot = f'{test_name}_{timestamp}.png'
         else:
-            # Сохраняем скриншот в базовую папку
-            screenshot_dir = 'C:\\Users\\Gans\\PycharmProjects\\VezubrWebAuto\\screens'
-            print(f"Saving screenshot to default directory: {screenshot_dir}")
+            name_screenshot = f'{timestamp}.png'
         
-        # Создаем имя файла скриншота, добавляем название теста
-        name_screenshot = f'{test_name}_{self.get_timestamp_dot()}.png'
         # Полный путь для сохранения скриншота
         screenshot_path = os.path.join(screenshot_dir, name_screenshot)
         
@@ -378,9 +375,15 @@ class Base:
         
         # Сохраняем скриншот
         self.driver.save_screenshot(screenshot_path)
+        
+        # Шаг в отчете Allure, если тест запускается с Allure, прикрепляем скриншот
         with allure.step(title="Screen taken: " + name_screenshot):
             print(f"Screenshot saved successfully at: {screenshot_path}")
             
+            # Прикрепляем файл скриншота только если используется Allure
+            if hasattr(self, 'allure_dir') and self.allure_dir:
+                allure.attach.file(screenshot_path, name="Screenshot", attachment_type=allure.attachment_type.PNG)
+    
     """ Click button"""
     def click_button(self, element_dict: Dict[str, str], index: int = 1, do_assert: Optional[bool] = False,
                      wait: Optional[str] = None, wait_type: str = 'clickable') -> NoReturn:
