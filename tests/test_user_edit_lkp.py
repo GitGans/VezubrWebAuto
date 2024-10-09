@@ -1,7 +1,6 @@
 import time
-
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.profile_page import Profile
 from pages.user_add_page import User
 
@@ -12,9 +11,10 @@ from pages.user_add_page import User
                     '1) создание пользователя и фильтрация по его фамилии, '
                     '2) редактируем: ФИО - ФИО-timestamp, тип - API, роль - Логист, тлф - Рандом, '
                     'email - Etimestamp@mail.ru, часовой пояс - Абиджан')
-def test_user_edit_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_user_edit_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к профилю
     sidebar.click_button(sidebar.profile_button, do_assert=True)
@@ -80,6 +80,4 @@ def test_user_edit_lkp(domain):
     user.click_button(user.save_edit_user_button, do_assert=True)
     # Подтверждение изменений
     user.click_button(user.confirm_add_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

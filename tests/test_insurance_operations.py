@@ -1,15 +1,16 @@
 import allure
+import pytest
 from pages.clients_list_page import ClientsList
 from pages.contractor_page import Contractor
-from tests.base_test import base_test_with_login
 
 
 @allure.story("Smoke test")
 @allure.feature('Прикрепление и открепление договоров страхования')
 @allure.description('ЛКЭ. Тест прикрепления и открепления договора страхования к ГВ')
-def test_insurance_contract_attach_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_insurance_contract_attach_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку клиентов
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
@@ -39,17 +40,16 @@ def test_insurance_contract_attach_lke(domain):
     contractor.click_button(contractor.delete_button, do_assert=True)
     # Подтверждение открепления договора
     contractor.click_button(contractor.ok_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
 @allure.feature('Прикрепление и открепление договоров страхования')
 @allure.description('ЛКП. Тест прикрепления и открепления договора страхования к ГВ')
-def test_insurance_contract_attach_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_insurance_contract_attach_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку клиентов
     sidebar.click_button(sidebar.clients_list_button, do_assert=True, wait="lst")
@@ -78,7 +78,5 @@ def test_insurance_contract_attach_lkp(domain):
     contractor.click_button(contractor.delete_button, do_assert=True)
     # Подтверждение открепления договора
     contractor.click_button(contractor.ok_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
     

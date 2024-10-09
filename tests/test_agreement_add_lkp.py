@@ -1,6 +1,6 @@
 import time
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.agreement_add_page import AgreementAdd
 from pages.clients_list_page import ClientsList
 from pages.contractor_page import Contractor
@@ -10,9 +10,10 @@ from pages.contractor_page import Contractor
 @allure.feature('Создание договоров')
 @allure.description('ЛКП. Тест создания договора с ГВ: '
                     'номер - №-timestamp, срок - с Сегодня по 45 год, автоформирование реестров - Отключено.')
-def test_agreement_client_add_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_agreement_client_add_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку клиентов
     sidebar.click_button(sidebar.clients_list_button, do_assert=True, wait="lst")
@@ -41,7 +42,5 @@ def test_agreement_client_add_lkp(domain):
     add_agr.click_button(add_agr.add_agr_button, do_assert=True)
     # Клик по кнопке подтверждения добавления договора
     add_agr.click_button(add_agr.confirm_add_button)
-
-    # Завершение теста
-    sidebar.test_finish()
-
+    # Конец теста
+    

@@ -1,6 +1,6 @@
 import time
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.driver_add_page import DriverAdd
 from pages.driver_list_page import DriverList
 
@@ -10,9 +10,10 @@ from pages.driver_list_page import DriverList
 @allure.description('ЛКП. Тест создания водителя Экс: ФИО - ФИО-timestamp, паспорт/права - РФ, '
                     '№ паспорт/код/права/тлф.апп/тлф. - Рандом, добавить/убрать - 2 и 1 ТС, '
                     'работа - останавливаем/востанавливаем/увольняем')
-def test_driver_add_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_driver_add_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку водителей
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.drivers_list_button,
@@ -65,6 +66,4 @@ def test_driver_add_lkp(domain):
     add_driver.click_button(add_driver.yes_button, do_assert=True)
     # Подтверждение успешного увольнения водителя
     add_driver.click_button(add_driver.ok_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

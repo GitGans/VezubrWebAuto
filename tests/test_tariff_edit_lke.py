@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.tariff_ftl_add_page import FTLTariffAdd
 from pages.tariff_ltl_add_page import LTLTariffAdd
 from pages.tariff_luo_add_page import LUOTariffAdd
@@ -9,9 +9,10 @@ from pages.tariffs_list_page import TariffsList
 @allure.story("Extended test")
 @allure.feature('Удаление тарифов')
 @allure.description('ЛКЭ. Тест удаления тарифа: тариф - Первый в списке')
-def test_tariff_delete_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_tariff_delete_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку тарифов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
@@ -26,18 +27,17 @@ def test_tariff_delete_lke(domain):
     tariff.click_button(tariff.delete_tariff_button, do_assert=True)
     # Подтверждение удаления тарифа
     tariff.click_button(tariff.confirm_button, wait="lst")
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Extended test")
 @allure.feature('Копирование тарифов')
 @allure.description('ЛКЭ. Тест копирования ПРР тарифа: фильтр - ПРР, название - ПРР-timestamp, спец. - Старый, '
                     'минималка/доплата/МКАД - Рандом, оригинал - Удаляем')
-def test_tariff_luo_copy_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_tariff_luo_copy_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку тарифов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
@@ -67,18 +67,17 @@ def test_tariff_luo_copy_lke(domain):
     tariff.click_button(tariff.confirm_button)
     tariff.click_button(tariff.confirm_button)
     tariff.click_button(tariff.confirm_button, do_assert=True)
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Extended test")
 @allure.feature('Копирование тарифов')
 @allure.description('ЛКЭ. Тест копирования FTL тарифа: фильтр - ПЧ, тип - Почасовой, округление - Час, '
                     'название - ПЧ-timestamp, ТС - Старый, кузов - Старый, минималка - Рандом, оригинал - Удаляем')
-def test_tariff_ftl_h_copy_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_tariff_ftl_h_copy_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку тарифов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
@@ -104,9 +103,7 @@ def test_tariff_ftl_h_copy_lke(domain):
     tariff.click_button(tariff.confirm_button)
     tariff.click_button(tariff.confirm_button)
     tariff.click_button(tariff.confirm_button, do_assert=True)
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Extended test")
@@ -114,9 +111,10 @@ def test_tariff_ftl_h_copy_lke(domain):
 @allure.description('ЛКЭ. Тест копирования FTL тарифа: фильтр - ГГ, тип - Фиксированный, маршрут - Старый, название '
                     '- ГГ-timestamp, ТС - Старый, кузов - Старый, минималка/доп.адрес/ожидание - Рандом, '
                     'оригинал - Удаляем')
-def test_tariff_ftl_cc_copy_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_tariff_ftl_cc_copy_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку тарифов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
@@ -146,9 +144,7 @@ def test_tariff_ftl_cc_copy_lke(domain):
     tariff.click_button(tariff.confirm_button)
     tariff.click_button(tariff.confirm_button)
     tariff.click_button(tariff.confirm_button, do_assert=True)
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Extended test")
@@ -156,9 +152,10 @@ def test_tariff_ftl_cc_copy_lke(domain):
 @allure.description('ЛКЭ. Тест копирования FTL тарифа: фильтр - ПБ, тип - Пробег, маршрут - Старый, '
                     'название - ПБ-timestamp, ТС - Старый, кузов - Старый, минималка/доп.адрес/ожидание - Рандом, '
                     'оригинал - Удаляем')
-def test_ftl_ml_tariff_copy_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_ftl_ml_tariff_copy_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку тарифов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
@@ -195,9 +192,7 @@ def test_ftl_ml_tariff_copy_lke(domain):
     tariff.click_button(tariff.confirm_button)
     tariff.click_button(tariff.confirm_button)
     tariff.click_button(tariff.confirm_button, do_assert=True)
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Extended test")
@@ -205,9 +200,10 @@ def test_ftl_ml_tariff_copy_lke(domain):
 @allure.description('ЛКЭ. Тест копирования LTL тарифа: фильтр - LTL, название - LTL-timestamp, тип - Старый, '
                     'мин.вес/объем вес/сбор прям./сбор обр. - Рандом, регион - Старый, '
                     'минималка/доплата/темп.коэф/срок - Рандом, оригинал - Удаляем')
-def test_tariff_ltl_copy_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_tariff_ltl_copy_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку тарифов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
@@ -237,6 +233,4 @@ def test_tariff_ltl_copy_lke(domain):
     tariff.click_button(tariff.confirm_button)
     tariff.click_button(tariff.confirm_button)
     tariff.click_button(tariff.confirm_button, do_assert=True)
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

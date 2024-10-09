@@ -1,6 +1,6 @@
 import time
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.cargo_place_add_page import CargoPlaceAdd
 from pages.cargo_place_list_page import CargoPlaceList
 
@@ -9,9 +9,10 @@ from pages.cargo_place_list_page import CargoPlaceList
 @allure.feature('Создание грузомест')
 @allure.description('ЛКЭ. Тест создания ГМ ГВ: тип - Короб, кол-во/вес/объем/цена/температура - Рандом, статус - Новое,'
                     ' название/накладная/штрихкод/пломба/внешний id - ГМ-timestamp, адреса - Первые из списка.')
-def test_cargo_place_from_lkz_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_cargo_place_from_lkz_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку грузомест
     sidebar.move_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.cargo_place_list_button,
@@ -26,9 +27,7 @@ def test_cargo_place_from_lkz_add_lke(domain):
     add_cp.dropdown_click_input_click(add_cp.cargo_place_owner_select, "Auto LKZ")
     # Добавление полного базового грузоместа
     add_cp.add_full_cargo_place_lke()
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
@@ -36,9 +35,10 @@ def test_cargo_place_from_lkz_add_lke(domain):
 @allure.description('ЛКЭ. Тест создания ГМ Экс с влож ГМ ГВ:  тип - Короб, кол-во/вес/объем/цена/температура - Рандом, '
                     'статус - Новое, название/накладная/штрихкод/пломба/внешний id - ГМ-timestamp, '
                     'адреса - Первые из списка, гм - Удаляем')
-def test_cargo_place_own_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_cargo_place_own_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку грузомест
     sidebar.move_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.cargo_place_list_button,
@@ -73,9 +73,7 @@ def test_cargo_place_own_add_lke(domain):
     add_cp.click_button(add_cp.yes_button)
     # Подтверждение успешного удаления
     add_cp.click_button(add_cp.ok_button, wait="lst")
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
@@ -83,9 +81,10 @@ def test_cargo_place_own_add_lke(domain):
 @allure.description('ЛКЗ. Тест создания ГМ: тип - Короб, кол-во/вес/объем/цена/температура - Рандом, статус - Новое, '
                     'название/накладная/штрихкод/пломба/внешний id - ГМ-timestamp, адреса - Первые из списка, '
                     'гм - Удаляем')
-def test_cargo_place_add_lkz(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkz'
-    base, sidebar = base_test_with_login(domain=domain, role='lkz')
+@pytest.mark.parametrize('base_fixture', ['lkz'], indirect=True)  # Параметризация роли
+def test_cargo_place_add_lkz(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку грузомест
     sidebar.move_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.cargo_place_list_button,
@@ -112,6 +111,4 @@ def test_cargo_place_add_lkz(domain):
     add_cp.click_button(add_cp.yes_button)
     # Подтверждение успешного удаления
     add_cp.click_button(add_cp.ok_button, wait="lst")
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.agreement_page import Agreement
 from pages.clients_list_page import ClientsList
 from pages.contractor_page import Contractor
@@ -11,9 +11,10 @@ from pages.producers_list_page import ProducersList
 @allure.feature('Создание ДУ')
 @allure.description('ЛКЭ. Тест создания ДУ с ГВ: номер - №-timestamp, срок - с Сегодня по 40 год, '
                     'коммент - ДУ создано автотестом')
-def test_extra_agreements_client_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_extra_agreements_client_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку клиентов
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
@@ -40,18 +41,17 @@ def test_extra_agreements_client_add_lke(domain):
     add_extra.click_button(add_extra.appoint_later_button, do_assert=True)
     # Клик по кнопке подтверждения добавления дополнительного соглашения
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
 @allure.feature('Создание ДУ')
 @allure.description('ЛКЭ. Тест создания ДУ с ПВ: номер - №-timestamp, срок - с Сегодня по 40 год, '
                     'коммент - ДУ создано автотестом')
-def test_extra_agreements_producer_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_extra_agreements_producer_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку перевозчиков
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
@@ -78,18 +78,17 @@ def test_extra_agreements_producer_add_lke(domain):
     add_extra.click_button(add_extra.appoint_later_button, do_assert=True)
     # Клик по кнопке подтверждения добавления дополнительного соглашения
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
 @allure.feature('Создание ДУ')
 @allure.description('ЛКЭ. Тест создания ДУ с внутр. ПВ: номер - №-timestamp, срок - с Сегодня по 40 год, '
                     'коммент - ДУ создано автотестом')
-def test_extra_agreements_inner_contractor_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_extra_agreements_inner_contractor_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку перевозчиков
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
@@ -116,6 +115,4 @@ def test_extra_agreements_inner_contractor_add_lke(domain):
     add_extra.click_button(add_extra.appoint_later_button, do_assert=True)
     # Клик по кнопке подтверждения добавления дополнительного соглашения
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

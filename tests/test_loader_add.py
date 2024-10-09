@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.loader_add_page import LoaderAdd
 from pages.loader_list_page import LoaderList
 
@@ -8,9 +8,10 @@ from pages.loader_list_page import LoaderList
 @allure.feature('Создание и операции с специалистами')
 @allure.description('ЛКЭ. Тест создания специалиста Экс: ФИО - ФИО-timestamp, паспорт - РФ, тип - Грузчик, '
                     '№ паспорт/код/права/тлф.апп/тлф. - Рандом, работа - останавливаем/востанавливаем.')
-def test_loader_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_loader_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку специалистов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.loaders_list_button,
@@ -34,18 +35,17 @@ def test_loader_add_lke(domain):
     # Открытие меню действий - возобновление работы специалиста
     add_loader.click_button(add_loader.action_menu_button)
     add_loader.click_button(add_loader.ready_to_work_button, wait="form")
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
 @allure.feature('Создание и операции с специалистами')
 @allure.description('ЛКП. Тест создания специалиста Экс: ФИО - ФИО-timestamp, паспорт - РФ, тип - Грузчик, '
                     '№ паспорт/код/права/тлф.апп/тлф. - Рандом, работа - останавливаем/востанавливаем.')
-def test_loader_add_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_loader_add_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку специалистов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.loaders_list_button,
@@ -69,6 +69,4 @@ def test_loader_add_lkp(domain):
     # Открытие меню действий - возобновление работы специалиста
     add_loader.click_button(add_loader.action_menu_button)
     add_loader.click_button(add_loader.ready_to_work_button, wait="form")
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

@@ -354,9 +354,11 @@ class Base:
         Сохраняет скриншот текущего состояния браузера в папку screens внутри проекта.
         Если тест запускается с Allure, прикрепляет скриншот к отчету Allure.
         """
-        # Определяем относительный путь к папке screens внутри проекта
-        project_root = os.path.dirname(os.path.abspath(__file__))  # Получаем корневую папку проекта
-        screenshot_dir = os.path.join(project_root, 'screens')  # Папка screens внутри проекта
+        # Определяем путь к корневой папке проекта
+        project_root = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), '..', '..'))  # Поднимаемся на два уровня вверх от текущего файла
+        screenshot_dir = os.path.join(project_root, 'screens')  # Путь к папке screens внутри корня проекта
+        
         print(f"Saving screenshot to relative directory: {screenshot_dir}")
         
         # Создаем имя файла скриншота с таймштампом и названием теста (если указано)
@@ -658,9 +660,10 @@ class Base:
                 field_dict['element'].send_keys(Keys.ENTER)
             print(f"{'Click and ' if click_first else ''}Backspace and input in {element_name}: {value}")
     
-    """ Backspace all and input with optional click, enter"""
+    """ Backspace all and input with optional click, enter, and wait type """
     def backspace_all_and_input(self, element_dict: Dict[str, str], value: str,
-                                click_first: bool = False, press_enter: Optional[bool] = False) -> None:
+                                click_first: bool = False, press_enter: bool = False,
+                                wait_type: str = 'clickable') -> None:
         """
         Очищает поле ввода путем нажатий клавиши Backspace для каждого символа в поле,
         затем вводит новое значение.
@@ -675,11 +678,14 @@ class Base:
             Если True, сначала кликает по полю перед вводом текста.
         press_enter : bool, optional
             Если True, нажимает Enter после ввода значения.
+        wait_type : str, optional
+            Тип ожидания элемента. По умолчанию 'clickable'.
+            Доступные варианты: 'clickable', 'visible', 'located', 'find', 'invisibility'.
 
         """
         element_name = element_dict['name']
         with allure.step(title=f"{'Click and ' if click_first else ''}Backspace and input in {element_name}: {value}"):
-            field_dict = self.get_element(element_dict)
+            field_dict = self.get_element(element_dict, wait_type=wait_type)
             if click_first:
                 field_dict['element'].click()
             current_value = field_dict['element'].get_attribute('value')
@@ -689,7 +695,7 @@ class Base:
             if press_enter:
                 field_dict['element'].send_keys(Keys.ENTER)
             print(f"{'Click and ' if click_first else ''}Backspaced and input in {element_name}: {value}")
-    
+
     """ Backspace num times and input with optional click, enter"""
     def backspace_num_and_input(self, element_dict: Dict[str, str], num: int, value: str,
                                 click_first: bool = False, press_enter: Optional[bool] = False) -> None:

@@ -1,6 +1,6 @@
 import time
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.cargo_place_add_page import CargoPlaceAdd
 from pages.cargo_place_list_page import CargoPlaceList
 
@@ -14,9 +14,10 @@ from pages.cargo_place_list_page import CargoPlaceList
                     ' название/накладная/штрихкод/пломба/внешнийid/коммент - ГМ-timestamp, адреса - Первые из списка. '
                     '3) редактируем: кол-во/вес/объем/цена/температура - Рандом, '
                     'название/накладная/штрихкод/пломба/внешнийid/коммент - ГМ-timestamp')
-def test_cargo_place_own_edit_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_cargo_place_own_edit_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку грузомест
     sidebar.move_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.cargo_place_list_button,
@@ -80,9 +81,7 @@ def test_cargo_place_own_edit_lke(domain):
     add_cp.backspace_len_and_input(add_cp.lke_comment_edit, cp_stamp)  # Комментарий
     # Клик по кнопке сохранения изменений
     add_cp.click_button(add_cp.save_button, wait="form")
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Critical path test")
@@ -92,9 +91,10 @@ def test_cargo_place_own_edit_lke(domain):
                     ' название/накладная/штрихкод/пломба/внешнийid/коммент - ГМ-timestamp, адреса - Первые из списка. '
                     '2) редактируем: кол-во/вес/объем/цена/температура - Рандом, '
                     'название/накладная/штрихкод/пломба/внешнийid/коммент - ГМ-timestamp')
-def test_cargo_place_edit_lkz(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkz'
-    base, sidebar = base_test_with_login(domain=domain, role='lkz')
+@pytest.mark.parametrize('base_fixture', ['lkz'], indirect=True)  # Параметризация роли
+def test_cargo_place_edit_lkz(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку грузомест
     sidebar.move_and_click(move_to=sidebar.assignments_hover, click_to=sidebar.cargo_place_list_button,
@@ -137,6 +137,4 @@ def test_cargo_place_edit_lkz(domain):
     add_cp.backspace_len_and_input(add_cp.lkz_comment_edit, cp_stamp)  # Комментарий
     # Клик по кнопке сохранения изменений
     add_cp.click_button(add_cp.save_button, wait="form")
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

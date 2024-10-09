@@ -1,15 +1,16 @@
 import allure
+import pytest
 from pages.login import accounts
-from tests.base_test import base_test_with_login
 from pages.profile_page import Profile
 
 
 @allure.story("Critical path test")
 @allure.feature('Удаление пользователей')
 @allure.description('ЛКЭ. Тест удаления пользователя: пользователь - Первый в списке')
-def test_user_delete_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_user_delete_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к профилю
     sidebar.click_button(sidebar.profile_button, do_assert=True)
@@ -23,17 +24,16 @@ def test_user_delete_lke(domain):
     profile.input_in_field(profile.password_input, accounts["lke"]["password"], safe=True)
     # Подтверждение удаления пользователя
     profile.click_button(profile.delete_confirm_button, wait="lst", do_assert=True)
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Critical path test")
 @allure.feature('Удаление пользователей')
 @allure.description('ЛКП. Тест удаления пользователя: пользователь - Первый в списке')
-def test_user_delete_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_user_delete_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к профилю
     sidebar.click_button(sidebar.profile_button, do_assert=True)
@@ -47,17 +47,16 @@ def test_user_delete_lkp(domain):
     profile.input_in_field(profile.password_input, accounts["lkp"]["password"], safe=True)
     # Подтверждение удаления пользователя
     profile.click_button(profile.delete_confirm_button, wait="lst", do_assert=True)
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Critical path test")
 @allure.feature('Удаление пользователей')
 @allure.description('ЛКЗ. Тест удаления пользователя: пользователь - Первый в списке')
-def test_user_delete_lkz(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkz'
-    base, sidebar = base_test_with_login(domain=domain, role='lkz')
+@pytest.mark.parametrize('base_fixture', ['lkz'], indirect=True)  # Параметризация роли
+def test_user_delete_lkz(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к профилю
     sidebar.click_button(sidebar.profile_button, do_assert=True)
@@ -71,6 +70,4 @@ def test_user_delete_lkz(domain):
     profile.input_in_field(profile.password_input, accounts["lkz"]["password"], safe=True)
     # Подтверждение удаления пользователя
     profile.click_button(profile.delete_confirm_button, wait="lst", do_assert=True)
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

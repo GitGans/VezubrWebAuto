@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.profile_page import Profile
 from pages.user_add_page import User
 
@@ -9,9 +9,10 @@ from pages.user_add_page import User
 @allure.description('ЛКЭ. Тест создания пользователя: ФИО - ФИО-timestamp, тип - Пользователь, роль - Админ, '
                     'тлф - Рандом, email - Etimestamp@mail.ru, часовой пояс - Екб, группа - Базовая группа, '
                     'подразделение - База')
-def test_user_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_user_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к профилю
     sidebar.click_button(sidebar.profile_button, do_assert=True)
@@ -48,6 +49,4 @@ def test_user_add_lke(domain):
     user.click_button(user.create_user_button, do_assert=True)
     # Подтверждение создания пользователя
     user.click_button(user.confirm_add_button)
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

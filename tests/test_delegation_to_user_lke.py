@@ -1,6 +1,6 @@
 import allure
+import pytest
 from selenium.webdriver.support.wait import WebDriverWait
-from tests.base_test import base_test_with_login
 from pages.clients_list_page import ClientsList
 from pages.contractor_page import Contractor
 from pages.producers_list_page import ProducersList
@@ -10,9 +10,10 @@ from pages.producers_list_page import ProducersList
 @allure.feature('Делегирование прав управления ЛК')
 @allure.description('ЛКЭ. Тест делегирования пользователю права управления ЛК ГВ: '
                     'делегируем - Второму, отменяем - Третьему')
-def test_delegation_client_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_delegation_client_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку клиентов
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
@@ -33,18 +34,17 @@ def test_delegation_client_lke(domain):
     contractor.click_button(contractor.user_checkbox_filled, 4)
     contractor.click_button(contractor.save_delegation_button, do_assert=True)
     contractor.click_button(contractor.ok_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
 @allure.feature('Делегирование прав управления ЛК')
 @allure.description('ЛКЭ. Тест делегирования пользователю права управления ЛК ГВ: '
                     'делегируем - Второму, отменяем - Третьему')
-def test_delegation_producer_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_delegation_producer_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку перевозчиков
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
@@ -65,18 +65,17 @@ def test_delegation_producer_lke(domain):
     contractor.click_button(contractor.user_checkbox_filled, 4)
     contractor.click_button(contractor.save_delegation_button, do_assert=True)
     contractor.click_button(contractor.ok_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
 @allure.feature('Делегирование прав управления ЛК')
 @allure.description('ЛКЭ. Тест делегирования пользователю права управления ЛК ГВ: '
                     'делегируем - Второму, отменяем - Третьему')
-def test_delegation_inner_producer_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_delegation_inner_producer_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку перевозчиков
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
@@ -97,17 +96,16 @@ def test_delegation_inner_producer_lke(domain):
     contractor.click_button(contractor.user_checkbox_filled, 4)
     contractor.click_button(contractor.save_delegation_button, do_assert=True)
     contractor.click_button(contractor.ok_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
 @allure.feature('Переход в ЛК делегировавшего КА')
 @allure.description('ЛКЭ. Тест перехода в ЛК делегировавшего ГВ: гв - auto LKZ')
-def test_go_to_account_client_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_go_to_account_client_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку клиентов
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
@@ -123,17 +121,16 @@ def test_go_to_account_client_lke(domain):
     base.driver.switch_to.window(windows[1])
     # Проверка корректности перехода в ЛК клиента
     client_list.assert_word(client_list.assert_auto_lkz)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
 @allure.feature('Переход в ЛК делегировавшего КА')
 @allure.description('ЛКЭ. Тест перехода в ЛК делегировавшего ПВ: пв - auto LKP')
-def test_go_to_account_producer_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_go_to_account_producer_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку перевозчиков
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
@@ -149,6 +146,4 @@ def test_go_to_account_producer_lke(domain):
     base.driver.switch_to.window(windows[1])
     # Проверка корректности перехода в ЛК перевозчика
     producer_list.assert_word(producer_list.assert_auto_lkp)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

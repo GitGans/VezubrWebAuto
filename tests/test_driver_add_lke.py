@@ -1,6 +1,6 @@
 import time
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.driver_add_page import DriverAdd
 from pages.driver_list_page import DriverList
 
@@ -10,9 +10,10 @@ from pages.driver_list_page import DriverList
 @allure.description('ЛКЭ. Тест создания водителя Экс: ФИО - ФИО-timestamp, паспорт/права - РФ, '
                     '№ паспорт/код/права/тлф.апп/тлф. - Рандом, добавить/убрать - 2 и 1 ТС, '
                     'работа - останавливаем/востанавливаем/увольняем')
-def test_own_driver_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_own_driver_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку водителей
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.drivers_list_button,
@@ -62,9 +63,7 @@ def test_own_driver_add_lke(domain):
     add_driver.click_button(add_driver.yes_button, do_assert=True)
     # Подтверждение успешного увольнения водителя
     add_driver.click_button(add_driver.ok_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
@@ -72,9 +71,10 @@ def test_own_driver_add_lke(domain):
 @allure.description('ЛКЭ. Тест создания водителя внутр КА: ка - Первыйй в списке, ФИО - ВФИО-timestamp, '
                     'паспорт/права - РФ, № паспорт/код/права/тлф. - Рандом, добавить/убрать - 2 и 1 ТС, '
                     'работа - останавливаем/востанавливаем/увольняем')
-def test_inner_driver_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_inner_driver_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку водителей
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.drivers_list_button,
@@ -124,6 +124,4 @@ def test_inner_driver_add_lke(domain):
     add_driver.click_button(add_driver.yes_button, do_assert=True)
     # Подтверждение успешного увольнения водителя
     add_driver.click_button(add_driver.ok_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

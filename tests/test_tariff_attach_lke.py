@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.agreement_page import Agreement
 from pages.clients_list_page import ClientsList
 from pages.contractor_page import Contractor
@@ -11,9 +11,10 @@ from pages.producers_list_page import ProducersList
 @allure.story("Smoke test")
 @allure.description('ЛКЭ. Тест прикрепления тарифа к ДУ c ГВ: создаем базовый ДУ и сразу прикрепляем существующий '
                     'тариф - Первый в списке')
-def test_tariff_attach_client_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_tariff_attach_client_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку клиентов
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.clients_list_button,
@@ -42,18 +43,17 @@ def test_tariff_attach_client_lke(domain):
     add_extra.click_button(add_extra.confirm_tariff_button, do_assert=True)
     # Подтверждение добавления дополнительного соглашения
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.feature('Прикрепление тарифов')
 @allure.story("Smoke test")
 @allure.description('ЛКЭ. Тест прикрепления тарифа к ДУ c ПВ: создаем базовый ДУ и сразу прикрепляем существующий '
                     'тариф - Первый в списке')
-def test_tariff_attach_producer_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_tariff_attach_producer_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку перевозчиков
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
@@ -82,18 +82,17 @@ def test_tariff_attach_producer_lke(domain):
     add_extra.click_button(add_extra.confirm_tariff_button, do_assert=True)
     # Подтверждение добавления дополнительного соглашения
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.feature('Прикрепление тарифов')
 @allure.story("Smoke test")
 @allure.description('ЛКЭ. Тест прикрепления тарифа к ДУ внутр. ПВ: создаем базовый ДУ и сразу прикрепляем существующий'
                     ' тариф - Первый в списке')
-def test_tariff_attach_inner_producer_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_tariff_attach_inner_producer_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку перевозчиков
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
@@ -122,6 +121,4 @@ def test_tariff_attach_inner_producer_lke(domain):
     add_extra.click_button(add_extra.confirm_tariff_button, do_assert=True)
     # Подтверждение добавления дополнительного соглашения
     add_extra.click_button(add_extra.confirm_add_button, wait="form")
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

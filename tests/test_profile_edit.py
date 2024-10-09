@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.profile_page import Profile
 
 
@@ -8,9 +8,10 @@ from pages.profile_page import Profile
 @allure.description('ЛКЭ. Тест редактирования профиля: адреса - А-timestamp, тлф - Рандом, '
                     'налогообложение - Перебор всех вариантов без сохранения, документообор - Вкл./Выкл, '
                     'ссылка контура - Копирование, счет - 405+Рандом, бик - Фикс.')
-def test_profile_edit_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_profile_edit_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к профилю
     sidebar.click_button(sidebar.profile_button, do_assert=True)
@@ -49,9 +50,7 @@ def test_profile_edit_lke(domain):
     # Сохранение изменений
     profile.click_button(profile.save_button, do_assert=True)
     profile.click_button(profile.confirm_button)
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
@@ -59,9 +58,10 @@ def test_profile_edit_lke(domain):
 @allure.description('ЛКП. Тест редактирования профиля: адреса - А-timestamp, тлф - Рандом, '
                     'налогообложение - Перебор всех вариантов без сохранения, документообор - Вкл./Выкл, '
                     'ссылка контура - Копирование, счет - 405+Рандом, бик - Фикс.')
-def test_profile_edit_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_profile_edit_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к профилю
     sidebar.click_button(sidebar.profile_button, do_assert=True)
@@ -100,9 +100,7 @@ def test_profile_edit_lkp(domain):
     # Сохранение изменений
     profile.click_button(profile.save_button, do_assert=True)
     profile.click_button(profile.confirm_button)
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
@@ -110,9 +108,10 @@ def test_profile_edit_lkp(domain):
 @allure.description('ЛКЗ. Тест редактирования профиля: адреса - А-timestamp, тлф - Рандом, '
                     'налогообложение - Перебор всех вариантов без сохранения, документообор - Вкл./Выкл, '
                     'ссылка контура - Копирование, счет - 405+Рандом, бик - Фикс.')
-def test_profile_edit_lkz(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkz'
-    base, sidebar = base_test_with_login(domain=domain, role='lkz')
+@pytest.mark.parametrize('base_fixture', ['lkz'], indirect=True)  # Параметризация роли
+def test_profile_edit_lkz(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к профилю
     sidebar.click_button(sidebar.profile_button, do_assert=True)
@@ -151,6 +150,4 @@ def test_profile_edit_lkz(domain):
     # Сохранение изменений
     profile.click_button(profile.save_button, do_assert=True)
     profile.click_button(profile.confirm_button)
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

@@ -1,7 +1,6 @@
 import time
 import allure
 import pytest
-from tests.base_test import base_test_with_login
 from pages.agreement_add_page import AgreementAdd
 from pages.clients_list_page import ClientsList
 from pages.contractor_page import Contractor
@@ -42,7 +41,7 @@ def test_agreement_client_add_lke(base_fixture, domain):
     # Отключение автоматического формирования реестров
     add_agr.dropdown_click_input_click(add_agr.registers_auto_select, "Автоматическое формирование Реестров отключено")
     # Клик по кнопке добавления договора
-    # add_agr.click_button(add_agr.add_agr_button, do_assert=True)
+    add_agr.click_button(add_agr.add_agr_button, do_assert=True)
     # Клик по кнопке подтверждения добавления договора
     add_agr.click_button(add_agr.confirm_add_button)
     # Конец теста
@@ -52,9 +51,10 @@ def test_agreement_client_add_lke(base_fixture, domain):
 @allure.feature('Создание договоров')
 @allure.description('ЛКЭ. Тест создания договора с ПВ: '
                     'номер - №-timestamp, срок - с Сегодня по 45 год, автоформирование реестров - Отключено.')
-def test_agreement_producer_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_agreement_producer_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку перевозчиков
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
@@ -84,18 +84,17 @@ def test_agreement_producer_add_lke(domain):
     add_agr.click_button(add_agr.add_agr_button, do_assert=True)
     # Клик по кнопке подтверждения добавления договора
     add_agr.click_button(add_agr.confirm_add_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
 @allure.feature('Создание договоров')
 @allure.description('ЛКЭ. Тест создания договора с внутренним ПВ: '
                     'номер - №-timestamp, срок - с Сегодня по 45 год, автоформирование реестров - Отключено.')
-def test_agreement_inter_contractor_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_agreement_inter_contractor_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку перевозчиков
     sidebar.move_and_click(move_to=sidebar.contractor_hover, click_to=sidebar.producers_list_button,
@@ -125,6 +124,4 @@ def test_agreement_inter_contractor_add_lke(domain):
     add_agr.click_button(add_agr.add_agr_button, do_assert=True)
     # Клик по кнопке подтверждения добавления договора
     add_agr.click_button(add_agr.confirm_add_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

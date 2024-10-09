@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.tariff_luo_add_page import LUOTariffAdd
 from pages.tariffs_list_page import TariffsList
 
@@ -8,9 +8,10 @@ from pages.tariffs_list_page import TariffsList
 @allure.feature('Создание тарифов')
 @allure.description('ЛКП. Тест создания ПРР тарифа: название - ПРР-timestamp, спец. - Грузчик, '
                     'минималка/доплата/МКАД - Рандом')
-def test_luo_tariff_add_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_luo_tariff_add_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку тарифов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.tariffs_list_button,
@@ -39,6 +40,4 @@ def test_luo_tariff_add_lkp(domain):
     # Подтверждение и сохранение тарифа
     add_tariff.click_button(add_tariff.add_tariff_button, do_assert=True)
     add_tariff.click_button(add_tariff.confirm_add_button, wait="lst")
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

@@ -1,14 +1,15 @@
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 
 
 @allure.story("Smoke test")
 @allure.feature('Боковое меню')
 @allure.description('ЛКЭ. Тест бокового меню: переход по всем вкладкам, ожидание прогрузки, '
                     'проверка вкладки по названию')
-def test_sidebar_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_sidebar_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход по всем вкладкам бокового меню и ожидание их прогрузки
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
@@ -85,18 +86,17 @@ def test_sidebar_lke(domain):
     sidebar.switch_to_original_window()
     sidebar.click_button(sidebar.monitor_button, do_assert=True)
     sidebar.click_button(sidebar.exit_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
     
     
 @allure.story("Smoke test")
 @allure.feature('Боковое меню')
 @allure.description('ЛКП. Тест бокового меню: '
                     'переход по всем вкладкам, ожидание прогрузки, проверка вкладки по названию')
-def test_sidebar_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_sidebar_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход по всем вкладкам бокового меню и ожидание их прогрузки
     sidebar.move_and_click(move_to=sidebar.requests_hover, click_to=sidebar.ftl_active_list_button,
@@ -147,18 +147,17 @@ def test_sidebar_lkp(domain):
     sidebar.switch_to_original_window()
     sidebar.click_button(sidebar.monitor_button, do_assert=True)
     sidebar.click_button(sidebar.exit_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
     
     
 @allure.story("Smoke test")
 @allure.feature('Боковое меню')
 @allure.description('ЛКЗ. Тест бокового меню: переход по всем вкладкам, '
                     'ожидание прогрузки, проверка вкладки по названию')
-def test_sidebar_lkz(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkz'
-    base, sidebar = base_test_with_login(domain=domain, role='lkz')
+@pytest.mark.parametrize('base_fixture', ['lkz'], indirect=True)  # Параметризация роли
+def test_sidebar_lkz(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход по всем вкладкам бокового меню и ожидание их прогрузки
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
@@ -212,6 +211,4 @@ def test_sidebar_lkz(domain):
     sidebar.switch_to_original_window()
     sidebar.click_button(sidebar.monitor_button, do_assert=True)
     sidebar.click_button(sidebar.exit_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

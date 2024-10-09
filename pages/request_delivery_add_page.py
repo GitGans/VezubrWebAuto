@@ -152,6 +152,10 @@ class DeliveryAdd(Base):
         "xpath": "//h4[@class='vz-form-group__title' and contains(text(), 'Выбор подрядчиков')]",
         "name": "text_to_click"
     }
+    save_button = {
+        "xpath": "//button[@class='ant-btn ant-btn-primary']",
+        "name": "save_button"
+    }
 
     # Methods
     """ Base request LTL"""

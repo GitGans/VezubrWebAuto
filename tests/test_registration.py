@@ -1,4 +1,5 @@
 import allure
+import pytest
 from selenium.webdriver.support.wait import WebDriverWait
 from pages.clients_list_page import ClientsList
 from pages.login import sms_center, base_password, base_lke
@@ -6,7 +7,6 @@ from pages.producers_list_page import ProducersList
 from pages.registration_page import Registration
 from pages.sidebar import SideBar
 from pages.sms_center_page import SmsCenter
-from tests.base_test import base_test_without_login, base_test_with_login_via_link
 
 
 @allure.story("Smoke test")
@@ -14,9 +14,10 @@ from tests.base_test import base_test_without_login, base_test_with_login_via_li
 @allure.description('Тест регистрации личного кабинета Экспедитора: регистрация - Прямая, тлф. - '
                     '98+get_timestamp_eight_signs, инн - Рандом, лицо - Юридическое, почта - Etimestamp@mail.ru, '
                     'пользователь - Регресс Экс, после создания заходим в ЛК и проверяем ИНН')
-def test_registration_new_lke(domain):
-    # Инициализация базовых объектов и переход к странице входа
-    base, login = base_test_without_login(domain=domain)
+@pytest.mark.parametrize('base_fixture', ['without_login'], indirect=True)
+def test_registration_new_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, login = base_fixture
     
     # Переход к странице регистрации
     login.click_button(login.registration_button)
@@ -77,9 +78,7 @@ def test_registration_new_lke(domain):
     login.click_button(login.login_button)
     # Проверка ИНН пользователя
     login.flexible_assert_word(login.assert_inn, reference_value=inn)
-    
-    # Завершение теста
-    base.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
@@ -88,9 +87,10 @@ def test_registration_new_lke(domain):
                     '98+get_timestamp_eight_signs, инн - Рандом, лицо - Юридическое, почта - Etimestamp@mail.ru, '
                     'пользователь - Регресс ГВ, после создания заходим в ЛК и проверяем ИНН, '
                     'далее заходим в ЛК Экс и принимаем ГВ в контур Экс.,')
-def test_registration_new_lkz(domain):
-    # Инициализация базовых объектов и переход к странице входа по ссылке
-    base, login = base_test_with_login_via_link(domain=domain)
+@pytest.mark.parametrize('base_fixture', ['via_link'], indirect=True)
+def test_registration_new_lkz(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, login = base_fixture
     
     reg = Registration(base.driver)
     # Переход к регистрации нового аккаунта
@@ -167,9 +167,7 @@ def test_registration_new_lkz(domain):
     client_list = ClientsList(base.driver)
     client_list.click_button(client_list.accept_button, wait="lst")
     base.verify_text_by_inn(inn_value=inn, reference_value="Нет договора")
-    
-    # Завершение теста
-    base.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
@@ -178,9 +176,10 @@ def test_registration_new_lkz(domain):
                     '98+get_timestamp_eight_signs, инн - Рандом, лицо - Юридическое, почта - Etimestamp@mail.ru, '
                     'пользователь - Регресс ПВ, после создания заходим в ЛК и проверяем ИНН, '
                     'далее заходим в ЛК Экс и принимаем ПВ в контур Экс.,')
-def test_registration_new_lkp(domain):
-    # Инициализация базовых объектов и переход к странице входа по ссылке
-    base, login = base_test_with_login_via_link(domain=domain)
+@pytest.mark.parametrize('base_fixture', ['via_link'], indirect=True)
+def test_registration_new_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, login = base_fixture
     
     reg = Registration(base.driver)
     # Переход к регистрации нового аккаунта
@@ -257,6 +256,5 @@ def test_registration_new_lkp(domain):
     producer_list = ProducersList(base.driver)
     producer_list.click_button(producer_list.accept_button, wait="lst")
     base.verify_text_by_inn(inn_value=inn, reference_value="Нет договора")
+    # Конец теста
     
-    # Завершение теста
-    base.test_finish()

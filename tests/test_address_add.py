@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.address_add_page import AddressAdd
 from pages.address_list_page import AddressesList
 
@@ -7,9 +7,10 @@ from pages.address_list_page import AddressesList
 @allure.story("Smoke test")
 @allure.feature('Создание и удаления адресов')
 @allure.description('ЛКЭ. Тест создания адреса: статус - Активный, заполняем поля - Все, в конце - Удаляем')
-def test_address_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_address_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку адресов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.addresses_list_button,
@@ -73,17 +74,16 @@ def test_address_add_lke(domain):
     # Удаление созданного адреса
     add_address.click_button(add_address.delete_button, do_assert=True)
     add_address.click_button(add_address.confirm_button, wait="lst")
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
 @allure.feature('Создание и удаления адресов')
 @allure.description('ЛКЭ. Тест создания адреса: статус - Активный, заполняем поля - Все, в конце - Удаляем')
-def test_address_add_lkz(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkz'
-    base, sidebar = base_test_with_login(domain=domain, role='lkz')
+@pytest.mark.parametrize('base_fixture', ['lkz'], indirect=True)  # Параметризация роли
+def test_address_add_lkz(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку адресов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.addresses_list_button,
@@ -147,7 +147,5 @@ def test_address_add_lkz(domain):
     # Удаление созданного адреса
     add_address.click_button(add_address.delete_button, do_assert=True)
     add_address.click_button(add_address.confirm_button, wait="lst")
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
     

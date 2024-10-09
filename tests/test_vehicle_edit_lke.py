@@ -1,6 +1,6 @@
 import allure
+import pytest
 from pages.producers_list_page import ProducersList
-from tests.base_test import base_test_with_login
 from pages.transport_add_page import TransportAdd
 from pages.transports_list_page import TransportsList
 
@@ -13,9 +13,10 @@ from pages.transports_list_page import TransportsList
                     'доп.парам - Нет'
                     '2) редактируем ТС: тип - Грузовая + Манипуль, кузов - Бортовой, грузоподемность/палеты/'
                     'высота - Макс, доп.парам - Все')
-def test_transport_inner_edit_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_transport_inner_edit_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
@@ -76,9 +77,7 @@ def test_transport_inner_edit_lke(domain):
     add_ts.click_button(add_ts.side_loading_toggl)
     add_ts.click_button(add_ts.top_loading_toggl)
     add_ts.click_button(add_ts.edit_confirm_button, do_assert=True)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
@@ -89,9 +88,10 @@ def test_transport_inner_edit_lke(domain):
                     'доп.парам - Все'
                     '2) редактируем ПП: тип - Грузовая, кузов - Фургон, грузоподемность/объем/паллет/высота - Мин, '
                     'доп.парам - Нет')
-def test_semitrailer_inner_edit_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_semitrailer_inner_edit_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
@@ -144,9 +144,7 @@ def test_semitrailer_inner_edit_lke(domain):
     add_ts.click_button(add_ts.top_loading_toggl)
     # Сохранение внесенных изменений транспортного средства
     add_ts.click_button(add_ts.edit_confirm_button, do_assert=True)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Extended test")
@@ -156,9 +154,10 @@ def test_semitrailer_inner_edit_lke(domain):
                     'тип - Цистерна, кузов - Цистерна, грузоподемность/объем/высота/отсеков - Мин. доп.парам - Нет'
                     '2) редактируем ПП: тип - Автовоз, кузов - Автовоз, грузоподемность/высота/машин - Макс, '
                     'доп.парам - Все')
-def test_semitrailer_edit_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_semitrailer_edit_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
@@ -200,9 +199,7 @@ def test_semitrailer_edit_lke(domain):
     add_ts.all_additional_params_without_gps()
     # Сохранение внесенных изменений транспортного средства
     add_ts.click_button(add_ts.edit_confirm_button, do_assert=True)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
@@ -211,9 +208,10 @@ def test_semitrailer_edit_lke(domain):
                     '1) создаем Тяг: номер - ВТЯГ-timestamp, модель - Тягач, выпуск - 2019г, собственник - Аренда,'
                     'доп.парам - Все'
                     '2) редактируем Тяг: выпуск - 2021г, собственник - Лизинг, доп.парам - Нет')
-def test_tractor_inner_edit_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_tractor_inner_edit_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
@@ -262,6 +260,4 @@ def test_tractor_inner_edit_lke(domain):
     add_ts.click_button(add_ts.gps_monitoring_toggl)
     # Сохранение внесенных изменений транспортного средства
     add_ts.click_button(add_ts.edit_confirm_button, do_assert=True)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

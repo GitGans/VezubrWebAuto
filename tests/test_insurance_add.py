@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.insurance_contract_add_page import InsuranceAdd
 from pages.insurer_page import Insurer
 from pages.insurers_list_page import InsurersList
@@ -9,9 +9,10 @@ from pages.insurers_list_page import InsurersList
 @allure.feature('Создание и завершение договоров страхования')
 @allure.description('ЛКЭ. Тест создания договора страхования: номер и название - № и Н-timestamp, срок - с Сегодня, '
                     'макс стоимость - 1ккк, бордеро - Да, премия - 0.05%, мин - 50руб, в конце - Удаляем')
-def test_insurance_contract_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_insurance_contract_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку страховщиков
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.insurers_list_button,
@@ -67,18 +68,17 @@ def test_insurance_contract_add_lke(domain):
     # Подтверждение закрытия договора
     add_contract.click_button(add_contract.confirm_button, do_assert=True)
     add_contract.click_button(add_contract.confirm_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
 @allure.feature('Создание и завершение договоров страхования')
 @allure.description('ЛКП. Тест создания договора страхования: номер и название - № и Н-timestamp, срок - с Сегодня, '
                     'макс стоимость - 1ккк, бордеро - Да, премия - 0.05%, мин - 50руб, в конце - Удаляем')
-def test_insurance_contract_add_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_insurance_contract_add_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку страховщиков
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.insurers_list_button,
@@ -133,18 +133,17 @@ def test_insurance_contract_add_lkp(domain):
     # Подтверждение закрытия договора
     add_contract.click_button(add_contract.confirm_button, do_assert=True)
     add_contract.click_button(add_contract.confirm_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Extended test")
 @allure.feature('Создание и завершение договоров страхования')
 @allure.description('ЛКЗ. Тест создания договора страхования: номер и название - № и Н-timestamp, срок - с Сегодня, '
                     'макс стоимость - 1ккк, бордеро - Да, премия - 0.05%, мин - 50руб, в конце - Удаляем')
-def test_insurance_contract_add_lkz(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkz'
-    base, sidebar = base_test_with_login(domain=domain, role='lkz')
+@pytest.mark.parametrize('base_fixture', ['lkz'], indirect=True)  # Параметризация роли
+def test_insurance_contract_add_lkz(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку страховщиков
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.insurers_list_button,
@@ -200,6 +199,4 @@ def test_insurance_contract_add_lkz(domain):
     # Подтверждение закрытия договора
     add_contract.click_button(add_contract.confirm_button, do_assert=True)
     add_contract.click_button(add_contract.confirm_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

@@ -1,6 +1,6 @@
 import time
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.request_old_ftl_add_page import FTLAdd
 
 
@@ -8,9 +8,10 @@ from pages.request_old_ftl_add_page import FTLAdd
 @allure.feature('Создание FTL заявок')
 @allure.description('ЛКЭ. Тест создания FTL заявки от ГВ: тип - Город, подача - Сейчас, ТС - Груз 0.5т, '
                     'кузов - Закрытый, адреса - Конкретные, публикация - Тариф')
-def test_ftl_request_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_ftl_request_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к созданию новой FTL заявки
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
@@ -63,18 +64,17 @@ def test_ftl_request_add_lke(domain):
     ftl.click_button(ftl.publish_button)
     ftl.click_button(ftl.continue_button, do_assert=True)
     ftl.click_button(ftl.confirm_add_button, wait="lst")
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
     
     
 @allure.story("Smoke test")
 @allure.feature('Создание FTL заявок')
 @allure.description('ЛКЗ. Тест создания FTL заявки: тип - Город, подача - Сейчас, ТС - Груз 0.5т, '
                     'кузов - Закрытый, адреса - Конкретные, публикация - Тариф')
-def test_ftl_request_add_lkz(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkz'
-    base, sidebar = base_test_with_login(domain=domain, role='lkz')
+@pytest.mark.parametrize('base_fixture', ['lkz'], indirect=True)  # Параметризация роли
+def test_ftl_request_add_lkz(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к созданию новой FTL заявки
     sidebar.move_and_click(move_to=sidebar.new_order_hover, click_to=sidebar.new_ftl_city_button,
@@ -126,6 +126,4 @@ def test_ftl_request_add_lkz(domain):
     ftl.click_button(ftl.publish_button)
     ftl.click_button(ftl.continue_button, do_assert=True)
     ftl.click_button(ftl.confirm_add_button, wait="lst")
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

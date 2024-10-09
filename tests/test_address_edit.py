@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.address_add_page import AddressAdd
 from pages.address_list_page import AddressesList
 
@@ -7,9 +7,10 @@ from pages.address_list_page import AddressesList
 @allure.story("Critical path test")
 @allure.feature('Создание и удаления адресов')
 @allure.description('ЛКЭ. Тест создания адреса: статус - Активный, заполняем поля - Все, в конце - Удаляем')
-def test_address_edit_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_address_edit_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку адресов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.addresses_list_button,
@@ -122,17 +123,16 @@ def test_address_edit_lke(domain):
     # Клик по кнопке сохранения адреса
     add_address.click_button(add_address.create_address_button)
     add_address.flexible_assert_word(add_address.name_address_input, edit_stamp)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Critical path test")
 @allure.feature('Создание адресов и редактирование')
 @allure.description('ЛКЭ. Тест создания адреса: статус - Активный, заполняем поля - Все, редактируем поля - Все')
-def test_address_edit_lkz(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkz'
-    base, sidebar = base_test_with_login(domain=domain, role='lkz')
+@pytest.mark.parametrize('base_fixture', ['lkz'], indirect=True)  # Параметризация роли
+def test_address_edit_lkz(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку адресов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.addresses_list_button,
@@ -176,13 +176,13 @@ def test_address_edit_lkz(domain):
     add_address.input_in_field(add_address.contact_person_input, "Какой-то Василий")
     add_address.input_in_field(add_address.mobile_phone_input, base.random_value_float_str(1000000000, 9999999999),
                                click_first=True)
-    # add_address.input_in_field(add_address.additional_first_input, base.random_value_float_str(1, 999999),
-    #                            click_first=True)
+    add_address.input_in_field(add_address.additional_first_input, base.random_value_float_str(1, 999999),
+                               click_first=True)
     add_address.input_in_field(add_address.email_input, f"E{base.get_timestamp()}@mail.ru")
     add_address.input_in_field(add_address.work_phone_input, base.random_value_float_str(1000000000, 9999999999),
                                click_first=True)
-    # add_address.input_in_field(add_address.additional_second_input, base.random_value_float_str(1, 999999),
-    #                            click_first=True)
+    add_address.input_in_field(add_address.additional_second_input, base.random_value_float_str(1, 999999),
+                               click_first=True)
     # Клик по кнопке создания адреса
     add_address.click_button(add_address.create_address_button, do_assert=True)
     # Клик по кнопке подтверждения добавления
@@ -245,7 +245,5 @@ def test_address_edit_lkz(domain):
     # Клик по кнопке сохранения адреса
     add_address.click_button(add_address.create_address_button)
     add_address.flexible_assert_word(add_address.name_address_input, edit_stamp)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
     

@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.group_page import Group
 from pages.profile_page import Profile
 
@@ -7,9 +7,10 @@ from pages.profile_page import Profile
 @allure.story("Extended test")
 @allure.feature('Создание групп')
 @allure.description('ЛКЭ. Тест создания группы: имя - №-timestamp, тип - Признак договора, признак - Рандом')
-def test_group_attr_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_group_attr_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход в профиль
     sidebar.click_button(sidebar.profile_button, do_assert=True)
@@ -31,17 +32,16 @@ def test_group_attr_add_lke(domain):
     group.click_button(group.create_group_button, do_assert=True)
     # Клик по кнопке подтверждения добавления группы
     group.click_button(group.confirm_add_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Extended test")
 @allure.feature('Создание групп')
 @allure.description('ЛКЭ. Тест создания группы: имя - №-timestamp, тип - Заказчик, заказчик - Рандом')
-def test_group_client_add_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_group_client_add_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход в профиль
     sidebar.click_button(sidebar.profile_button, do_assert=True)
@@ -63,17 +63,16 @@ def test_group_client_add_lke(domain):
     group.click_button(group.create_group_button, do_assert=True)
     # Клик по кнопке подтверждения добавления группы
     group.click_button(group.confirm_add_button)
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Extended test")
 @allure.feature('Создание групп')
 @allure.description('ЛКЭ. Тест удалания группы: группа - Шестая в списке')
-def test_group_delete_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_group_delete_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход в профиль
     sidebar.click_button(sidebar.profile_button, do_assert=True)
@@ -85,6 +84,4 @@ def test_group_delete_lke(domain):
     profile.click_button(profile.groups_delete_button)
     # Клик по кнопке подтверждения удаления
     profile.click_button(profile.confirm_button, wait="lst")
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

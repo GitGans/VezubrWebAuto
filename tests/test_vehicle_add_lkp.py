@@ -1,6 +1,6 @@
 import time
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.transport_add_page import TransportAdd
 from pages.transports_list_page import TransportsList
 
@@ -10,9 +10,10 @@ from pages.transports_list_page import TransportsList
 @allure.description('ЛКП. Тест создания ТС ПВ: номер - ТС-timestamp, модель - Монорамник, выпуск - 2023г, собственник '
                     '- Подрядчик, тип - Грузовой, кузов - Тент, грузоподемность/объем/палеты/высота - Рандом, '
                     'добавить/убрать - 2 и 1 водителя, эксплуотация - останавливаем/востанавливаем/завершаем')
-def test_transport_add_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_transport_add_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
@@ -60,9 +61,7 @@ def test_transport_add_lkp(domain):
     add_ts.click_button(add_ts.exploitation_finish_button)
     add_ts.click_button(add_ts.yes_button, do_assert=True)
     add_ts.click_button(add_ts.ok_button)
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Critical path test")
@@ -70,9 +69,10 @@ def test_transport_add_lkp(domain):
 @allure.description('ЛКП. Тест создания ПП ПВ: номер - ПП-timestamp, модель - Полуприцеп, выпуск - 2023г, собственник '
                     '- Подрядчик, тип - Грузовой, кузов - Тент, грузоподемность/объем/палеты/высота - Рандом, '
                     'добавить/заменить - Тягач, эксплуотация - останавливаем/востанавливаем')
-def test_trailer_add_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_trailer_add_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
@@ -113,18 +113,17 @@ def test_trailer_add_lkp(domain):
     add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
     add_ts.click_button(add_ts.resume_button, wait="form")
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
 @allure.feature('Создание транспортных средств')
 @allure.description('ЛКП. Тест создания Тягача: номер - ТЯГ-timestamp, модель - Тягач, выпуск - 2023г, собственник'
                     ' - Подрядчик, добавить/убрать - 2 и 1 водителя, эксплуотация - останавливаем/востанавливаем')
-def test_tractor1_add_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_tractor1_add_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
@@ -162,18 +161,17 @@ def test_tractor1_add_lkp(domain):
     add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
     add_ts.click_button(add_ts.resume_button, wait="form")
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Critical path test")
 @allure.feature('Создание транспортных средств')
 @allure.description('ЛКП. Тест создания Тягача ПВ": номер - ТЯГ-timestamp, модель - Тягач, выпуск - 2023г, собственник'
                     ' - Подрядчик, добавить/заменить - ПП, эксплуотация - останавливаем/востанавливаем')
-def test_tractor2_add_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_tractor2_add_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
 
     # Переход к списку транспортных средств
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.transports_list_button,
@@ -208,6 +206,4 @@ def test_tractor2_add_lkp(domain):
     add_ts.click_button(add_ts.suspend_button, wait="form")
     add_ts.click_button(add_ts.action_menu_button)
     add_ts.click_button(add_ts.resume_button, wait="form")
-
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста

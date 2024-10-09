@@ -1,5 +1,5 @@
 import allure
-from tests.base_test import base_test_with_login
+import pytest
 from pages.loader_add_page import LoaderAdd
 from pages.loader_list_page import LoaderList
 
@@ -11,9 +11,10 @@ from pages.loader_list_page import LoaderList
                     'годен до - 10.10.2045, № паспорт/код/права/тлф.апп/тлф. - Рандом.'
                     '2) редактируем: ФИО - ФИО-timestamp, паспорт - РФ, тип - Такелажник/Упаковщик/Карщик, '
                     'годен до - 10.10.2045, № паспорт/код/права/тлф.апп/тлф. - Рандом.')
-def test_loader1_edit_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_loader1_edit_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку специалистов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.loaders_list_button,
@@ -93,9 +94,7 @@ def test_loader1_edit_lke(domain):
     # Сохранение изменений
     add_loader.click_button(add_loader.confirm_edit_button, do_assert=True)
     add_loader.click_button(add_loader.confirm_add_button, wait="form")
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
@@ -105,9 +104,10 @@ def test_loader1_edit_lke(domain):
                     'годен до - 10.10.2045, № паспорт/код/права/тлф.апп/тлф. - Рандом.'
                     '2) редактируем: ФИО - ФИО-timestamp, паспорт - Албания/Тирана, тип - Сборщик/Стропальщик, '
                     '№ паспорт/код/права/тлф.апп/тлф. - Рандом.')
-def test_loader2_edit_lke(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lke'
-    base, sidebar = base_test_with_login(domain=domain, role='lke')
+@pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
+def test_loader2_edit_lke(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку специалистов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.loaders_list_button,
@@ -182,9 +182,7 @@ def test_loader2_edit_lke(domain):
     # Сохранение изменений
     add_loader.click_button(add_loader.confirm_edit_button, do_assert=True)
     add_loader.click_button(add_loader.confirm_add_button, wait="form")
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
@@ -194,9 +192,10 @@ def test_loader2_edit_lke(domain):
                     'годен до - 10.10.2045, № паспорт/код/права/тлф.апп/тлф. - Рандом.'
                     '2) редактируем: ФИО - ФИО-timestamp, паспорт - РФ, тип - Грузчик/Такелажник/Стропальщик, '
                     'годен до - 10.10.2045, № паспорт/код/права/тлф.апп/тлф. - Рандом.')
-def test_loader1_edit_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_loader1_edit_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку специалистов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.loaders_list_button,
@@ -276,9 +275,7 @@ def test_loader1_edit_lkp(domain):
     # Сохранение изменений
     add_loader.click_button(add_loader.confirm_edit_button, do_assert=True)
     add_loader.click_button(add_loader.confirm_add_button, wait="form")
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
 
 
 @allure.story("Smoke test")
@@ -288,9 +285,10 @@ def test_loader1_edit_lkp(domain):
                     'годен до - 10.10.2045, № паспорт/код/права/тлф.апп/тлф. - Рандом.'
                     '2) редактируем: ФИО - ФИО-timestamp, паспорт - Азербайджан/Баку, тип - Упаковщик/Стропальщик, '
                     'годен до - 10.10.2045, № паспорт/код/права/тлф.апп/тлф. - Рандом.')
-def test_loader2_edit_lkp(domain):
-    # Инициализация базовых объектов и авторизация под ролью 'lkp'
-    base, sidebar = base_test_with_login(domain=domain, role='lkp')
+@pytest.mark.parametrize('base_fixture', ['lkp'], indirect=True)  # Параметризация роли
+def test_loader2_edit_lkp(base_fixture, domain):
+    # Инициализация базовых объектов через фикстуру
+    base, sidebar = base_fixture
     
     # Переход к списку специалистов
     sidebar.move_and_click(move_to=sidebar.directories_hover, click_to=sidebar.loaders_list_button,
@@ -368,7 +366,5 @@ def test_loader2_edit_lkp(domain):
     # Сохранение изменений
     add_loader.click_button(add_loader.confirm_edit_button, do_assert=True)
     add_loader.click_button(add_loader.confirm_add_button, wait="form")
-    
-    # Завершение теста
-    sidebar.test_finish()
+    # Конец теста
     
