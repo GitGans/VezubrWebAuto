@@ -25,7 +25,7 @@ def test_registration_new_lke(base_fixture, domain):
     reg = Registration(base.driver)
     # Выбор типа регистрации - Экспедитор
     reg.click_button(reg.expeditor_button)
-    phone = "98" + reg.get_timestamp_eight_signs()
+    phone = "98" + reg.get_timestamp(eight=True)
     # Ввод номера телефона
     reg.input_in_field(reg.phone_input, phone, click_first=True)
     # Принятие политики конфиденциальности
@@ -97,7 +97,7 @@ def test_registration_new_lkz(base_fixture, domain):
     reg.click_button(reg.registration_new_account)
     # Выбор типа регистрации - Грузовладелец
     reg.click_button(reg.client_button)
-    phone = "98" + reg.get_timestamp_eight_signs()
+    phone = "98" + reg.get_timestamp(eight=True)
     # Ввод номера телефона
     reg.input_in_field(reg.phone_input, phone, click_first=True)
     # Принятие политики конфиденциальности
@@ -186,7 +186,7 @@ def test_registration_new_lkp(base_fixture, domain):
     reg.click_button(reg.registration_new_account)
     # Выбор типа регистрации - Перевозчик
     reg.click_button(reg.producer_button)
-    phone = "98" + reg.get_timestamp_eight_signs()
+    phone = "98" + reg.get_timestamp(eight=True)
     # Ввод номера телефона
     reg.input_in_field(reg.phone_input, phone, click_first=True)
     # Принятие политики конфиденциальности

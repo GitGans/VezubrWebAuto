@@ -57,12 +57,12 @@ class Base:
         "xpath": "//button[contains(., 'Сбросить')]",
         "name": "reset_button"
     }
-
-    """ Get driver"""
+    
+    """ Get driver """
     @classmethod
     def get_driver(cls: Type['Base']) -> 'Base':
         """
-        Создает и возвращает экземпляр драйвера и класса.
+        Создает и возвращает экземпляр драйвера с нужными настройками в зависимости от операционной системы.
 
         Returns
         -------
@@ -71,50 +71,50 @@ class Base:
         """
         options = webdriver.ChromeOptions()
         
-        if platform.system() == 'Windows':
-            # Настройки для Windows
-            chrome_driver_path = WINDOWS_DRIVER_PATH
-            options.add_argument('--window-size=1920x1080')
-            # options.add_argument('--headless')  # Режим без графического интерфейса
-        else:
-            # Настройки для Linux (например, в контейнерах)
-            chrome_driver_path = LINUX_DRIVER_PATH
+        # Настройки драйвера для разных операционных систем
+        chrome_driver_path = WINDOWS_DRIVER_PATH if platform.system() == 'Windows' else LINUX_DRIVER_PATH
+        options.add_argument('--window-size=1920x1080')
+        
+        if platform.system() != 'Windows':
+            # Дополнительные параметры для Linux
             options.add_argument('--no-sandbox')
             options.add_argument('--disable-dev-shm-usage')
             options.add_argument('--disable-gpu')
-            options.add_argument('--headless')  # Режим без графического интерфейса
+            options.add_argument('--headless')
             options.add_argument('--remote-debugging-port=9222')
             options.add_argument('--disable-software-rasterizer')
             options.add_argument('--disable-setuid-sandbox')
-            options.add_argument('--window-size=1920x1080')
         
         service = Service(chrome_driver_path)
         driver = webdriver.Chrome(options=options, service=service)
         
+        # Шаг в Allure и вывод в консоль
         with allure.step(title="Start test"):
             print("Start test")
         
         return cls(driver)
-
-    """Test finish"""
+    
+    """ Test finish """
     def test_finish(self) -> None:
         """
         Завершает тест и закрывает браузер.
         """
+        # Шаг в Allure и вывод в консоль
         with allure.step(title="Test finish"):
             print("Test finish")
             self.driver.quit()
-
-    """ Get current url"""
+    
+    """ Get current url """
     def get_current_url(self) -> None:
         """
         Получает и выводит текущий URL адрес в консоль.
         """
         get_url = self.driver.current_url
+        # Шаг в Allure и вывод в консоль
         with allure.step(title="Current url: " + get_url):
             print("Current url: " + get_url)
-
-    """ Get element with choosing a method for obtaining an element"""
+    
+    """ Get element with choosing a method for obtaining an element """
     def get_element(self, element_info: Dict[str, str], wait_type: str = 'clickable') -> Dict[str, Any]:
         """
         Ожидает элемент в зависимости от выбранного типа ожидания и возвращает его.
@@ -124,7 +124,7 @@ class Base:
         element_info : dict
             Информация о локаторе элемента.
         wait_type : str, optional
-            Тип ожидания: 'clickable', 'visible', 'located', 'find', или 'invisibility'.
+            Тип ожидания: 'clickable', 'visible', 'located', 'find', или 'invisibility'. По умолчанию 'clickable'.
 
         Returns
         -------
@@ -132,87 +132,68 @@ class Base:
             Словарь с информацией о найденном элементе.
         """
         try:
-            if wait_type == 'clickable':
-                element = WebDriverWait(self.driver, 60).until(
-                    EC.element_to_be_clickable((By.XPATH, element_info['xpath'])))
-            elif wait_type == 'visible':
-                element = WebDriverWait(self.driver, 15).until(
-                    EC.visibility_of_element_located((By.XPATH, element_info['xpath'])))
-            elif wait_type == 'located':
-                element = WebDriverWait(self.driver, 60).until(
-                    EC.presence_of_element_located((By.XPATH, element_info['xpath'])))
-            elif wait_type == 'find':
-                element = self.driver.find_element(By.XPATH, element_info['xpath'])
-            elif wait_type == 'invisibility':
-                WebDriverWait(self.driver, 60).until(
-                    EC.invisibility_of_element_located((By.XPATH, element_info['xpath'])))
-                element = None
-            else:
+            wait_conditions = {
+                'clickable': EC.element_to_be_clickable,
+                'visible': EC.visibility_of_element_located,
+                'located': EC.presence_of_element_located,
+                'find': lambda locator: self.driver.find_element(*locator),
+                'invisibility': EC.invisibility_of_element_located
+            }
+            
+            if wait_type not in wait_conditions:
                 raise ValueError(f"Unsupported wait type: {wait_type}")
+            
+            condition = wait_conditions[wait_type]
+            
+            if wait_type == 'invisibility':
+                # Ожидание невидимости элемента с заданным таймаутом
+                WebDriverWait(self.driver, 15).until(condition((By.XPATH, element_info['xpath'])))
+                element = None  # Возвращаем None, так как элемент невидим
+            else:
+                # Ожидание для остальных типов
+                element = WebDriverWait(self.driver, 60).until(condition((By.XPATH, element_info['xpath'])))
             
             return {'name': element_info['name'], 'element': element}
         
         except TimeoutException:
-            message = ""
-            if wait_type == 'clickable':
-                message = f"Element '{element_info['name']}' is not clickable"
-            elif wait_type == 'visible':
-                message = f"Element '{element_info['name']}' is not visible"
-                with allure.step(message):
-                    print(message)
-                # Возвращаем None, чтобы тест продолжился
-                return {'name': element_info['name'], 'element': None}
-            elif wait_type == 'located':
-                message = f"Element '{element_info['name']}' is not located"
-            elif wait_type == 'find':
-                message = f"Element '{element_info['name']}' is not found"
-            elif wait_type == 'invisibility':
-                message = f"Element '{element_info['name']}' is not invisible"
-            
+            message = f"Element '{element_info['name']}' is not {wait_type}"
+            # Шаг в Allure и вывод в консоль
             with allure.step(message):
                 print(message)
             raise TimeoutException(message)
-
-    """ Get timestamp"""
-    @staticmethod
-    def get_timestamp() -> str:
-        """
-        Возвращает текущее время в формате UTC без разделителей.
-
-        Returns
-        -------
-        str
-            Текущее время в формате "ГГГГММДДЧЧММСС".
-        """
-        return datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S")
-
-    """ Get timestamp eight signs"""
-    @staticmethod
-    def get_timestamp_eight_signs() -> str:
-        """
-        Возвращает текущее время в формате UTC без разделителей.
-
-        Returns
-        -------
-        str
-            Текущее время в формате "ДДЧЧММСС".
-        """
-        return datetime.datetime.utcnow().strftime("%d%H%M%S")
-
-    """ Get timestamp with dot"""
-    @staticmethod
-    def get_timestamp_dot() -> str:
-        """
-        Возвращает текущее время в формате UTC с точками в качестве разделителей.
-
-        Returns
-        -------
-        str
-            Текущее время в формате "ГГГГ.ММ.ДД.ЧЧ.ММ.СС".
-        """
-        return datetime.datetime.utcnow().strftime("%Y.%m.%d.%H.%M.%S")
     
-    """ Assert word fix reference"""
+    """ Get timestamp """
+    @staticmethod
+    def get_timestamp(dot: bool = False, eight: bool = False) -> str:
+        """
+        Возвращает текущее время в формате UTC с возможностью выбора формата.
+
+        Parameters
+        ----------
+        dot : bool, optional
+            Если True, время будет возвращено с точками в качестве разделителей ("ГГГГ.ММ.ДД.ЧЧ.ММ.СС").
+        eight : bool, optional
+            Если True, время будет возвращено в формате "ДДЧЧММСС".
+            Если оба параметра True, приоритет будет у параметра 'eight'.
+
+        Returns
+        -------
+        str
+            Текущее время в выбранном формате.
+        """
+        if eight:
+            # Формат с восемью знаками без разделителей
+            timestamp = datetime.datetime.utcnow().strftime("%d%H%M%S")
+        elif dot:
+            # Формат с точками в качестве разделителей
+            timestamp = datetime.datetime.utcnow().strftime("%Y.%m.%d.%H.%M.%S")
+        else:
+            # Формат по умолчанию без разделителей
+            timestamp = datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        
+        return timestamp
+    
+    """ Assert word fix reference """
     def assert_word(self, element_dict: Dict[str, str], wait_type: str = 'clickable') -> NoReturn:
         """
         Проверяет, что текст элемента соответствует заданному значению. Если предоставлен 'reference_xpath',
@@ -241,11 +222,13 @@ class Base:
             time.sleep(0.1)  # Фиксированная задержка
             value_word = element.text
         
+        # Шаг в Allure и вывод в консоль
         with allure.step(title=f"Assert \"{value_word}\" == \"{element_dict['reference']}\""):
             assert re.fullmatch(element_dict['reference'],
                                 value_word), f"Expected '{element_dict['reference']}', but found '{value_word}'."
-            print(f"Assert \"{value_word}\" == \"{element_dict['reference']}\"")
-        
+            print(
+                f"Assert \"{value_word}\" == \"{element_dict['reference']}\"")
+    
     """ Assert word input reference"""
     def flexible_assert_word(self, element_dict: Dict[str, str], reference_value: str,
                              wait_type: str = 'clickable') -> None:
@@ -354,15 +337,14 @@ class Base:
         Сохраняет скриншот текущего состояния браузера в папку screens внутри проекта.
         Если тест запускается с Allure, прикрепляет скриншот к отчету Allure.
         """
-        # Определяем путь к корневой папке проекта
-        project_root = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), '..', '..'))  # Поднимаемся на два уровня вверх от текущего файла
+        # Определяем относительный путь к папке screens внутри проекта
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))  # Поднимаемся на уровень вверх
         screenshot_dir = os.path.join(project_root, 'screens')  # Путь к папке screens внутри корня проекта
         
         print(f"Saving screenshot to relative directory: {screenshot_dir}")
         
         # Создаем имя файла скриншота с таймштампом и названием теста (если указано)
-        timestamp = self.get_timestamp_dot()
+        timestamp = self.get_timestamp(dot=True)
         if test_name:
             name_screenshot = f'{test_name}_{timestamp}.png'
         else:

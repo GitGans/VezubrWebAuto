@@ -1,5 +1,4 @@
 import pytest
-import os
 from tests.base_test import base_test_with_login, base_test_without_login, base_test_with_login_via_link
 
 
@@ -15,13 +14,8 @@ def domain(request):
 
 @pytest.fixture
 def base_fixture(request, domain):
-    # Ищем директорию, которая начинается с 'results_'
-    allure_dir = None
-    for dir_name in os.listdir('.'):
-        if dir_name.startswith('results_') and os.path.isdir(dir_name):
-            allure_dir = os.path.abspath(dir_name)  # Сохраняем путь к найденной директории
-            print(f"Allure directory found and set: {allure_dir}")
-            break
+    # Проверяем, используется ли отчет Allure
+    allure_dir = request.config.getoption("--alluredir", default=None)
     
     # Получаем параметр из теста, который определяет тип теста и роль
     role = request.param
@@ -29,16 +23,16 @@ def base_fixture(request, domain):
     # Логика для выбора базового теста
     if role == 'without_login':
         base, login = base_test_without_login(domain)
-        base.allure_dir = allure_dir  # Устанавливаем директорию в base
-        yield base, login  # Возвращаем base и login вместо sidebar
+        base.allure_dir = allure_dir  # Устанавливаем директорию в base, если используется Allure
+        yield base, login
     elif role == 'via_link':
         base, login = base_test_with_login_via_link(domain)
-        base.allure_dir = allure_dir  # Устанавливаем директорию в base
-        yield base, login  # Возвращаем base и login вместо sidebar
+        base.allure_dir = allure_dir
+        yield base, login
     else:
         base, sidebar = base_test_with_login(domain, role)
-        base.allure_dir = allure_dir  # Устанавливаем директорию в base
-        yield base, sidebar  # Возвращаем base и sidebar
+        base.allure_dir = allure_dir
+        yield base, sidebar
     
     # Завершаем сессию драйвера после выполнения теста
     base.test_finish()
