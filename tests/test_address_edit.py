@@ -122,7 +122,7 @@ def test_address_edit_lke(base_fixture, domain):
     add_address.click_button(add_address.general_tab)
     # Клик по кнопке сохранения адреса
     add_address.click_button(add_address.create_address_button)
-    add_address.flexible_assert_word(add_address.name_address_input, edit_stamp)
+    add_address.assert_element_text(add_address.name_address_input, edit_stamp)
     # Конец теста
 
 
@@ -244,6 +244,6 @@ def test_address_edit_lkz(base_fixture, domain):
     add_address.click_button(add_address.general_tab)
     # Клик по кнопке сохранения адреса
     add_address.click_button(add_address.create_address_button)
-    add_address.flexible_assert_word(add_address.name_address_input, edit_stamp)
+    add_address.assert_element_text(add_address.name_address_input, edit_stamp)
     # Конец теста
     

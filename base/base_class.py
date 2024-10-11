@@ -193,69 +193,40 @@ class Base:
         
         return timestamp
     
-    """ Assert word fix reference """
-    def assert_word(self, element_dict: Dict[str, str], wait_type: str = 'clickable') -> NoReturn:
+    """ Assert element text"""
+    def assert_element_text(self, element_dict: Dict[str, str], reference_value: Optional[str] = None,
+                            wait_type: str = 'clickable') -> None:
         """
-        Проверяет, что текст элемента соответствует заданному значению. Если предоставлен 'reference_xpath',
-        использует его для точного определения элемента для проверки текста.
+        Проверяет, что текст элемента соответствует заданному значению или условию.
+        Использует 'reference_xpath' из 'element_dict' для получения текста элемента.
+        Если не указан 'reference_value', используется 'reference' из 'element_dict' для сравнения.
 
         Parameters
         ----------
         element_dict : dict
-            Словарь с информацией о локаторе элемента и ожидаемым текстом.
-            Может включать 'reference_xpath' для спецификации элемента, текст которого следует проверять.
+            Словарь с информацией о локаторе элемента, должен включать 'reference_xpath' для определения элемента.
+        reference_value : str, optional
+            Ожидаемый текст для сравнения, если указан.
         wait_type : str, optional
-            Тип ожидания элемента ('clickable', 'visible', 'located', 'find').
+            Тип ожидания элемента ('clickable', 'visible', 'located', 'find'). По умолчанию 'clickable'.
 
         Raises
         ------
         AssertionError
             Если текст элемента не соответствует ожидаемому значению.
         """
-        if 'reference_xpath' in element_dict:
-            reference_element = self.get_element(
-                {'name': 'Reference element', 'xpath': element_dict['reference_xpath']}, wait_type='located')['element']
-            time.sleep(0.1)  # Фиксированная задержка
-            value_word = reference_element.text
-        else:
-            element = self.get_element(element_dict, wait_type=wait_type)['element']
-            time.sleep(0.1)  # Фиксированная задержка
-            value_word = element.text
+        # Получаем текст элемента по reference_xpath
+        reference_element_info = {'name': 'Reference element', 'xpath': element_dict['reference_xpath']}
+        element = self.get_element(reference_element_info, wait_type=wait_type)['element']
+        value_word = element.text or element.get_attribute('value')
+        
+        # Определяем ожидаемое значение
+        expected_value = reference_value if reference_value else element_dict.get('reference', '')
         
         # Шаг в Allure и вывод в консоль
-        with allure.step(title=f"Assert \"{value_word}\" == \"{element_dict['reference']}\""):
-            assert re.fullmatch(element_dict['reference'],
-                                value_word), f"Expected '{element_dict['reference']}', but found '{value_word}'."
-            print(
-                f"Assert \"{value_word}\" == \"{element_dict['reference']}\"")
-    
-    """ Assert word input reference"""
-    def flexible_assert_word(self, element_dict: Dict[str, str], reference_value: str,
-                             wait_type: str = 'clickable') -> None:
-        """
-        Проверяет, что текст элемента или значение его атрибута 'value' соответствует заданному значению.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о локаторе элемента.
-        reference_value : str
-            Ожидаемый текст или значение для проверки соответствия тексту элемента или его атрибуту 'value'.
-        wait_type : str, optional
-            Тип ожидания элемента ('clickable', 'visible', 'located', 'find').
-
-        Raises
-        ------
-        AssertionError
-            Если текст элемента или его атрибут 'value' не соответствует ожидаемому значению.
-        """
-        element = self.get_element(element_dict, wait_type=wait_type)['element']
-        time.sleep(0.1)  # Фиксированная задержка
-        actual_text = element.text or element.get_attribute('value')  # Получаем текст или значение атрибута 'value'
-        with allure.step(title=f"Assert \"{actual_text}\" == \"{reference_value}\""):
-            assert re.fullmatch(reference_value,
-                                actual_text), f"Expected '{reference_value}', but found '{actual_text}'."
-            print(f"Assert \"{actual_text}\" == \"{reference_value}\"")
+        with allure.step(f"Assert \"{value_word}\" == \"{expected_value}\""):
+            assert re.fullmatch(expected_value, value_word), f"Expected '{expected_value}', but found '{value_word}'."
+            print(f"Assert \"{value_word}\" == \"{expected_value}\"")
     
     """ Assert text extraction by INN wait clickable"""
     def verify_text_by_inn(self, inn_value: str, reference_value: str, wait_type: str = 'located') -> NoReturn:
@@ -416,7 +387,7 @@ class Base:
                         # Продолжаем выполнение, несмотря на то, что спиннер не исчез
                         
             if do_assert:
-                self.assert_word(element_dict)
+                self.assert_element_text(element_dict)
     
     """ In dropdown click, wait, input and enter"""
     def dropdown_click_input_wait_enter(self, element_dict: Dict[str, str], option_text: str, press_enter: bool = True,
@@ -710,30 +681,6 @@ class Base:
             if press_enter:
                 field_dict['element'].send_keys(Keys.ENTER)
             print(f"{'Click and ' if click_first else ''}Backspaced {num} times and input in {element_name}: {value}")
-
-    """ Scroll X Y"""
-    def scroll_page(self, x: Optional[int] = None, y: Optional[int] = None) -> None:
-        """
-        Прокручивает страницу на заданное количество пикселей по горизонтали и вертикали.
-
-        Parameters
-        ----------
-        x : int, optional
-            Количество пикселей для прокрутки по горизонтали.
-        y : int, optional
-            Количество пикселей для прокрутки по вертикали.
-
-        """
-        with allure.step(title=f"Scroll page X by {x} pixels and Y by {y} pixels"):
-            script = "window.scrollBy({}, {});".format(x, y) if x is not None and y is not None else ""
-            self.driver.execute_script(script)
-            if x is not None or y is not None:
-                print(f"Scroll page", end="")
-                if x is not None:
-                    print(f" X {x} pixels", end="")
-                if y is not None:
-                    print(f" Y by {y} pixels", end="")
-                print()
     
     """Scroll to the bottom of the page"""
     def scroll_to_bottom(self) -> NoReturn:

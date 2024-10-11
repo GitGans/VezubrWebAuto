@@ -77,7 +77,7 @@ def test_registration_new_lke(base_fixture, domain):
     login.input_in_field(login.password_input, base_password["password"], safe=True)
     login.click_button(login.login_button)
     # Проверка ИНН пользователя
-    login.flexible_assert_word(login.assert_inn, reference_value=inn)
+    login.assert_element_text(login.assert_inn, reference_value=inn)
     # Конец теста
 
 
@@ -149,7 +149,7 @@ def test_registration_new_lkz(base_fixture, domain):
     login.input_in_field(login.password_input, base_password["password"], safe=True)
     login.click_button(login.login_button)
     # Проверка ИНН пользователя
-    login.flexible_assert_word(login.assert_inn, reference_value=inn)
+    login.assert_element_text(login.assert_inn, reference_value=inn)
     
     # Выход из личного кабинета
     sidebar = SideBar(base.driver)
@@ -238,7 +238,7 @@ def test_registration_new_lkp(base_fixture, domain):
     login.input_in_field(login.password_input, base_password["password"], safe=True)
     login.click_button(login.login_button)
     # Проверка ИНН пользователя
-    login.flexible_assert_word(login.assert_inn, reference_value=inn)
+    login.assert_element_text(login.assert_inn, reference_value=inn)
     
     # Выход из личного кабинета
     sidebar = SideBar(base.driver)

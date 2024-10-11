@@ -120,7 +120,7 @@ def test_go_to_account_client_lke(base_fixture, domain):
     windows = base.driver.window_handles
     base.driver.switch_to.window(windows[1])
     # Проверка корректности перехода в ЛК клиента
-    client_list.assert_word(client_list.assert_auto_lkz)
+    client_list.assert_element_text(client_list.assert_auto_lkz)
     # Конец теста
 
 
@@ -145,5 +145,5 @@ def test_go_to_account_producer_lke(base_fixture, domain):
     windows = base.driver.window_handles
     base.driver.switch_to.window(windows[1])
     # Проверка корректности перехода в ЛК перевозчика
-    producer_list.assert_word(producer_list.assert_auto_lkp)
+    producer_list.assert_element_text(producer_list.assert_auto_lkp)
     # Конец теста
