@@ -166,7 +166,9 @@ def test_registration_new_lkz(base_fixture, domain):
                            do_assert=True, wait="lst")
     client_list = ClientsList(base.driver)
     client_list.click_button(client_list.accept_button, wait="lst")
-    base.verify_text_by_inn(inn_value=inn, reference_value="Нет договора")
+    
+    # Проверка принятия пользователя по ИНН
+    reg.verify_text_by_inn(inn_value=inn, reference_value="Нет договора")
     # Конец теста
 
 
@@ -255,6 +257,8 @@ def test_registration_new_lkp(base_fixture, domain):
                            do_assert=True, wait="lst")
     producer_list = ProducersList(base.driver)
     producer_list.click_button(producer_list.accept_button, wait="lst")
-    base.verify_text_by_inn(inn_value=inn, reference_value="Нет договора")
+    
+    # Проверка принятия пользователя по ИНН
+    reg.verify_text_by_inn(inn_value=inn, reference_value="Нет договора")
     # Конец теста
     

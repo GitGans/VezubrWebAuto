@@ -73,8 +73,9 @@ class Base:
         
         # Настройки драйвера для разных операционных систем
         chrome_driver_path = WINDOWS_DRIVER_PATH if platform.system() == 'Windows' else LINUX_DRIVER_PATH
+        # options.add_argument('--headless')
         options.add_argument('--window-size=1920x1080')
-        
+
         if platform.system() != 'Windows':
             # Дополнительные параметры для Linux
             options.add_argument('--no-sandbox')
@@ -198,13 +199,13 @@ class Base:
                             wait_type: str = 'clickable') -> None:
         """
         Проверяет, что текст элемента соответствует заданному значению или условию.
-        Использует 'reference_xpath' из 'element_dict' для получения текста элемента.
+        Использует 'reference_xpath' из 'element_dict' для получения текста элемента, если указан.
         Если не указан 'reference_value', используется 'reference' из 'element_dict' для сравнения.
 
         Parameters
         ----------
         element_dict : dict
-            Словарь с информацией о локаторе элемента, должен включать 'reference_xpath' для определения элемента.
+            Словарь с информацией о локаторе элемента. Может включать 'reference_xpath' или 'xpath'.
         reference_value : str, optional
             Ожидаемый текст для сравнения, если указан.
         wait_type : str, optional
@@ -215,9 +216,13 @@ class Base:
         AssertionError
             Если текст элемента не соответствует ожидаемому значению.
         """
-        # Получаем текст элемента по reference_xpath
-        reference_element_info = {'name': 'Reference element', 'xpath': element_dict['reference_xpath']}
-        element = self.get_element(reference_element_info, wait_type=wait_type)['element']
+        # Проверяем наличие 'reference_xpath' и используем его для получения текста, иначе используем 'xpath'
+        if 'reference_xpath' in element_dict:
+            element_info = {'name': 'Reference element', 'xpath': element_dict['reference_xpath']}
+        else:
+            element_info = {'name': element_dict['name'], 'xpath': element_dict['xpath']}
+        
+        element = self.get_element(element_info, wait_type=wait_type)['element']
         value_word = element.text or element.get_attribute('value')
         
         # Определяем ожидаемое значение
@@ -227,37 +232,6 @@ class Base:
         with allure.step(f"Assert \"{value_word}\" == \"{expected_value}\""):
             assert re.fullmatch(expected_value, value_word), f"Expected '{expected_value}', but found '{value_word}'."
             print(f"Assert \"{value_word}\" == \"{expected_value}\"")
-    
-    """ Assert text extraction by INN wait clickable"""
-    def verify_text_by_inn(self, inn_value: str, reference_value: str, wait_type: str = 'located') -> NoReturn:
-        """
-        Проверяет наличие и соответствие конкретного текста для строки таблицы, содержащей заданный ИНН,
-        с выбором типа ожидания элемента.
-
-        Parameters
-        ----------
-        inn_value : str
-            ИНН, используемый для поиска соответствующей строки в таблице.
-        reference_value : str
-            Ожидаемый текст для сравнения, который должен точно совпадать с текстом элемента.
-        wait_type : str, optional
-            Тип ожидания элемента ('clickable', 'visible', 'located', 'find').
-
-        Raises
-        ------
-        AssertionError
-            Если текст элемента не соответствует ожидаемому значению.
-        """
-        element_info = {
-            "name": f"Text for INN {inn_value} matching '{reference_value}'",
-            "xpath": f"//tr[.//a[contains(text(), '{inn_value}')]]//div[contains(text(), '{reference_value}')]"
-        }
-        element = self.get_element(element_info, wait_type=wait_type)['element']
-        time.sleep(0.1)  # Фиксированная задержка
-        value_word = element.text
-        with allure.step(title=f"Assert \"{value_word}\" == \"{reference_value}\""):
-            assert value_word == reference_value, f"Expected '{reference_value}', but found '{value_word}'."
-            print(f"Assert \"{value_word}\" == \"{reference_value}\"")
     
     """ Get random value float to str"""
     @staticmethod

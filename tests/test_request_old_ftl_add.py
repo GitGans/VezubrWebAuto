@@ -122,6 +122,7 @@ def test_ftl_request_add_lkz(base_fixture, domain):
     ftl.click_button(ftl.tariff_button)
     ftl.click_button(ftl.producer_select)
     ftl.click_button(ftl.select_all_producer)
+    time.sleep(0.5)
     ftl.click_button(ftl.producer_select_text)
     ftl.click_button(ftl.publish_button)
     ftl.click_button(ftl.continue_button, do_assert=True)

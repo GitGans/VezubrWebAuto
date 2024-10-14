@@ -8,7 +8,7 @@ from pages.producers_list_page import ProducersList
 
 
 @allure.story("Smoke test")
-@allure.feature('Create Contact')
+@allure.feature('Создание договоров')
 @allure.description('ЛКЭ. Тест создания договора с ГВ: '
                     'номер - №-timestamp, срок - с Сегодня по 45 год, автоформирование реестров - Отключено.')
 @pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
