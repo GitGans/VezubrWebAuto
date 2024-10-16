@@ -253,61 +253,38 @@ class Base:
         str
             Строковое представление случайного вещественного числа с заданной точностью.
         """
-        return f'{random.uniform(of, to):.{precision}f}'
-
-    """ Get random value custom start int to str"""
-    @staticmethod
-    def random_value_custom_start(prefix: str, n: int) -> str:
-        """
-        Генерирует случайное число с заданным префиксом и общей длиной.
-
-        Parameters
-        ----------
-        prefix : str
-            Префикс числа.
-        n : int
-            Общая длина результата, включая префикс.
-
-        Returns
-        -------
-        str
-            Строка, представляющая собой случайное число с заданным префиксом.
-        """
-        random_digits = ''.join([str(random.randint(0, 9)) for _ in range(n - len(prefix))])
-        return f'{prefix}{random_digits}'
-
-    """ Get screenshot"""
+        # Генерируем случайное число в указанном диапазоне и форматируем с указанной точностью
+        random_value = random.uniform(of, to)
+        return f'{random_value:.{precision}f}'
+    
+    """ Get screenshot """
     def get_screenshot(self, test_name: str = None) -> NoReturn:
         """
         Сохраняет скриншот текущего состояния браузера в папку screens внутри проекта.
         Если тест запускается с Allure, прикрепляет скриншот к отчету Allure.
+
+        Parameters
+        ----------
+        test_name : str, optional
+            Название теста, добавляемое к имени скриншота. Если не указано, используется только таймштамп.
         """
-        # Определяем относительный путь к папке screens внутри проекта
-        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))  # Поднимаемся на уровень вверх
-        screenshot_dir = os.path.join(project_root, 'screens')  # Путь к папке screens внутри корня проекта
-        
-        print(f"Saving screenshot to relative directory: {screenshot_dir}")
+        # Определяем путь к папке screens внутри корня проекта
+        screenshot_dir = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')), 'screens')
         
         # Создаем имя файла скриншота с таймштампом и названием теста (если указано)
-        timestamp = self.get_timestamp(dot=True)
-        if test_name:
-            name_screenshot = f'{test_name}_{timestamp}.png'
-        else:
-            name_screenshot = f'{timestamp}.png'
-        
-        # Полный путь для сохранения скриншота
+        name_screenshot = f"{test_name + '_' if test_name else ''}{self.get_timestamp(dot=True)}.png"
         screenshot_path = os.path.join(screenshot_dir, name_screenshot)
         
-        # Проверяем, существует ли папка, и создаем ее, если не существует
-        if not os.path.exists(screenshot_dir):
-            os.makedirs(screenshot_dir)
+        # Проверяем существование папки и создаем ее при необходимости
+        os.makedirs(screenshot_dir, exist_ok=True)
         
         # Сохраняем скриншот
         self.driver.save_screenshot(screenshot_path)
         
-        # Шаг в отчете Allure, если тест запускается с Allure, прикрепляем скриншот
-        with allure.step(title="Screen taken: " + name_screenshot):
-            print(f"Screenshot saved successfully at: {screenshot_path}")
+        # Шаг в Allure и вывод в консоль
+        message = f"Screenshot saved at: {screenshot_path}"
+        with allure.step(title=f"Screen taken: {name_screenshot}"):
+            print(message)
             
             # Прикрепляем файл скриншота только если используется Allure
             if hasattr(self, 'allure_dir') and self.allure_dir:
