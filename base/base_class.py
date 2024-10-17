@@ -341,9 +341,9 @@ class Base:
                 self.assert_element_text(element_dict)
     
     """ In dropdown click, wait, input and enter"""
-    def dropdown_click_input_wait_enter(self, element_dict: Dict[str, str], option_text: str, press_enter: bool = True,
-                                        wait_presence: bool = False, wait_type: str = 'clickable',
-                                        dd_index: int = 1, index: int = 1) -> None:
+    def dropdown_with_input(self, element_dict: Dict[str, str], option_text: str, press_enter: bool = True,
+                            wait_presence: bool = False, wait_type: str = 'clickable',
+                            dd_index: int = 1, index: int = 1) -> None:
         """
         Выбирает текст в выпадающем списке, вводит текст и, опционально, ожидает появления опции,
         после чего может нажимать Enter. Позволяет выбор типа ожидания для элемента.
@@ -351,7 +351,7 @@ class Base:
         Parameters
         ----------
         element_dict : dict
-            Словарь с информацией о элементе выпадающего списка.
+            Словарь с информацией об элементе выпадающего списка.
         option_text : str
             Текст опции для выбора.
         press_enter : bool, optional
@@ -359,45 +359,51 @@ class Base:
         wait_presence : bool, optional
             Если True, ожидает появления текста перед нажатием Enter.
         wait_type : str, optional
-            Тип ожидания элемента ('clickable', 'visible', 'located', 'find'), по умолчанию 'clickable'.
+            Тип ожидания элемента ('clickable', 'visible', 'located', 'find'). По умолчанию 'clickable'.
         dd_index : int, optional
             Индекс выпадающего списка для инициации клика, начиная с 1.
         index : int, optional
             Индекс опции в списке, начиная с 1, который нужно выбрать.
+
         """
-        step_title = f"Select '{option_text}' from dropdown {element_dict['name']}"
-        print_message = f"Selected '{option_text}' from dropdown {element_dict['name']}"
-        
+        # Формируем единое сообщение для Allure шага и вывода в консоль
+        message = f"Select '{option_text}' from dropdown {element_dict['name']}"
         if dd_index != 1:
-            step_title += f" at dropdown index {dd_index}"
-            print_message += f" at dropdown index {dd_index}"
-        
+            message += f" at dropdown index {dd_index}"
         if index != 1:
-            step_title += f" at option index {index}"
-            print_message += f" at option index {index}"
+            message += f" at option index {index}"
         
-        with allure.step(title=step_title):
+        with allure.step(message):
+            # Генерация XPath для выпадающего списка
             xpath_dropdown = f"({element_dict['xpath']})[{dd_index}]" if dd_index > 1 else element_dict['xpath']
             dropdown_dict = self.get_element({"name": element_dict['name'], "xpath": xpath_dropdown},
                                              wait_type=wait_type)
-            dropdown_dict['element'].click()
-            option_to_select = dropdown_dict['element'].find_element(By.XPATH, "./../..//input")
-            option_to_select.send_keys(option_text)
             
+            # Клик по выпадающему списку
+            dropdown_dict['element'].click()
+            
+            # Поиск поля для ввода текста
+            option_input = dropdown_dict['element'].find_element(By.XPATH, "./../..//input")
+            option_input.send_keys(option_text)
+            
+            # XPath для опции, которую нужно выбрать
             option_xpath = f"(.//li[@role='option' and contains(normalize-space(.), '{option_text}')])[{index}]"
             
             if wait_presence:
-                WebDriverWait(self.driver, 60).until(
-                    EC.presence_of_element_located((By.XPATH, option_xpath))
-                )
+                # Ожидание появления опции
+                WebDriverWait(self.driver, 60).until(EC.presence_of_element_located((By.XPATH, option_xpath)))
             
             if press_enter:
-                option_to_select.send_keys(Keys.ENTER)
+                # Нажатие Enter после ввода текста
+                option_input.send_keys(Keys.ENTER)
             else:
-                option_element = self.driver.find_element(By.XPATH, option_xpath)
+                # Клик по опции в списке
+                option_element = WebDriverWait(self.driver, 60).until(
+                    EC.element_to_be_clickable((By.XPATH, option_xpath)))
                 option_element.click()
             
-            print(print_message)
+            # Вывод сообщения в консоль
+            print(message)
     
     """In dropdown click input + index click"""
     def dropdown_click_input_click(self, element_dict: Dict[str, str], option_text: str, dd_index: int = 1,

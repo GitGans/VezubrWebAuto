@@ -39,7 +39,7 @@ def test_ftl_request_add_lke(base_fixture, domain):
     ftl.click_button(ftl.request_category_select)
     ftl.click_button(ftl.select_freight)
     # Выбор типа ТС - до 0.5т
-    ftl.dropdown_click_input_wait_enter(ftl.vehicle_type_select, "до 0.5т")
+    ftl.dropdown_with_input(ftl.vehicle_type_select, "до 0.5т")
     # Выбор типа кузова - Закрытый
     ftl.click_button(ftl.vehicle_body_select)
     ftl.click_button(ftl.body_type_closed_checkbox)
@@ -101,7 +101,7 @@ def test_ftl_request_add_lkz(base_fixture, domain):
     ftl.click_button(ftl.select_freight)
     # Выбор типа ТС - до 0.5т
     ftl.click_button(ftl.vehicle_type_select)
-    ftl.dropdown_click_input_wait_enter(ftl.vehicle_type_select, "до 0.5т")
+    ftl.dropdown_with_input(ftl.vehicle_type_select, "до 0.5т")
     # Выбор типа кузова - Закрытый
     ftl.click_button(ftl.vehicle_body_select)
     ftl.click_button(ftl.body_type_closed_checkbox)

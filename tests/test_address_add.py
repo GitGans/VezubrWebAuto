@@ -32,13 +32,13 @@ def test_address_add_lke(base_fixture, domain):
     # Установка статуса адреса в "Активный"
     add_address.click_button(add_address.address_status_toggl)
     # Ввод фактического адреса и выбор из выпадающего списка
-    add_address.dropdown_click_input_wait_enter(
+    add_address.dropdown_with_input(
         add_address.address_input,
         f"г Екатеринбург, пр-кт Ленина, д {base.random_value_float_str(1, 150)}",
         wait_presence=True
     )
     # Ввод ИНН владельца адреса и выбор из выпадающего списка
-    add_address.dropdown_click_input_wait_enter(add_address.owner_inn_input, "77", wait_presence=True)
+    add_address.dropdown_with_input(add_address.owner_inn_input, "77", wait_presence=True)
     # Ввод id адреса партнера
     add_address.input_in_field(add_address.external_id_input, address_stamp)
     # Ввод требований к ТС на адресе
@@ -105,13 +105,13 @@ def test_address_add_lkz(base_fixture, domain):
     # Установка статуса адреса в "Активный"
     add_address.click_button(add_address.address_status_toggl)
     # Ввод фактического адреса и выбор из выпадающего списка
-    add_address.dropdown_click_input_wait_enter(
+    add_address.dropdown_with_input(
         add_address.address_input,
         f"г Екатеринбург, пр-кт Ленина, д {base.random_value_float_str(1, 150)}",
         wait_presence=True
     )
     # Ввод ИНН владельца адреса и выбор из выпадающего списка
-    add_address.dropdown_click_input_wait_enter(add_address.owner_inn_input, "77", wait_presence=True)
+    add_address.dropdown_with_input(add_address.owner_inn_input, "77", wait_presence=True)
     # Ввод id адреса партнера
     add_address.input_in_field(add_address.external_id_input, address_stamp)
     # Ввод требований к ТС на адресе

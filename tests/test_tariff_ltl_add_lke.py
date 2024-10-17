@@ -37,9 +37,9 @@ def test_ltl_tariff_add_lke(base_fixture, domain):
     # Ввод стоимости обратного сбора
     add_tariff.backspace_len_and_input(add_tariff.reverse_price_input, base.random_value_float_str(100, 500))
     # Выбор региона отправки
-    add_tariff.dropdown_click_input_wait_enter(add_tariff.dispatch_region_select, "Свердловская область")
+    add_tariff.dropdown_with_input(add_tariff.dispatch_region_select, "Свердловская область")
     # Выбор региона доставки
-    add_tariff.dropdown_click_input_wait_enter(add_tariff.delivery_region_select, "Алтайский край")
+    add_tariff.dropdown_with_input(add_tariff.delivery_region_select, "Алтайский край")
     # Ввод минимальной стоимости
     add_tariff.input_in_field(add_tariff.min_price_input, base.random_value_float_str(1000, 3000))
     # Ввод стоимости за килограмм

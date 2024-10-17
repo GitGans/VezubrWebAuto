@@ -68,11 +68,11 @@ def test_ftl_cc_tariff_add_lkp(base_fixture, domain):
     # Выбор типа маршрута "Нас. пункт - Нас. пункт"
     add_tariff.dropdown_click_input_click(add_tariff.fixed_type_select, "Нас. пункт - Нас. пункт")
     # Ввод города отправления
-    add_tariff.dropdown_click_input_wait_enter(add_tariff.departures_city_input, wait_presence=True,
-                                               option_text="г Екатеринбург")
+    add_tariff.dropdown_with_input(add_tariff.departures_city_input, wait_presence=True,
+                                   option_text="г Екатеринбург")
     # Ввод города прибытия
-    add_tariff.dropdown_click_input_wait_enter(add_tariff.arrival_city_input, wait_presence=True,
-                                               option_text="г Уфа")
+    add_tariff.dropdown_with_input(add_tariff.arrival_city_input, wait_presence=True,
+                                   option_text="г Уфа")
     # Выбор типа ТС "1.5т / 9м3 / 4пал."
     add_tariff.dropdown_click_input_click(add_tariff.vehicle_type_select, "1.5т / 9м3 / 4пал.")
     # Установка флага "Закрытый кузов"

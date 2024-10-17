@@ -292,9 +292,9 @@ class CargoPlaceAdd(Base):
         # Выбор статуса грузоместа
         self.dropdown_click_input_click(self.lkz_cp_status_select, "Новое")
         # Ввод адресов отправления и доставки
-        self.dropdown_click_input_wait_enter(self.departure_address_select,
+        self.dropdown_with_input(self.departure_address_select,
                                              "Свердловская обл, г Верхняя Пышма, Успенский пр-кт, д 103а")
-        self.dropdown_click_input_wait_enter(self.delivery_address_select,
+        self.dropdown_with_input(self.delivery_address_select,
                                              "Свердловская обл, г Березовский, ул Театральная, д 13")
         # Последовательное нажатие на кнопки с условиями
         self.click_button(self.create_cargo_place_button, do_assert=True)
@@ -330,9 +330,9 @@ class CargoPlaceAdd(Base):
         # Выбор статуса грузоместа "Новое"
         self.dropdown_click_input_click(self.lke_cp_status_select, "Новое")
         # Ввод адресов отправления и доставки
-        self.dropdown_click_input_wait_enter(self.departure_address_select,
+        self.dropdown_with_input(self.departure_address_select,
                                              "Свердловская обл, г Верхняя Пышма, Успенский пр-кт, д 103а")
-        self.dropdown_click_input_wait_enter(self.delivery_address_select,
+        self.dropdown_with_input(self.delivery_address_select,
                                              "Свердловская обл, г Березовский, ул Театральная, д 13")
         # Клик по кнопке создания грузоместа
         self.click_button(self.create_cargo_place_button, do_assert=True)
@@ -379,9 +379,9 @@ class CargoPlaceAdd(Base):
         self.input_in_field(self.lkz_external_id_input, cp_stamp)  # Внешний ID
         self.input_in_field(self.lkz_comment_input, cp_stamp)  # Комментарий
         # Ввод адресов отправления и доставки
-        self.dropdown_click_input_wait_enter(self.departure_address_select,
+        self.dropdown_with_input(self.departure_address_select,
                                              "Свердловская обл, г Верхняя Пышма, Успенский пр-кт, д 103а")
-        self.dropdown_click_input_wait_enter(self.delivery_address_select,
+        self.dropdown_with_input(self.delivery_address_select,
                                              "Свердловская обл, г Березовский, ул Театральная, д 13")
         # Клик по кнопке создания грузоместа
         self.click_button(self.create_cargo_place_button, do_assert=True)
@@ -426,9 +426,9 @@ class CargoPlaceAdd(Base):
         self.input_in_field(self.lke_external_id_input, cp_stamp)  # Внешний ID
         self.input_in_field(self.lke_comment_input, cp_stamp)  # Комментарий
         # Ввод адресов отправления и доставки
-        self.dropdown_click_input_wait_enter(self.departure_address_select,
+        self.dropdown_with_input(self.departure_address_select,
                                              "Свердловская обл, г Верхняя Пышма, Успенский пр-кт, д 103а")
-        self.dropdown_click_input_wait_enter(self.delivery_address_select,
+        self.dropdown_with_input(self.delivery_address_select,
                                              "Свердловская обл, г Березовский, ул Театральная, д 13")
         # Клик по кнопке создания грузоместа
         self.click_button(self.create_cargo_place_button, do_assert=True)
