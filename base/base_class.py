@@ -462,15 +462,25 @@ class Base:
             Тип ожидания элемента ('clickable', 'visible', 'located', 'find', 'invisibility').
 
         """
-        element_name = f"{element_dict['name']} index {index}" if index > 1 else element_dict['name']
+        # Формируем единое сообщение для Allure шага и вывода в консоль
+        message = f"Move to {element_dict['name']}"
+        if index != 1:
+            message += f" at index {index}"
+        
+        # Обновление локатора с учетом индекса
         locator = f"({element_dict['xpath']})[{index}]" if index > 1 else element_dict['xpath']
-        updated_element_dict = {"name": element_name, "xpath": locator}
-
-        with allure.step(title=f"Move to {element_name}"):
+        updated_element_dict = {"name": element_dict['name'], "xpath": locator}
+        
+        with allure.step(message):
+            # Получение элемента с помощью метода get_element
             button_dict = self.get_element(updated_element_dict, wait_type)
+            
+            # Перемещение курсора к элементу
             ActionChains(self.driver).move_to_element(button_dict['element']).perform()
+            
+            # Вывод сообщения в консоль
             print(f"Moved to {button_dict['name']}")
-
+    
     """ Switch to original window"""
     def switch_to_original_window(self) -> None:
         """
