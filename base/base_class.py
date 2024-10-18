@@ -341,6 +341,8 @@ class Base:
                 self.assert_element_text(element_dict)
     
     """ In dropdown click, wait, input and enter"""
+    """ In dropdown click, wait, input and enter """
+    
     def dropdown_with_input(self, element_dict: Dict[str, str], option_text: str, press_enter: bool = True,
                             wait_presence: bool = False, wait_type: str = 'clickable',
                             dd_index: int = 1, index: int = 1) -> None:
@@ -364,7 +366,6 @@ class Base:
             Индекс выпадающего списка для инициации клика, начиная с 1.
         index : int, optional
             Индекс опции в списке, начиная с 1, который нужно выбрать.
-
         """
         # Формируем единое сообщение для Allure шага и вывода в консоль
         message = f"Select '{option_text}' from dropdown {element_dict['name']}"
@@ -390,17 +391,17 @@ class Base:
             option_xpath = f"(.//li[@role='option' and contains(normalize-space(.), '{option_text}')])[{index}]"
             
             if wait_presence:
-                # Ожидание появления опции
-                WebDriverWait(self.driver, 60).until(EC.presence_of_element_located((By.XPATH, option_xpath)))
+                # Ожидание появления опции с использованием get_element
+                self.get_element({"name": "Dropdown option", "xpath": option_xpath}, wait_type="visible")
             
             if press_enter:
                 # Нажатие Enter после ввода текста
                 option_input.send_keys(Keys.ENTER)
             else:
-                # Клик по опции в списке
-                option_element = WebDriverWait(self.driver, 60).until(
-                    EC.element_to_be_clickable((By.XPATH, option_xpath)))
-                option_element.click()
+                # Клик по опции в списке с использованием get_element
+                option_element = self.get_element({"name": "Dropdown option", "xpath": option_xpath},
+                                                  wait_type="clickable")
+                option_element['element'].click()
             
             # Вывод сообщения в консоль
             print(message)
