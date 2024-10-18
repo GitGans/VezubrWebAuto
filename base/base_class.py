@@ -481,16 +481,21 @@ class Base:
             # Вывод сообщения в консоль
             print(f"Moved to {button_dict['name']}")
     
-    """ Switch to original window"""
+    """ Switch to original window """
     def switch_to_original_window(self) -> None:
         """
         Переключается обратно к оригинальному окну браузера.
-
         """
-        with allure.step(title="Returned to the original window"):
+        # Формируем сообщение для Allure шага и вывода в консоль
+        message = "Returned to the original window"
+        
+        with allure.step(message):
+            # Переключаемся на оригинальное окно
             original_window_handle = self.driver.current_window_handle
             self.driver.switch_to.window(original_window_handle)
-            print("Returned to the original window")
+            
+            # Вывод сообщения в консоль
+            print(message)
     
     """ Input in field with optional click, enter, index and wait loading"""
     def input_in_field(self, element_dict: Dict[str, str], value: str, click_first: bool = False,
@@ -777,7 +782,7 @@ class Base:
         else:
             raise ValueError(f"Не удалось извлечь код подтверждения из текста: {element_text}")
 
-    """ Generate inn"""
+    """ Generate INN """
     @staticmethod
     def generate_inn(entity_type: str) -> str:
         """
@@ -800,14 +805,17 @@ class Base:
             Если передан неизвестный тип сущности. Допустимые значения параметра entity_type: 'individual', 'entity'.
         """
         def calculate_control_sum(numbers: list[int], local_coeffs: list[int]) -> int:
+            """Вычисляет контрольную сумму по заданным коэффициентам."""
             return sum(a * b for a, b in zip(numbers, local_coeffs)) % 11 % 10
 
         if entity_type == "entity":
+            # Генерация ИНН для юридического лица
             base = [random.randint(0, 9) for _ in range(9)]
             entity_coeffs = [2, 4, 10, 3, 5, 9, 4, 6, 8]
             control_sum = calculate_control_sum(base, entity_coeffs)
             inn = ''.join(map(str, base)) + str(control_sum)
         elif entity_type == "individual":
+            # Генерация ИНН для физического лица
             base = [random.randint(0, 9) for _ in range(10)]
             individual_coeffs_first = [7, 2, 4, 10, 3, 5, 9, 4, 6, 8]
             individual_coeffs_second = [3, 7, 2, 4, 10, 3, 5, 9, 4, 6, 8, 5]
