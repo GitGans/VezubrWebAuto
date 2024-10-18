@@ -26,7 +26,7 @@ def test_ftl_request_add_lke(base_fixture, domain):
                            do_assert=True)
     
     # Выбор владельца заявки
-    ftl.dropdown_click_input_click(ftl.request_owner_select, "Auto LKZ")
+    ftl.dropdown_without_input(ftl.request_owner_select, "Auto LKZ")
     # Установка даты подачи заявки на сегодня
     ftl.click_button(ftl.start_date_field)
     ftl.click_button(ftl.today_button)

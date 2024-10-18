@@ -26,9 +26,9 @@ def test_insurance_contract_attach_lke(base_fixture, domain):
     # Разворачивание списка договоров страхования
     contractor.click_button(contractor.insurance_expandable_list)
     # Выбор страховой компании "Энергогарант"
-    contractor.dropdown_click_input_click(contractor.insurance_company_select, "Энергогарант")
+    contractor.dropdown_without_input(contractor.insurance_company_select, "Энергогарант")
     # Выбор конкретного договора страхования
-    contractor.dropdown_click_input_click(contractor.insurance_contract_select,
+    contractor.dropdown_without_input(contractor.insurance_contract_select,
                                           "Договор №№-20240222214909 «Н-20240222214909» от 23.02.2024")
     # Подтверждение привязки договора
     contractor.click_button(contractor.confirm_button, do_assert=True)
@@ -64,9 +64,9 @@ def test_insurance_contract_attach_lkp(base_fixture, domain):
     # Разворачивание списка договоров страхования
     contractor.click_button(contractor.insurance_expandable_list)
     # Выбор страховой компании "Энергогарант"
-    contractor.dropdown_click_input_click(contractor.insurance_company_select, "Энергогарант")
+    contractor.dropdown_without_input(contractor.insurance_company_select, "Энергогарант")
     # Выбор конкретного договора страхования
-    contractor.dropdown_click_input_click(contractor.insurance_contract_select,
+    contractor.dropdown_without_input(contractor.insurance_contract_select,
                                           "Договор №№-20240621181730 «Н-20240621181730» от 21.06.2024")
     # Подтверждение привязки договора
     contractor.click_button(contractor.confirm_button, do_assert=True)

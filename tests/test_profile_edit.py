@@ -22,13 +22,13 @@ def test_profile_edit_lke(base_fixture, domain):
     # Изменение номера телефона
     profile.backspace_len_and_input(profile.phone_input, base.random_value_float_str(9000000000, 9999999999))
     # Перебор всех вариантов налогообложения
-    profile.dropdown_click_input_click(profile.vat_type_select, "Не плательщик НДС")
-    profile.dropdown_click_input_click(profile.vat_type_select, "Плательщик НДС")
-    profile.dropdown_click_input_click(profile.direct_request_select, "Только плательщикам НДС")
-    profile.dropdown_click_input_click(profile.direct_request_select, "Только неплательщикам НДС")
-    profile.dropdown_click_input_click(profile.direct_request_select, "Всем")
-    profile.dropdown_click_input_click(profile.values_in_system_select, "Без НДС")
-    profile.dropdown_click_input_click(profile.values_in_system_select, "С НДС")
+    profile.dropdown_without_input(profile.vat_type_select, "Не плательщик НДС")
+    profile.dropdown_without_input(profile.vat_type_select, "Плательщик НДС")
+    profile.dropdown_without_input(profile.direct_request_select, "Только плательщикам НДС")
+    profile.dropdown_without_input(profile.direct_request_select, "Только неплательщикам НДС")
+    profile.dropdown_without_input(profile.direct_request_select, "Всем")
+    profile.dropdown_without_input(profile.values_in_system_select, "Без НДС")
+    profile.dropdown_without_input(profile.values_in_system_select, "С НДС")
     # Включение и отключение электронного документооборота
     profile.click_button(profile.electronic_document_toggl)
     profile.click_button(profile.electronic_document_toggl)
@@ -72,13 +72,13 @@ def test_profile_edit_lkp(base_fixture, domain):
     # Изменение номера телефона
     profile.backspace_len_and_input(profile.phone_input, base.random_value_float_str(9000000000, 9999999999))
     # Перебор всех вариантов налогообложения
-    profile.dropdown_click_input_click(profile.vat_type_select, "Не плательщик НДС")
-    profile.dropdown_click_input_click(profile.vat_type_select, "Плательщик НДС")
-    profile.dropdown_click_input_click(profile.direct_request_select, "Только плательщикам НДС")
-    profile.dropdown_click_input_click(profile.direct_request_select, "Только неплательщикам НДС")
-    profile.dropdown_click_input_click(profile.direct_request_select, "Всем")
-    profile.dropdown_click_input_click(profile.values_in_system_select, "Без НДС")
-    profile.dropdown_click_input_click(profile.values_in_system_select, "С НДС")
+    profile.dropdown_without_input(profile.vat_type_select, "Не плательщик НДС")
+    profile.dropdown_without_input(profile.vat_type_select, "Плательщик НДС")
+    profile.dropdown_without_input(profile.direct_request_select, "Только плательщикам НДС")
+    profile.dropdown_without_input(profile.direct_request_select, "Только неплательщикам НДС")
+    profile.dropdown_without_input(profile.direct_request_select, "Всем")
+    profile.dropdown_without_input(profile.values_in_system_select, "Без НДС")
+    profile.dropdown_without_input(profile.values_in_system_select, "С НДС")
     # Включение и отключение электронного документооборота
     profile.click_button(profile.electronic_document_toggl)
     profile.click_button(profile.electronic_document_toggl)
@@ -122,13 +122,13 @@ def test_profile_edit_lkz(base_fixture, domain):
     # Изменение номера телефона
     profile.backspace_len_and_input(profile.phone_input, base.random_value_float_str(9000000000, 9999999999))
     # Перебор всех вариантов налогообложения
-    profile.dropdown_click_input_click(profile.vat_type_select, "Не плательщик НДС")
-    profile.dropdown_click_input_click(profile.vat_type_select, "Плательщик НДС")
-    profile.dropdown_click_input_click(profile.direct_request_select, "Только плательщикам НДС")
-    profile.dropdown_click_input_click(profile.direct_request_select, "Только неплательщикам НДС")
-    profile.dropdown_click_input_click(profile.direct_request_select, "Всем")
-    profile.dropdown_click_input_click(profile.values_in_system_select, "Без НДС")
-    profile.dropdown_click_input_click(profile.values_in_system_select, "С НДС")
+    profile.dropdown_without_input(profile.vat_type_select, "Не плательщик НДС")
+    profile.dropdown_without_input(profile.vat_type_select, "Плательщик НДС")
+    profile.dropdown_without_input(profile.direct_request_select, "Только плательщикам НДС")
+    profile.dropdown_without_input(profile.direct_request_select, "Только неплательщикам НДС")
+    profile.dropdown_without_input(profile.direct_request_select, "Всем")
+    profile.dropdown_without_input(profile.values_in_system_select, "Без НДС")
+    profile.dropdown_without_input(profile.values_in_system_select, "С НДС")
     # Включение и отключение электронного документооборота
     profile.click_button(profile.electronic_document_toggl)
     profile.click_button(profile.electronic_document_toggl)

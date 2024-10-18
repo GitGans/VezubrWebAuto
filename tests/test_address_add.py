@@ -26,9 +26,9 @@ def test_address_add_lke(base_fixture, domain):
     # Ввод названия адреса
     add_address.input_in_field(add_address.name_address_input, address_stamp)
     # Выбор типа адреса
-    add_address.dropdown_click_input_click(add_address.address_type_select, "Склад")
+    add_address.dropdown_without_input(add_address.address_type_select, "Склад")
     # Настройка статусов адреса в МП
-    add_address.dropdown_click_input_click(add_address.address_status_in_app, "Полный список")
+    add_address.dropdown_without_input(add_address.address_status_in_app, "Полный список")
     # Установка статуса адреса в "Активный"
     add_address.click_button(add_address.address_status_toggl)
     # Ввод фактического адреса и выбор из выпадающего списка
@@ -44,7 +44,7 @@ def test_address_add_lke(base_fixture, domain):
     # Ввод требований к ТС на адресе
     add_address.input_in_field(add_address.max_height_input, base.random_value_float_str(2.0, 5.0, precision=1))
     add_address.input_in_field(add_address.max_capacity_input, base.random_value_float_str(1000, 5000))
-    add_address.dropdown_click_input_click(add_address.loading_type_select, "Верхняя")
+    add_address.dropdown_without_input(add_address.loading_type_select, "Верхняя")
     add_address.click_button(add_address.entry_pass_toggl)
     add_address.input_in_field(add_address.time_departure_input, base.random_value_float_str(10, 60))
     add_address.input_in_field(add_address.time_arrival_input, base.random_value_float_str(10, 60))
@@ -99,9 +99,9 @@ def test_address_add_lkz(base_fixture, domain):
     # Ввод названия адреса
     add_address.input_in_field(add_address.name_address_input, address_stamp)
     # Выбор типа адреса
-    add_address.dropdown_click_input_click(add_address.address_type_select, "Склад")
+    add_address.dropdown_without_input(add_address.address_type_select, "Склад")
     # Настройка статусов адреса в МП
-    add_address.dropdown_click_input_click(add_address.address_status_in_app, "Полный список")
+    add_address.dropdown_without_input(add_address.address_status_in_app, "Полный список")
     # Установка статуса адреса в "Активный"
     add_address.click_button(add_address.address_status_toggl)
     # Ввод фактического адреса и выбор из выпадающего списка
@@ -117,7 +117,7 @@ def test_address_add_lkz(base_fixture, domain):
     # Ввод требований к ТС на адресе
     add_address.input_in_field(add_address.max_height_input, base.random_value_float_str(2.0, 5.0, precision=1))
     add_address.input_in_field(add_address.max_capacity_input, base.random_value_float_str(1000, 5000))
-    add_address.dropdown_click_input_click(add_address.loading_type_select, "Верхняя")
+    add_address.dropdown_without_input(add_address.loading_type_select, "Верхняя")
     add_address.click_button(add_address.entry_pass_toggl)
     add_address.input_in_field(add_address.time_departure_input, base.random_value_float_str(10, 60))
     add_address.input_in_field(add_address.time_arrival_input, base.random_value_float_str(10, 60))

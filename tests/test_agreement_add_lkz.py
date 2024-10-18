@@ -37,7 +37,7 @@ def test_agreement_producer_add_lkz(base_fixture, domain):
     time.sleep(0.5)
     add_agr.input_in_field(add_agr.agr_date_input, "01012045")
     # Отключение автоматического формирования реестров
-    add_agr.dropdown_click_input_click(add_agr.registers_auto_select, "Автоматическое формирование Реестров отключено")
+    add_agr.dropdown_without_input(add_agr.registers_auto_select, "Автоматическое формирование Реестров отключено")
     # Клик по кнопке добавления договора
     add_agr.click_button(add_agr.add_agr_button, do_assert=True)
     # Клик по кнопке подтверждения добавления договора

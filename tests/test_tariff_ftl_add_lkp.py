@@ -23,13 +23,13 @@ def test_ftl_h_tariff_add_lkp(base_fixture, domain):
 
     add_tariff = FTLTariffAdd(base.driver)
     # Выбор типа тарифа "FTL"
-    add_tariff.dropdown_click_input_click(add_tariff.tariff_type_select, "FTL")
+    add_tariff.dropdown_without_input(add_tariff.tariff_type_select, "FTL")
     # Выбор подтипа тарифа "Почасовой"
-    add_tariff.dropdown_click_input_click(add_tariff.ftl_type_select, "Почасовой")
+    add_tariff.dropdown_without_input(add_tariff.ftl_type_select, "Почасовой")
     # Ввод названия тарифа
     add_tariff.input_in_field(add_tariff.tariff_name_input, f"ПЧ-{base.get_timestamp()}")
     # Выбор типа ТС "до 0.5т"
-    add_tariff.dropdown_click_input_click(add_tariff.vehicle_type_select, "до 0.5т")
+    add_tariff.dropdown_without_input(add_tariff.vehicle_type_select, "до 0.5т")
     # Установка флага "Закрытый кузов"
     add_tariff.click_button(add_tariff.body_type_closed_checkbox)
     # Ввод минимальной стоимости
@@ -60,13 +60,13 @@ def test_ftl_cc_tariff_add_lkp(base_fixture, domain):
 
     add_tariff = FTLTariffAdd(base.driver)
     # Выбор типа тарифа "FTL"
-    add_tariff.dropdown_click_input_click(add_tariff.tariff_type_select, "FTL")
+    add_tariff.dropdown_without_input(add_tariff.tariff_type_select, "FTL")
     # Выбор подтипа тарифа "Фиксированный"
-    add_tariff.dropdown_click_input_click(add_tariff.ftl_type_select, "Фиксированный")
+    add_tariff.dropdown_without_input(add_tariff.ftl_type_select, "Фиксированный")
     # Ввод названия тарифа
     add_tariff.input_in_field(add_tariff.tariff_name_input, f"ГГ-{base.get_timestamp()}")
     # Выбор типа маршрута "Нас. пункт - Нас. пункт"
-    add_tariff.dropdown_click_input_click(add_tariff.fixed_type_select, "Нас. пункт - Нас. пункт")
+    add_tariff.dropdown_without_input(add_tariff.fixed_type_select, "Нас. пункт - Нас. пункт")
     # Ввод города отправления
     add_tariff.dropdown_with_input(add_tariff.departures_city_input, wait_presence=True,
                                    option_text="г Екатеринбург")
@@ -74,7 +74,7 @@ def test_ftl_cc_tariff_add_lkp(base_fixture, domain):
     add_tariff.dropdown_with_input(add_tariff.arrival_city_input, wait_presence=True,
                                    option_text="г Уфа")
     # Выбор типа ТС "1.5т / 9м3 / 4пал."
-    add_tariff.dropdown_click_input_click(add_tariff.vehicle_type_select, "1.5т / 9м3 / 4пал.")
+    add_tariff.dropdown_without_input(add_tariff.vehicle_type_select, "1.5т / 9м3 / 4пал.")
     # Установка флага "Закрытый кузов"
     add_tariff.click_button(add_tariff.body_type_closed_checkbox)
     # Ввод минимальной стоимости
@@ -111,13 +111,13 @@ def test_ftl_ml_tariff_add_lkp(base_fixture, domain):
 
     add_tariff = FTLTariffAdd(base.driver)
     # Выбор типа тарифа "FTL"
-    add_tariff.dropdown_click_input_click(add_tariff.tariff_type_select, "FTL")
+    add_tariff.dropdown_without_input(add_tariff.tariff_type_select, "FTL")
     # Выбор подтипа тарифа "Пробег"
-    add_tariff.dropdown_click_input_click(add_tariff.ftl_type_select, "Пробег")
+    add_tariff.dropdown_without_input(add_tariff.ftl_type_select, "Пробег")
     # Ввод названия тарифа
     add_tariff.input_in_field(add_tariff.tariff_name_input, f"ПБ-{base.get_timestamp()}")
     # Выбор типа ТС "5т / 36м3 / 15пал."
-    add_tariff.dropdown_click_input_click(add_tariff.vehicle_type_select, "5т / 36м3 / 15пал.")
+    add_tariff.dropdown_without_input(add_tariff.vehicle_type_select, "5т / 36м3 / 15пал.")
     # Установка флага "Закрытый кузов"
     add_tariff.click_button(add_tariff.body_type_closed_checkbox)
     # Ввод стоимости пробега

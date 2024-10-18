@@ -28,7 +28,7 @@ def test_transport_inner_edit_lke(base_fixture, domain):
     
     add_ts = TransportAdd(base.driver)
     # Выбор типа транспортного средства
-    add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Монорамное ТС")
+    add_ts.dropdown_without_input(add_ts.vehicle_type_select, "Монорамное ТС")
     # Выбор владельца транспортного средства
     add_ts.click_button(add_ts.vehicle_owner_select, wait="lst")
     
@@ -40,21 +40,21 @@ def test_transport_inner_edit_lke(base_fixture, domain):
     # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ВТС-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Монорамник")
-    add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
-    add_ts.dropdown_click_input_click(add_ts.year_select, "2023")
-    add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Грузопассажирская")
-    add_ts.dropdown_click_input_click(add_ts.vehicle_body_types_select, "Тентованный")
+    add_ts.dropdown_without_input(add_ts.owner_types_select, "Подрядчик является собственником")
+    add_ts.dropdown_without_input(add_ts.year_select, "2023")
+    add_ts.dropdown_without_input(add_ts.vehicle_categories_select, "Грузопассажирская")
+    add_ts.dropdown_without_input(add_ts.vehicle_body_types_select, "Тентованный")
     add_ts.input_in_field(add_ts.capacity_input, "1")
     add_ts.input_in_field(add_ts.height_from_ground_input, "1")
-    add_ts.dropdown_click_input_click(add_ts.number_passengers_select, "4")
+    add_ts.dropdown_without_input(add_ts.number_passengers_select, "4")
     # Создание транспортного средства
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
     # Редактирование транспортного средства
     add_ts.click_button(add_ts.edit_button)
-    add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Грузопассажирская")
-    add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Грузовая")
-    add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Манипулятор")
+    add_ts.dropdown_without_input(add_ts.vehicle_categories_select, "Грузопассажирская")
+    add_ts.dropdown_without_input(add_ts.vehicle_categories_select, "Грузовая")
+    add_ts.dropdown_without_input(add_ts.vehicle_categories_select, "Манипулятор")
     add_ts.backspace_len_and_input(add_ts.capacity_input, "30")
     add_ts.backspace_len_and_input(add_ts.height_from_ground_input, "4")
     add_ts.input_in_field(add_ts.pallets_input, "35")
@@ -63,13 +63,13 @@ def test_transport_inner_edit_lke(base_fixture, domain):
     add_ts.click_button(add_ts.sanitation_toggl)
     add_ts.click_button(add_ts.sanitary_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
-    add_ts.dropdown_click_input_click(add_ts.first_pass_type_select, "МКАД", index=1)
+    add_ts.dropdown_without_input(add_ts.first_pass_type_select, "МКАД", index=1)
     add_ts.click_button(add_ts.first_pass_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
-    add_ts.dropdown_click_input_click(add_ts.second_pass_type_select, "СК", index=2)
+    add_ts.dropdown_without_input(add_ts.second_pass_type_select, "СК", index=2)
     add_ts.click_button(add_ts.second_pass_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
-    add_ts.dropdown_click_input_click(add_ts.third_pass_type_select, "ТТК", index=3)
+    add_ts.dropdown_without_input(add_ts.third_pass_type_select, "ТТК", index=3)
     add_ts.click_button(add_ts.third_pass_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
     add_ts.click_button(add_ts.gps_monitoring_toggl)
@@ -103,7 +103,7 @@ def test_semitrailer_inner_edit_lke(base_fixture, domain):
     
     add_ts = TransportAdd(base.driver)
     # Выбор типа транспортного средства
-    add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Полуприцеп")
+    add_ts.dropdown_without_input(add_ts.vehicle_type_select, "Полуприцеп")
     # Выбор владельца транспортного средства
     add_ts.click_button(add_ts.vehicle_owner_select, wait="lst")
     
@@ -115,10 +115,10 @@ def test_semitrailer_inner_edit_lke(base_fixture, domain):
     # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ВПП-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Полуприцеп")
-    add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
-    add_ts.dropdown_click_input_click(add_ts.year_select, "2023")
-    add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Грузовая")
-    add_ts.dropdown_click_input_click(add_ts.vehicle_body_types_select, "Тентованный")
+    add_ts.dropdown_without_input(add_ts.owner_types_select, "Подрядчик является собственником")
+    add_ts.dropdown_without_input(add_ts.year_select, "2023")
+    add_ts.dropdown_without_input(add_ts.vehicle_categories_select, "Грузовая")
+    add_ts.dropdown_without_input(add_ts.vehicle_body_types_select, "Тентованный")
     add_ts.input_in_field(add_ts.capacity_input, "100")
     add_ts.input_in_field(add_ts.volume_input, "120")
     add_ts.input_in_field(add_ts.pallets_input, "35")
@@ -169,13 +169,13 @@ def test_semitrailer_edit_lke(base_fixture, domain):
     
     add_ts = TransportAdd(base.driver)
     # Выбор типа транспортного средства
-    add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Полуприцеп")
+    add_ts.dropdown_without_input(add_ts.vehicle_type_select, "Полуприцеп")
     # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ПП-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Полуприцеп")
-    add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
-    add_ts.dropdown_click_input_click(add_ts.year_select, "2020")
-    add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Цистерна")
+    add_ts.dropdown_without_input(add_ts.owner_types_select, "Подрядчик является собственником")
+    add_ts.dropdown_without_input(add_ts.year_select, "2020")
+    add_ts.dropdown_without_input(add_ts.vehicle_categories_select, "Цистерна")
     add_ts.input_in_field(add_ts.capacity_input, "10")
     add_ts.input_in_field(add_ts.volume_input, "20")
     add_ts.input_in_field(add_ts.height_from_ground_input, "1")
@@ -185,8 +185,8 @@ def test_semitrailer_edit_lke(base_fixture, domain):
     add_ts.click_button(add_ts.confirm_button, wait="form")
     # Редактирование транспортного средства
     add_ts.click_button(add_ts.edit_button)
-    add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Аренда")
-    add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Автовоз")
+    add_ts.dropdown_without_input(add_ts.owner_types_select, "Аренда")
+    add_ts.dropdown_without_input(add_ts.vehicle_categories_select, "Автовоз")
     add_ts.backspace_all_and_input(add_ts.capacity_input, "40")
     add_ts.backspace_all_and_input(add_ts.height_from_ground_input, "5")
     add_ts.input_in_field(add_ts.car_count_input, "10")
@@ -223,7 +223,7 @@ def test_tractor_inner_edit_lke(base_fixture, domain):
     
     add_ts = TransportAdd(base.driver)
     # Выбор типа транспортного средства
-    add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Тягач")
+    add_ts.dropdown_without_input(add_ts.vehicle_type_select, "Тягач")
     # Выбор владельца транспортного средства
     add_ts.click_button(add_ts.vehicle_owner_select, wait="lst")
     
@@ -235,15 +235,15 @@ def test_tractor_inner_edit_lke(base_fixture, domain):
     # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ВТЯГ-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Тягач")
-    add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Аренда")
-    add_ts.dropdown_click_input_click(add_ts.year_select, "2019")
-    add_ts.dropdown_click_input_click(add_ts.first_pass_type_select, "МКАД", index=1)
+    add_ts.dropdown_without_input(add_ts.owner_types_select, "Аренда")
+    add_ts.dropdown_without_input(add_ts.year_select, "2019")
+    add_ts.dropdown_without_input(add_ts.first_pass_type_select, "МКАД", index=1)
     add_ts.click_button(add_ts.tractor_first_pass_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
-    add_ts.dropdown_click_input_click(add_ts.second_pass_type_select, "СК", index=2)
+    add_ts.dropdown_without_input(add_ts.second_pass_type_select, "СК", index=2)
     add_ts.click_button(add_ts.tractor_second_pass_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
-    add_ts.dropdown_click_input_click(add_ts.third_pass_type_select, "ТТК", index=3)
+    add_ts.dropdown_without_input(add_ts.third_pass_type_select, "ТТК", index=3)
     add_ts.click_button(add_ts.tractor_third_pass_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
     add_ts.click_button(add_ts.gps_monitoring_toggl)
@@ -252,8 +252,8 @@ def test_tractor_inner_edit_lke(base_fixture, domain):
     add_ts.click_button(add_ts.confirm_button, wait="form")
     # Редактирование транспортного средства
     add_ts.click_button(add_ts.edit_button)
-    add_ts.dropdown_click_input_click(add_ts.year_select, "2021")
-    add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Лизинг")
+    add_ts.dropdown_without_input(add_ts.year_select, "2021")
+    add_ts.dropdown_without_input(add_ts.owner_types_select, "Лизинг")
     add_ts.move_and_click(move_to=add_ts.third_pass_type_select, click_to=add_ts.close_circle_button, click_index=9)
     add_ts.move_and_click(move_to=add_ts.second_pass_type_select, click_to=add_ts.close_circle_button, click_index=7)
     add_ts.move_and_click(move_to=add_ts.first_pass_type_select, click_to=add_ts.close_circle_button, click_index=5)

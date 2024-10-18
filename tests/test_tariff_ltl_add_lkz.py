@@ -23,11 +23,11 @@ def test_ltl_tariff_add_lkz(base_fixture, domain):
 
     add_tariff = LTLTariffAdd(base.driver)
     # Выбор типа тарифа "LTL"
-    add_tariff.dropdown_click_input_click(add_tariff.tariff_type_select, "LTL")
+    add_tariff.dropdown_without_input(add_tariff.tariff_type_select, "LTL")
     # Ввод названия тарифа
     add_tariff.input_in_field(add_tariff.tariff_name_input, f"LTL-{base.get_timestamp()}")
     # Выбор подтипа тарифа "Короб"
-    add_tariff.dropdown_click_input_click(add_tariff.ltl_type_select, "Короб")
+    add_tariff.dropdown_without_input(add_tariff.ltl_type_select, "Короб")
     # Ввод минимального веса
     add_tariff.backspace_len_and_input(add_tariff.min_weight_input, base.random_value_float_str(10, 100))
     # Ввод объёмного веса

@@ -25,14 +25,14 @@ def test_transport_add_lkp(base_fixture, domain):
 
     add_ts = TransportAdd(base.driver)
     # Выбор типа транспортного средства
-    add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Монорамное ТС")
+    add_ts.dropdown_without_input(add_ts.vehicle_type_select, "Монорамное ТС")
     # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ТС-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Монорамник")
-    add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
-    add_ts.dropdown_click_input_click(add_ts.year_select, "2022")
-    add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Грузовая")
-    add_ts.dropdown_click_input_click(add_ts.vehicle_body_types_select, "Тентованный")
+    add_ts.dropdown_without_input(add_ts.owner_types_select, "Подрядчик является собственником")
+    add_ts.dropdown_without_input(add_ts.year_select, "2022")
+    add_ts.dropdown_without_input(add_ts.vehicle_categories_select, "Грузовая")
+    add_ts.dropdown_without_input(add_ts.vehicle_body_types_select, "Тентованный")
     add_ts.input_in_field(add_ts.capacity_input, base.random_value_float_str(0.5, 30.0))
     add_ts.input_in_field(add_ts.volume_input, base.random_value_float_str(0.5, 120.0))
     add_ts.input_in_field(add_ts.pallets_input, base.random_value_float_str(0, 35))
@@ -84,14 +84,14 @@ def test_trailer_add_lkp(base_fixture, domain):
 
     add_ts = TransportAdd(base.driver)
     # Выбор типа транспортного средства
-    add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Полуприцеп")
+    add_ts.dropdown_without_input(add_ts.vehicle_type_select, "Полуприцеп")
     # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ПП-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Полуприцеп")
-    add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
-    add_ts.dropdown_click_input_click(add_ts.year_select, "2022")
-    add_ts.dropdown_click_input_click(add_ts.vehicle_categories_select, "Грузовая")
-    add_ts.dropdown_click_input_click(add_ts.vehicle_body_types_select, "Тентованный")
+    add_ts.dropdown_without_input(add_ts.owner_types_select, "Подрядчик является собственником")
+    add_ts.dropdown_without_input(add_ts.year_select, "2022")
+    add_ts.dropdown_without_input(add_ts.vehicle_categories_select, "Грузовая")
+    add_ts.dropdown_without_input(add_ts.vehicle_body_types_select, "Тентованный")
     add_ts.input_in_field(add_ts.capacity_input, base.random_value_float_str(0.5, 100.0))
     add_ts.input_in_field(add_ts.volume_input, base.random_value_float_str(0.5, 120.0))
     add_ts.input_in_field(add_ts.pallets_input, base.random_value_float_str(0, 35))
@@ -135,12 +135,12 @@ def test_tractor1_add_lkp(base_fixture, domain):
 
     add_ts = TransportAdd(base.driver)
     # Выбор типа транспортного средства
-    add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Тягач")
+    add_ts.dropdown_without_input(add_ts.vehicle_type_select, "Тягач")
     # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ТЯГ-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Тягач")
-    add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
-    add_ts.dropdown_click_input_click(add_ts.year_select, "2023")
+    add_ts.dropdown_without_input(add_ts.owner_types_select, "Подрядчик является собственником")
+    add_ts.dropdown_without_input(add_ts.year_select, "2023")
     # Создание транспортного средства
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")
@@ -183,12 +183,12 @@ def test_tractor2_add_lkp(base_fixture, domain):
 
     add_ts = TransportAdd(base.driver)
     # Выбор типа транспортного средства
-    add_ts.dropdown_click_input_click(add_ts.vehicle_type_select, "Тягач")
+    add_ts.dropdown_without_input(add_ts.vehicle_type_select, "Тягач")
     # Заполнение данных о транспортном средстве
     add_ts.input_in_field(add_ts.plate_number_input, f"ТЯГ-{base.get_timestamp()}")
     add_ts.input_in_field(add_ts.mark_model_input, "Тягач")
-    add_ts.dropdown_click_input_click(add_ts.owner_types_select, "Подрядчик является собственником")
-    add_ts.dropdown_click_input_click(add_ts.year_select, "2023")
+    add_ts.dropdown_without_input(add_ts.owner_types_select, "Подрядчик является собственником")
+    add_ts.dropdown_without_input(add_ts.year_select, "2023")
     # Создание транспортного средства
     add_ts.click_button(add_ts.create_vehicle_button, do_assert=True)
     add_ts.click_button(add_ts.confirm_button, wait="form")

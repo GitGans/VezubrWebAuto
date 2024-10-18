@@ -25,11 +25,11 @@ def test_user_add_lke(base_fixture, domain):
 
     user = User(base.driver)
     # Выбор типа пользователя "Пользователь"
-    user.dropdown_click_input_click(user.user_type_select, "Пользователь")
+    user.dropdown_without_input(user.user_type_select, "Пользователь")
     # Выбор роли пользователя "Администратор"
-    user.dropdown_click_input_click(user.user_role_select, "Администратор")
+    user.dropdown_without_input(user.user_role_select, "Администратор")
     # Выбор часового пояса "Asia/Yekaterinburg"
-    user.dropdown_click_input_click(user.user_timezone_select, "Asia/Yekaterinburg")
+    user.dropdown_without_input(user.user_timezone_select, "Asia/Yekaterinburg")
     # Ввод фамилии пользователя
     user.input_in_field(user.surname_input, f"Ф-{base.get_timestamp()}")
     # Ввод имени пользователя
@@ -42,9 +42,9 @@ def test_user_add_lke(base_fixture, domain):
     # Ввод email пользователя
     user.input_in_field(user.email_input, f"E{base.get_timestamp()}@mail.ru")
     # Выбор группы пользователя "Базовая группа"
-    user.dropdown_click_input_click(user.user_group_select, "Базовая группа")
+    user.dropdown_without_input(user.user_group_select, "Базовая группа")
     # Выбор подразделения пользователя "База"
-    user.dropdown_click_input_click(user.user_subdivision_select, "База")
+    user.dropdown_without_input(user.user_subdivision_select, "База")
     # Клик по кнопке создания пользователя
     user.click_button(user.create_user_button, do_assert=True)
     # Подтверждение создания пользователя

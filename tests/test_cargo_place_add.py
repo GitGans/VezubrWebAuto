@@ -24,7 +24,7 @@ def test_cargo_place_from_lkz_add_lke(base_fixture, domain):
     
     add_cp = CargoPlaceAdd(base.driver)
     # Выбор владельца грузоместа "Auto LKZ"
-    add_cp.dropdown_click_input_click(add_cp.cargo_place_owner_select, "Auto LKZ")
+    add_cp.dropdown_without_input(add_cp.cargo_place_owner_select, "Auto LKZ")
     # Добавление полного базового грузоместа
     add_cp.add_full_cargo_place_lke()
     # Конец теста
@@ -50,7 +50,7 @@ def test_cargo_place_own_add_lke(base_fixture, domain):
     
     add_cp = CargoPlaceAdd(base.driver)
     # Выбор владельца грузоместа "Собственное Задание Экспедитора"
-    add_cp.dropdown_click_input_click(add_cp.cargo_place_owner_select, "Собственное Задание Экспедитора")
+    add_cp.dropdown_without_input(add_cp.cargo_place_owner_select, "Собственное Задание Экспедитора")
     # Выбор вложенного грузоместа
     add_cp.click_button(add_cp.child_cp_select, wait="lst")
     # Очистка даты и выбор грузоместа

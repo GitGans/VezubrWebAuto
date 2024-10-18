@@ -175,7 +175,7 @@ class LoaderAdd(Base):
         self.input_in_field(self.passport_id_input, self.random_value_float_str(1000000000, 9999999999))
         self.input_in_field(self.passport_by_input, "Верховный грузила")
         self.input_in_field(self.passport_code_input, self.random_value_float_str(100000, 999999), click_first=True)
-        self.dropdown_click_input_click(self.loader_type_select, "Грузчик")
+        self.dropdown_without_input(self.loader_type_select, "Грузчик")
         self.input_in_field(self.app_phone_input, self.random_value_float_str(8650000000, 8659999999), click_first=True)
         self.input_in_field(self.contact_phone_input, self.random_value_float_str(8650000000, 8659999999),
                             click_first=True)

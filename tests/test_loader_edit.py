@@ -27,7 +27,7 @@ def test_loader1_edit_lke(base_fixture, domain):
     add_loader = LoaderAdd(base.driver)
     # Установка страны и города выдачи паспорта
     add_loader.click_button(add_loader.passport_toggl)
-    add_loader.dropdown_click_input_click(add_loader.loader_country_select, "Албания / Albania / ALB")
+    add_loader.dropdown_without_input(add_loader.loader_country_select, "Албания / Albania / ALB")
     add_loader.input_in_field(add_loader.loader_city_input, "Тирана")
     # Ввод ФИО и паспортных данных
     surname = f"Ф-{add_loader.get_timestamp()}"
@@ -39,9 +39,9 @@ def test_loader1_edit_lke(base_fixture, domain):
     add_loader.input_in_field(add_loader.passport_code_input,
                               add_loader.random_value_float_str(100000, 999999), click_first=True)
     # Установка типов специалиста
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Грузчик", 2, 1)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Сборщик", 3, 2)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Стропальщик", 4, 3)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Грузчик", 2, 1)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Сборщик", 3, 2)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Стропальщик", 4, 3)
     # Установка срока действия
     add_loader.click_button(add_loader.date_button, index=3)
     add_loader.input_in_field(add_loader.calendar_input, value="10102045")
@@ -79,9 +79,9 @@ def test_loader1_edit_lke(base_fixture, domain):
                               move_index=2, click_to=add_loader.close_circle_button, click_index=5)
     add_loader.move_and_click(move_to=add_loader.loader_type_select,
                               move_index=1, click_to=add_loader.close_circle_button, click_index=4)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Такелажник")
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Упаковщик", 2, 2)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Карщик", 3, 3)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Такелажник")
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Упаковщик", 2, 2)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Карщик", 3, 3)
     # Ввод новых контактных данных и адреса
     add_loader.click_button(add_loader.date_button, index=3)
     add_loader.input_in_field(add_loader.calendar_input, value="10102045")
@@ -128,9 +128,9 @@ def test_loader2_edit_lke(base_fixture, domain):
     add_loader.input_in_field(add_loader.passport_code_input,
                               add_loader.random_value_float_str(100000, 999999), click_first=True)
     # Установка типов специалиста
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Грузчик", 1, 1)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Упаковщик", 2, 2)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Такелажник", 3, 3)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Грузчик", 1, 1)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Упаковщик", 2, 2)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Такелажник", 3, 3)
     # Установка срока действия
     add_loader.input_in_field(add_loader.app_phone_input,
                               add_loader.random_value_float_str(8650000000, 8659999999), click_first=True)
@@ -150,7 +150,7 @@ def test_loader2_edit_lke(base_fixture, domain):
     add_loader.click_button(add_loader.loader_edit_button, wait="form")
     add_loader.click_button(add_loader.passport_toggl)
     # Установка страны и города выдачи паспорта
-    add_loader.dropdown_click_input_click(add_loader.loader_country_select, "Албания / Albania / ALB")
+    add_loader.dropdown_without_input(add_loader.loader_country_select, "Албания / Albania / ALB")
     add_loader.input_in_field(add_loader.loader_city_input, "Тирана")
     # Ввод новых данных ФИО и паспортных данных
     add_loader.backspace_all_and_input(add_loader.surname_input, f"Ф-{add_loader.get_timestamp()}")
@@ -168,8 +168,8 @@ def test_loader2_edit_lke(base_fixture, domain):
                               move_index=3, click_to=add_loader.close_circle_button, click_index=5)
     add_loader.move_and_click(move_to=add_loader.loader_type_select,
                               move_index=2, click_to=add_loader.close_circle_button, click_index=4)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Такелажник", 2, 1)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Упаковщик", 3, 2)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Такелажник", 2, 1)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Упаковщик", 3, 2)
     # Ввод новых контактных данных и адреса
     add_loader.click_button(add_loader.date_button, index=2)
     add_loader.input_in_field(add_loader.calendar_input, value="10102045")
@@ -208,7 +208,7 @@ def test_loader1_edit_lkp(base_fixture, domain):
     add_loader = LoaderAdd(base.driver)
     # Установка страны и города выдачи паспорта
     add_loader.click_button(add_loader.passport_toggl)
-    add_loader.dropdown_click_input_click(add_loader.loader_country_select, "Азербайджан / Azerbaijan / AZE")
+    add_loader.dropdown_without_input(add_loader.loader_country_select, "Азербайджан / Azerbaijan / AZE")
     add_loader.input_in_field(add_loader.loader_city_input, "Баку")
     # Ввод ФИО и паспортных данных
     surname = f"Ф-{add_loader.get_timestamp()}"
@@ -220,9 +220,9 @@ def test_loader1_edit_lkp(base_fixture, domain):
     add_loader.input_in_field(add_loader.passport_code_input,
                               add_loader.random_value_float_str(100000, 999999), click_first=True)
     # Установка типов специалиста
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Упаковщик", 2, 1)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Сборщик", 3, 2)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Штабелерщик", 4, 3)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Упаковщик", 2, 1)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Сборщик", 3, 2)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Штабелерщик", 4, 3)
     # Установка срока действия
     add_loader.click_button(add_loader.date_button, index=3)
     add_loader.input_in_field(add_loader.calendar_input, value="10102045")
@@ -260,9 +260,9 @@ def test_loader1_edit_lkp(base_fixture, domain):
                               move_index=2, click_to=add_loader.close_circle_button, click_index=5)
     add_loader.move_and_click(move_to=add_loader.loader_type_select,
                               move_index=1, click_to=add_loader.close_circle_button, click_index=4)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Грузчик")
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Такелажник", 2, 2)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Стропальщик", 3, 3)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Грузчик")
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Такелажник", 2, 2)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Стропальщик", 3, 3)
     # Ввод новых контактных данных и адреса
     add_loader.click_button(add_loader.date_button, index=3)
     add_loader.input_in_field(add_loader.calendar_input, value="10102045")
@@ -309,9 +309,9 @@ def test_loader2_edit_lkp(base_fixture, domain):
     add_loader.input_in_field(add_loader.passport_code_input,
                               add_loader.random_value_float_str(100000, 999999), click_first=True)
     # Установка типов специалиста
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Грузчик", 1, 1)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Сборщик", 2, 2)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Карщик", 3, 3)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Грузчик", 1, 1)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Сборщик", 2, 2)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Карщик", 3, 3)
     # Установка срока действия
     add_loader.click_button(add_loader.date_button, index=3)
     add_loader.input_in_field(add_loader.calendar_input, value="10102045")
@@ -334,7 +334,7 @@ def test_loader2_edit_lkp(base_fixture, domain):
     add_loader.click_button(add_loader.loader_edit_button, wait="form")
     add_loader.click_button(add_loader.passport_toggl)
     # Установка страны и города выдачи паспорта
-    add_loader.dropdown_click_input_click(add_loader.loader_country_select, "Азербайджан / Azerbaijan / AZE")
+    add_loader.dropdown_without_input(add_loader.loader_country_select, "Азербайджан / Azerbaijan / AZE")
     add_loader.input_in_field(add_loader.loader_city_input, "Баку")
     # Ввод новых данных ФИО и паспортных данных
     add_loader.backspace_all_and_input(add_loader.surname_input, f"Ф-{add_loader.get_timestamp()}")
@@ -352,8 +352,8 @@ def test_loader2_edit_lkp(base_fixture, domain):
                               move_index=3, click_to=add_loader.close_circle_button, click_index=5)
     add_loader.move_and_click(move_to=add_loader.loader_type_select,
                               move_index=2, click_to=add_loader.close_circle_button, click_index=4)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Упаковщик", 2, 1)
-    add_loader.dropdown_click_input_click(add_loader.loader_type_select, "Стропальщик", 3, 2)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Упаковщик", 2, 1)
+    add_loader.dropdown_without_input(add_loader.loader_type_select, "Стропальщик", 3, 2)
     # Ввод новых контактных данных и адреса
     add_loader.click_button(add_loader.date_button, index=3)
     add_loader.input_in_field(add_loader.calendar_input, value="10102045")

@@ -37,7 +37,7 @@ def test_own_driver_edit_lke(base_fixture, domain):
     # Включить тогл паспорт
     add_driver.click_button(add_driver.passport_toggl)
     # Выбор страны - Албания
-    add_driver.dropdown_click_input_click(add_driver.driver_country_select, "Албания / Albania / ALB")
+    add_driver.dropdown_without_input(add_driver.driver_country_select, "Албания / Albania / ALB")
     # Ввод города - Тирана
     add_driver.input_in_field(add_driver.driver_city_input, "Тирана")
     # Ввод новой фамилии

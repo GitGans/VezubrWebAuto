@@ -341,8 +341,6 @@ class Base:
                 self.assert_element_text(element_dict)
     
     """ In dropdown click, wait, input and enter"""
-    """ In dropdown click, wait, input and enter """
-    
     def dropdown_with_input(self, element_dict: Dict[str, str], option_text: str, press_enter: bool = True,
                             wait_presence: bool = False, wait_type: str = 'clickable',
                             dd_index: int = 1, index: int = 1) -> None:
@@ -406,9 +404,9 @@ class Base:
             # Вывод сообщения в консоль
             print(message)
     
-    """In dropdown click input + index click"""
-    def dropdown_click_input_click(self, element_dict: Dict[str, str], option_text: str, dd_index: int = 1,
-                                   index: int = 1) -> None:
+    """ In dropdown click input + index click """
+    def dropdown_without_input(self, element_dict: Dict[str, str], option_text: str, dd_index: int = 1,
+                               index: int = 1) -> None:
         """
         Выбирает опцию в выпадающем списке с помощью поиска и клика по найденному элементу.
 
@@ -418,34 +416,36 @@ class Base:
             Словарь с информацией об элементе выпадающего списка.
         option_text : str
             Текст опции для поиска и выбора.
-        dd_index : int
+        dd_index : int, optional
             Индекс выпадающего списка для инициации клика, начиная с 1.
-        index : int
+        index : int, optional
             Индекс опции в списке, начиная с 1, который нужно выбрать.
-
         """
-        step_title = f"Select '{option_text}' from dropdown {element_dict['name']}"
-        print_message = f"Selected '{option_text}' from dropdown {element_dict['name']}"
-        
+        # Формируем единое сообщение для Allure шага и вывода в консоль
+        message = f"Select '{option_text}' from dropdown {element_dict['name']}"
         if dd_index != 1:
-            step_title += f" at dropdown index {dd_index}"
-            print_message += f" at dropdown index {dd_index}"
-        
+            message += f" at dropdown index {dd_index}"
         if index != 1:
-            step_title += f" at option index {index}"
-            print_message += f" at option index {index}"
+            message += f" at option index {index}"
         
-        with allure.step(title=step_title):
+        with allure.step(message):
+            # Генерация XPath для выпадающего списка
             xpath_dropdown = f"({element_dict['xpath']})[{dd_index}]" if dd_index > 1 else element_dict['xpath']
             dropdown_dict = self.get_element({"name": element_dict['name'], "xpath": xpath_dropdown})
+            
+            # Клик по выпадающему списку
             dropdown_dict['element'].click()
             
+            # XPath для выбора нужной опции
             xpath_expression = f"(.//li[@role='option' and normalize-space(.)='{option_text}'])[{index}]"
-            option_to_select = WebDriverWait(self.driver, 60).until(
-                EC.element_to_be_clickable((By.XPATH, xpath_expression)))
+            option_to_select = self.get_element({"name": f"Option '{option_text}'", "xpath": xpath_expression})[
+                'element']
+            
+            # Клик по найденной опции
             option_to_select.click()
             
-            print(print_message)
+            # Вывод сообщения в консоль
+            print(message)
     
     """ Move to element"""
     def move_to_element(self, element_dict: Dict[str, str], index: int = 1, wait_type: str = 'clickable') -> None:

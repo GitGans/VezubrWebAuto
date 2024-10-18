@@ -24,11 +24,11 @@ def test_user_add_lkp(base_fixture, domain):
 
     user = User(base.driver)
     # Выбор типа пользователя "Пользователь"
-    user.dropdown_click_input_click(user.user_type_select, "Пользователь")
+    user.dropdown_without_input(user.user_type_select, "Пользователь")
     # Выбор роли пользователя "Администратор"
-    user.dropdown_click_input_click(user.user_role_select, "Администратор")
+    user.dropdown_without_input(user.user_role_select, "Администратор")
     # Выбор часового пояса "Asia/Yekaterinburg"
-    user.dropdown_click_input_click(user.user_timezone_select, "Asia/Yekaterinburg")
+    user.dropdown_without_input(user.user_timezone_select, "Asia/Yekaterinburg")
     # Ввод фамилии пользователя
     user.input_in_field(user.surname_input, f"Ф-{base.get_timestamp()}")
     # Ввод имени пользователя

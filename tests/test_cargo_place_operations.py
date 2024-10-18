@@ -24,7 +24,7 @@ def test_cargo_place_routing_lke(base_fixture, domain):
     
     add_cp = CargoPlaceAdd(base.driver)
     # Выбор владельца грузоместа "Auto LKZ"
-    add_cp.dropdown_click_input_click(add_cp.cargo_place_owner_select, "Auto LKZ")
+    add_cp.dropdown_without_input(add_cp.cargo_place_owner_select, "Auto LKZ")
     # Добавление полного базового грузоместа
     cp_stamp = add_cp.add_base_cargo_place_lke()
 
@@ -42,7 +42,7 @@ def test_cargo_place_routing_lke(base_fixture, domain):
     # Клик по кнопке маршрутизировать ГМ
     cp_list.click_button(cp_list.multi_route_button)
     # Выбор типа ТС для маршрутизации
-    cp_list.dropdown_click_input_click(cp_list.vehicle_type_select, dd_index=2, option_text="20т / 90м3 / 33пал.")
+    cp_list.dropdown_without_input(cp_list.vehicle_type_select, dd_index=2, option_text="20т / 90м3 / 33пал.")
     # Ввод кол-ва ТС для маршрутизации
     cp_list.input_in_field(cp_list.quantity_vehicle_input, "1")
     # Выбор временного периода для маршрутизации ГМ от сегодня
@@ -97,7 +97,7 @@ def test_cargo_place_routing_lkz(base_fixture, domain):
     # Клик по кнопке маршрутизировать ГМ
     cp_list.click_button(cp_list.multi_route_button)
     # Выбор типа ТС для маршрутизации
-    cp_list.dropdown_click_input_click(cp_list.vehicle_type_select, dd_index=2, option_text="20т / 90м3 / 33пал.")
+    cp_list.dropdown_without_input(cp_list.vehicle_type_select, dd_index=2, option_text="20т / 90м3 / 33пал.")
     # Ввод кол-ва ТС для маршрутизации
     cp_list.input_in_field(cp_list.quantity_vehicle_input, "1")
     # Выбор временного периода для маршрутизации ГМ от сегодня
@@ -137,7 +137,7 @@ def test_cargo_place_transfer_lke(base_fixture, domain):
     
     add_cp = CargoPlaceAdd(base.driver)
     # Выбор владельца грузоместа "Auto LKZ"
-    add_cp.dropdown_click_input_click(add_cp.cargo_place_owner_select, "Auto LKZ")
+    add_cp.dropdown_without_input(add_cp.cargo_place_owner_select, "Auto LKZ")
     # Добавление полного базового грузоместа
     cp_stamp = add_cp.add_base_cargo_place_lke()
     

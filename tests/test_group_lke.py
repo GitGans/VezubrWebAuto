@@ -25,7 +25,7 @@ def test_group_attr_add_lke(base_fixture, domain):
     # Ввод имени группы
     group.input_in_field(group.title_input, f"№-{base.get_timestamp()}")
     # Выбор типа группы "Признак Договора"
-    group.dropdown_click_input_click(group.group_type_select, "Признак Договора")
+    group.dropdown_without_input(group.group_type_select, "Признак Договора")
     # Ввод случайного признака
     group.input_in_field(group.params_input, group.random_value_float_str(100, 5000))
     # Клик по кнопке создания группы
@@ -56,7 +56,7 @@ def test_group_client_add_lke(base_fixture, domain):
     # Ввод имени группы
     group.input_in_field(group.title_input, f"№-{base.get_timestamp()}")
     # Выбор типа группы "Заказчик"
-    group.dropdown_click_input_click(group.group_type_select, "Заказчик")
+    group.dropdown_without_input(group.group_type_select, "Заказчик")
     # Ввод случайного заказчика
     group.input_in_field(group.params_input, group.random_value_float_str(100, 5000))
     # Клик по кнопке создания группы

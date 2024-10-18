@@ -24,13 +24,13 @@ def test_delegation_to_lke_lkp(base_fixture, domain):
     # Переход на вкладку настроек
     contractor.click_button(contractor.settings_tab)
     # Установка делегирования "Нет" и сохранение
-    contractor.dropdown_click_input_click(contractor.delegation_type_select, "Нет")
+    contractor.dropdown_without_input(contractor.delegation_type_select, "Нет")
     contractor.click_button(contractor.save_button, do_assert=True)
     # Установка делегирования "Делегировать только управление подбором ТС и водителей" и сохранение
-    contractor.dropdown_click_input_click(contractor.delegation_type_select,
+    contractor.dropdown_without_input(contractor.delegation_type_select,
                                           "Делегировать только управление подбором ТС и водителей")
     contractor.click_button(contractor.save_button, do_assert=True)
     # Установка делегирования "Да, полное делегирование" и сохранение
-    contractor.dropdown_click_input_click(contractor.delegation_type_select, "Да, полное делегирование")
+    contractor.dropdown_without_input(contractor.delegation_type_select, "Да, полное делегирование")
     contractor.click_button(contractor.save_button, do_assert=True)
     # Конец теста

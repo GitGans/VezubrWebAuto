@@ -220,7 +220,7 @@ class DeliveryAdd(Base):
         # Выбор типа груза (например, FTL)
         self.click_button(self.select_type_cargo)
         # Выбор типа ТС
-        self.dropdown_click_input_click(self.vehicle_type_select, "до 0.5т")
+        self.dropdown_without_input(self.vehicle_type_select, "до 0.5т")
         # Выбор типа кузова
         self.click_button(self.body_type_select)
         # Выбор закрытого типа кузова

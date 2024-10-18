@@ -28,11 +28,11 @@ def test_user_edit_lkp(base_fixture, domain):
     user = User(base.driver)
     surname = f"Ф-{base.get_timestamp()}"
     # Выбор типа пользователя
-    user.dropdown_click_input_click(user.user_type_select, "Пользователь")
+    user.dropdown_without_input(user.user_type_select, "Пользователь")
     # Выбор роли пользователя
-    user.dropdown_click_input_click(user.user_role_select, "Администратор")
+    user.dropdown_without_input(user.user_role_select, "Администратор")
     # Выбор часового пояса пользователя
-    user.dropdown_click_input_click(user.user_timezone_select, "Asia/Yekaterinburg")
+    user.dropdown_without_input(user.user_timezone_select, "Asia/Yekaterinburg")
     # Ввод фамилии пользователя
     user.input_in_field(user.surname_input, surname)
     # Ввод имени пользователя
@@ -58,13 +58,13 @@ def test_user_edit_lkp(base_fixture, domain):
     # Редактирование данных пользователя
     user.click_button(user.user_edit_button, wait="form")
     # Изменение типа пользователя на "API"
-    user.dropdown_click_input_click(user.user_type_select, "API")
+    user.dropdown_without_input(user.user_type_select, "API")
     # Сброс роли пользователя
     user.click_button(user.user_role_reset)
     # Изменение роли пользователя на "Логист"
-    user.dropdown_click_input_click(user.user_role_select, "Логист")
+    user.dropdown_without_input(user.user_role_select, "Логист")
     # Изменение часового пояса на "Africa/Abidjan"
-    user.dropdown_click_input_click(user.user_timezone_select, "Africa/Abidjan")
+    user.dropdown_without_input(user.user_timezone_select, "Africa/Abidjan")
     # Изменение фамилии пользователя
     user.backspace_len_and_input(user.surname_input, f"Ф-{base.get_timestamp()}")
     # Изменение имени пользователя
