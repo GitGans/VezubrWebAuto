@@ -67,7 +67,7 @@ def test_insurance_contract_attach_lkp(base_fixture, domain):
     contractor.dropdown_without_input(contractor.insurance_company_select, "Энергогарант")
     # Выбор конкретного договора страхования
     contractor.dropdown_without_input(contractor.insurance_contract_select,
-                                          "Договор №№-20240621181730 «Н-20240621181730» от 21.06.2024")
+                                          "Договор №№-20240721102631 «Н-20240721102631» от 21.07.2024")
     # Подтверждение привязки договора
     contractor.click_button(contractor.confirm_button, do_assert=True)
     # Подтверждение успешного выполнения действия

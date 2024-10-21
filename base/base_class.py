@@ -827,26 +827,26 @@ class Base:
 
         return inn
     
-    """ Multiple click buttons"""
+    """ Multiple click buttons """
     def click_multiple_buttons(self, button_element: Dict[str, str], num_buttons: int, num_clicks: int = 1,
-                               wait: Optional[str] = None, wait_type: str = 'clickable', start_index: int = 1):
+                               wait: Optional[str] = None, wait_type: str = 'clickable', start_index: int = 1) -> None:
         """
         Нажимает на каждую из N кнопок по num_clicks раз, с опциональным ожиданием прогрузки после каждого клика,
         начиная с заданного индекса.
 
         Parameters
         ----------
-        button_element : Dict[str, str]
+        button_element : dict
             Словарь с информацией о кнопке для клика.
         num_buttons : int
             Количество кнопок, на которые нужно кликнуть.
         num_clicks : int, optional
             Количество кликов на одну кнопку, по умолчанию 1.
         wait : str, optional
-            Определяет, какой спиннер ожидать после клика ('lst' для списка или 'form' для формы), если None,
+            Определяет, какой спиннер ожидать после клика ('lst' для списка или 'form' для формы). Если None,
             ожидание не выполняется.
         wait_type : str, optional
-            Тип ожидания элемента перед кликом ('clickable', 'visible', 'located', 'find'), по умолчанию 'clickable'.
+            Тип ожидания элемента перед кликом ('clickable', 'visible', 'located', 'find'). По умолчанию 'clickable'.
         start_index : int, optional
             Начальный индекс кнопки для кликов, по умолчанию 1.
         """
@@ -858,12 +858,13 @@ class Base:
                                        "xpath": f"({button_element['xpath']})[{i}]"}
                     
                     # Получаем элемент с использованием метода get_element
-                    element_info = self.get_element(element_locator, wait_type='visible')
+                    element_info = self.get_element(element_locator, wait_type=wait_type)
                     element = element_info['element']
                     
                     # Скроллим к элементу перед кликом
                     self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
                     
+                    # Выполняем клик по кнопке
                     if wait:
                         self.click_button(button_element, index=i, wait=wait, wait_type=wait_type)
                     else:
