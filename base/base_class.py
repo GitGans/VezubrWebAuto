@@ -497,7 +497,7 @@ class Base:
             # Вывод сообщения в консоль
             print(message)
     
-    """ Input in field with optional click, enter, index and wait loading"""
+    """ Input in field with optional click, enter, index, and wait for loading """
     def input_in_field(self, element_dict: Dict[str, str], value: str, click_first: bool = False,
                        press_enter: bool = False, wait: Optional[str] = None, safe: bool = False,
                        wait_type: str = 'clickable', index: int = 1) -> None:
@@ -531,14 +531,18 @@ class Base:
         locator = f"({element_dict['xpath']})[{index}]" if index > 1 else element_dict['xpath']
         updated_element_dict = {"name": element_name, "xpath": locator}
         
-        with allure.step(title=f"{('Click and ' if click_first else '')}Input in {element_name}: " + log_value):
+        # Формируем сообщение для шага Allure и консоли
+        message = f"{'Click and ' if click_first else ''}Input in {element_name}: {log_value}"
+        
+        with allure.step(title=message):
             field_dict = self.get_element(updated_element_dict, wait_type)
             if click_first:
                 field_dict['element'].click()
             field_dict['element'].send_keys(value)
             if press_enter:
                 field_dict['element'].send_keys(Keys.ENTER)
-            print(f"{('Click and ' if click_first else '')}Input in {field_dict['name']}: " + log_value)
+            print(message)
+            
             if wait:
                 # Определяем, какой спиннер ожидать
                 loading_spinner = self.loading_form if wait == 'form' else self.loading_list
@@ -554,7 +558,6 @@ class Base:
                 except TimeoutException:
                     with allure.step("Spinner did not disappear"):
                         print("Spinner did not disappear")
-                        # Продолжаем выполнение, несмотря на то, что спиннер не исчез
     
     """ Backspace len and input with optional click, enter"""
     def backspace_len_and_input(self, element_dict: Dict[str, str], value: str,
