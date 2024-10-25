@@ -2,7 +2,7 @@ import allure
 import requests
 
 
-def test_api_login_lkp(api_base_url, api_login):
+def test_api_front_settings_lkp(api_base_url, api_login):
     # Логинимся под ролью "lkp"
     token = api_login("lkp")
     
@@ -23,10 +23,9 @@ def test_api_login_lkp(api_base_url, api_login):
         
         # Дополнительный вывод для отладки
         print(f"Status Code: {response.status_code}")
-        print(f"Response Text: {response.text}")
         
         # Логируем результат в Allure
-        with allure.step(f"Response status: {response.status_code}, Response text: {response.text}"):
+        with allure.step(f"Response status: {response.status_code}"):
             pass
     
     # Проверка статуса

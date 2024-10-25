@@ -35,12 +35,12 @@ def api_login(api_base_url):
         # Получаем токен
         token = response.json().get("token")
         
-        # Выводим токен в консоль
-        print(f"Token for role '{role}': {token}")
+        # Выводим сообщение о получении токена в консоль
+        print(f"Token received for role '{role}'")
         
-        # Добавляем токен в шаг Allure
-        with allure.step(f"Login successful for role '{role}', token: {token}"):
-            pass  # Шаг отображается в отчете, можно добавить дополнительные действия если нужно
+        # Логируем получение токена в Allure
+        with allure.step(f"Token received for role '{role}'"):
+            pass  # Шаг отображается в Allure, но без токена
         
         return token
     
