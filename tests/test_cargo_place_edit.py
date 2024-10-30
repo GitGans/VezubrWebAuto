@@ -15,7 +15,7 @@ from pages.cargo_place_list_page import CargoPlaceList
                     '3) редактируем: кол-во/вес/объем/цена/температура - Рандом, '
                     'название/накладная/штрихкод/пломба/внешнийid/коммент - ГМ-timestamp')
 @pytest.mark.parametrize('base_fixture', ['lke'], indirect=True)  # Параметризация роли
-def test_cargo_place_own_edit_lke(base_fixture, domain):
+def test_cargo_place_edit_own_lke(base_fixture, domain):
     # Инициализация базовых объектов через фикстуру
     base, sidebar = base_fixture
     
@@ -64,21 +64,21 @@ def test_cargo_place_own_edit_lke(base_fixture, domain):
     # Клик по кнопке редактирования грузоместа
     add_cp.click_button(add_cp.edit_button)
     # Ввод рандомизированных данных для количества, веса, объема и стоимости груза
-    add_cp.backspace_len_and_input(add_cp.quantity_edit, base.random_value_float_str(1, 10))
-    add_cp.backspace_len_and_input(add_cp.weight_edit, base.random_value_float_str(10, 20000))
-    add_cp.backspace_len_and_input(add_cp.value_edit, base.random_value_float_str(0.1, 35.0, precision=1))
-    add_cp.backspace_len_and_input(add_cp.cost_edit, base.random_value_float_str(100, 1000000))
+    add_cp.backspace_and_input(add_cp.quantity_edit, base.random_value_float_str(1, 10))
+    add_cp.backspace_and_input(add_cp.weight_edit, base.random_value_float_str(10, 20000))
+    add_cp.backspace_and_input(add_cp.value_edit, base.random_value_float_str(0.1, 35.0, precision=1))
+    add_cp.backspace_and_input(add_cp.cost_edit, base.random_value_float_str(100, 1000000))
     # Генерация уникального идентификатора для грузоместа
     cp_stamp = f"ГМ-{add_cp.get_timestamp()}"
     # Ввод уникальных данных для грузоместа
-    add_cp.backspace_len_and_input(add_cp.lke_cp_title_edit, cp_stamp)  # Название
-    add_cp.backspace_len_and_input(add_cp.lke_invoice_number_edit, cp_stamp)  # Номер накладной
-    add_cp.backspace_len_and_input(add_cp.lke_bar_code_edit, cp_stamp)  # Штрихкод
-    add_cp.backspace_len_and_input(add_cp.lke_seal_number_edit, cp_stamp)  # Номер пломбы
-    add_cp.backspace_len_and_input(add_cp.temp_from_edit, add_cp.random_value_float_str(-5, 0))  # Температура от
-    add_cp.backspace_len_and_input(add_cp.temp_until_edit, add_cp.random_value_float_str(0, 5))  # Температура до
-    add_cp.backspace_len_and_input(add_cp.lke_external_id_edit, cp_stamp)  # Внешний ID
-    add_cp.backspace_len_and_input(add_cp.lke_comment_edit, cp_stamp)  # Комментарий
+    add_cp.backspace_and_input(add_cp.lke_cp_title_edit, cp_stamp)  # Название
+    add_cp.backspace_and_input(add_cp.lke_invoice_number_edit, cp_stamp)  # Номер накладной
+    add_cp.backspace_and_input(add_cp.lke_bar_code_edit, cp_stamp)  # Штрихкод
+    add_cp.backspace_and_input(add_cp.lke_seal_number_edit, cp_stamp)  # Номер пломбы
+    add_cp.backspace_and_input(add_cp.temp_from_edit, add_cp.random_value_float_str(-5, 0))  # Температура от
+    add_cp.backspace_and_input(add_cp.temp_until_edit, add_cp.random_value_float_str(0, 5))  # Температура до
+    add_cp.backspace_and_input(add_cp.lke_external_id_edit, cp_stamp)  # Внешний ID
+    add_cp.backspace_and_input(add_cp.lke_comment_edit, cp_stamp)  # Комментарий
     # Клик по кнопке сохранения изменений
     add_cp.click_button(add_cp.save_button, wait="form")
     # Конец теста
@@ -120,21 +120,21 @@ def test_cargo_place_edit_lkz(base_fixture, domain):
     # Клик по кнопке редактирования грузоместа
     add_cp.click_button(add_cp.edit_button)
     # Ввод рандомизированных данных для количества, веса, объема и стоимости груза
-    add_cp.backspace_len_and_input(add_cp.quantity_edit, base.random_value_float_str(1, 10))
-    add_cp.backspace_len_and_input(add_cp.weight_edit, base.random_value_float_str(10, 20000))
-    add_cp.backspace_len_and_input(add_cp.value_edit, base.random_value_float_str(0.1, 35.0, precision=1))
-    add_cp.backspace_len_and_input(add_cp.cost_edit, base.random_value_float_str(100, 1000000))
+    add_cp.backspace_and_input(add_cp.quantity_edit, base.random_value_float_str(1, 10))
+    add_cp.backspace_and_input(add_cp.weight_edit, base.random_value_float_str(10, 20000))
+    add_cp.backspace_and_input(add_cp.value_edit, base.random_value_float_str(0.1, 35.0, precision=1))
+    add_cp.backspace_and_input(add_cp.cost_edit, base.random_value_float_str(100, 1000000))
     # Генерация уникального идентификатора для грузоместа
     cp_stamp = f"ГМ-{add_cp.get_timestamp()}"
     # Ввод уникальных данных для грузоместа
-    add_cp.backspace_len_and_input(add_cp.lkz_cp_title_edit, cp_stamp)  # Название
-    add_cp.backspace_len_and_input(add_cp.lkz_invoice_number_edit, cp_stamp)  # Номер накладной
-    add_cp.backspace_len_and_input(add_cp.lkz_bar_code_edit, cp_stamp)  # Штрихкод
-    add_cp.backspace_len_and_input(add_cp.lkz_seal_number_edit, cp_stamp)  # Номер пломбы
-    add_cp.backspace_len_and_input(add_cp.temp_from_edit, add_cp.random_value_float_str(-5, 0))  # Температура от
-    add_cp.backspace_len_and_input(add_cp.temp_until_edit, add_cp.random_value_float_str(0, 5))  # Температура до
-    add_cp.backspace_len_and_input(add_cp.lkz_external_id_edit, cp_stamp)  # Внешний ID
-    add_cp.backspace_len_and_input(add_cp.lkz_comment_edit, cp_stamp)  # Комментарий
+    add_cp.backspace_and_input(add_cp.lkz_cp_title_edit, cp_stamp)  # Название
+    add_cp.backspace_and_input(add_cp.lkz_invoice_number_edit, cp_stamp)  # Номер накладной
+    add_cp.backspace_and_input(add_cp.lkz_bar_code_edit, cp_stamp)  # Штрихкод
+    add_cp.backspace_and_input(add_cp.lkz_seal_number_edit, cp_stamp)  # Номер пломбы
+    add_cp.backspace_and_input(add_cp.temp_from_edit, add_cp.random_value_float_str(-5, 0))  # Температура от
+    add_cp.backspace_and_input(add_cp.temp_until_edit, add_cp.random_value_float_str(0, 5))  # Температура до
+    add_cp.backspace_and_input(add_cp.lkz_external_id_edit, cp_stamp)  # Внешний ID
+    add_cp.backspace_and_input(add_cp.lkz_comment_edit, cp_stamp)  # Комментарий
     # Клик по кнопке сохранения изменений
     add_cp.click_button(add_cp.save_button, wait="form")
     # Конец теста

@@ -54,7 +54,7 @@ def test_cargo_place_routing_lke(base_fixture, domain):
     time.sleep(1)
     cp_list.click_button(cp_list.today_button)
     cp_list.click_button(cp_list.calendar_picker_button, index=2)
-    cp_list.backspace_num_and_input(cp_list.calendar_input, num=5, value=new_time)
+    cp_list.backspace_and_input(cp_list.calendar_input, num=5, value=new_time)
     cp_list.click_button(cp_list.calendar_ok_button)
     # Клик по кнопке отправить ГМ на маршрутизацию
     cp_list.click_button(cp_list.send_button, do_assert=True)
@@ -109,7 +109,7 @@ def test_cargo_place_routing_lkz(base_fixture, domain):
     time.sleep(1)
     cp_list.click_button(cp_list.today_button)
     cp_list.click_button(cp_list.calendar_picker_button, index=2)
-    cp_list.backspace_num_and_input(cp_list.calendar_input, num=5, value=new_time)
+    cp_list.backspace_and_input(cp_list.calendar_input, num=5, value=new_time)
     cp_list.click_button(cp_list.calendar_ok_button)
     # Клик по кнопке отправить ГМ на маршрутизацию
     cp_list.click_button(cp_list.send_button, do_assert=True)

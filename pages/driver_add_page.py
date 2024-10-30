@@ -224,7 +224,7 @@ class DriverAdd(Base):
         self.input_in_field(self.passport_code_input, self.random_value_float_str(100000, 999999), click_first=True)
         self.input_in_field(self.license_id_input, self.random_value_float_str(1000000000, 9999999999))
         self.click_button(self.license_date_input_close)
-        self.backspace_len_and_input(self.license_date_input_open, '45')
+        self.backspace_and_input(self.license_date_input_open, num=2, value="45")
         
         # Ввод контактной информации
         self.input_in_field(self.app_phone_input, self.random_value_float_str(9650000000, 9659999999), click_first=True)
@@ -266,7 +266,7 @@ class DriverAdd(Base):
         self.input_in_field(self.passport_code_input, self.random_value_float_str(100000, 999999), click_first=True)
         self.input_in_field(self.license_id_input, self.random_value_float_str(1000000000, 9999999999))
         self.click_button(self.license_date_input_close)
-        self.backspace_len_and_input(self.license_date_input_open, '45')
+        self.backspace_and_input(self.license_date_input_open, num=2, value="45")
         
         # Ввод контактной информации
         self.input_in_field(self.app_phone_input, self.random_value_float_str(9650000000, 9659999999), click_first=True)

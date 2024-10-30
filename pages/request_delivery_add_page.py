@@ -182,7 +182,7 @@ class DeliveryAdd(Base):
         # Еще раз клик по кнопке выбора даты и времени начала подачи
         self.click_button(self.start_at_from_button)
         # Ввод новой временной метки в соответствующее поле
-        self.backspace_num_and_input(self.start_at_from_input, 5, new_time)
+        self.backspace_and_input(self.start_at_from_input, num=5, value=new_time)
         # Клик по кнопке подтверждения выбора даты и времени
         self.click_button(self.calendar_ok_button)
         time.sleep(1)
@@ -211,7 +211,7 @@ class DeliveryAdd(Base):
         # Еще раз клик по кнопке выбора даты и времени начала подачи
         self.click_button(self.start_at_from_button)
         # Ввод новой временной метки в соответствующее поле
-        self.backspace_num_and_input(self.start_at_from_input, 5, new_time)
+        self.backspace_and_input(self.start_at_from_input, num=5, value=new_time)
         # Клик по кнопке подтверждения выбора даты и времени
         self.click_button(self.calendar_ok_button)
         time.sleep(1)  # Ожидание перед продолжением выполнения

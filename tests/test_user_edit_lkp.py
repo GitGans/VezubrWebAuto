@@ -66,16 +66,16 @@ def test_user_edit_lkp(base_fixture, domain):
     # Изменение часового пояса на "Africa/Abidjan"
     user.dropdown_without_input(user.user_timezone_select, "Africa/Abidjan")
     # Изменение фамилии пользователя
-    user.backspace_len_and_input(user.surname_input, f"Ф-{base.get_timestamp()}")
+    user.backspace_and_input(user.surname_input, f"Ф-{base.get_timestamp()}")
     # Изменение имени пользователя
-    user.backspace_len_and_input(user.name_input, f"И-{base.get_timestamp()}")
+    user.backspace_and_input(user.name_input, f"И-{base.get_timestamp()}")
     # Изменение отчества пользователя
-    user.backspace_len_and_input(user.patronymic_input, f"О-{base.get_timestamp()}")
+    user.backspace_and_input(user.patronymic_input, f"О-{base.get_timestamp()}")
     # Изменение номера телефона пользователя
     user.click_button(user.phone_input)
-    user.backspace_len_and_input(user.phone_input, base.random_value_float_str(1000000000, 9999999999))
+    user.backspace_and_input(user.phone_input, base.random_value_float_str(1000000000, 9999999999))
     # Изменение email пользователя
-    user.backspace_len_and_input(user.email_input, f"E{base.get_timestamp()}@mail.ru")
+    user.backspace_and_input(user.email_input, f"E{base.get_timestamp()}@mail.ru")
     # Сохранение изменений
     user.click_button(user.save_edit_user_button, do_assert=True)
     # Подтверждение изменений

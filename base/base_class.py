@@ -479,7 +479,7 @@ class Base:
             ActionChains(self.driver).move_to_element(button_dict['element']).perform()
             
             # Вывод сообщения в консоль
-            print(f"Moved to {button_dict['name']}")
+            print(message)
     
     """ Switch to original window """
     def switch_to_original_window(self) -> None:
@@ -559,43 +559,12 @@ class Base:
                     with allure.step("Spinner did not disappear"):
                         print("Spinner did not disappear")
     
-    """ Backspace len and input with optional click, enter"""
-    def backspace_len_and_input(self, element_dict: Dict[str, str], value: str,
-                                click_first: bool = False, press_enter: Optional[bool] = False) -> None:
+    """ Backspace num times/all and input with optional click, enter, and wait type"""
+    def backspace_and_input(self, element_dict: Dict[str, str], value: str, click_first: bool = False,
+                            press_enter: bool = False, wait_type: str = 'clickable', num: Optional[int] = None) -> None:
         """
-        Выполняет нажатие клавиши Backspace для удаления символов,
-        соответствующих длине вводимого значения, и вводит текст.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о поле ввода.
-        value : str
-            Значение для ввода.
-        click_first : bool, optional
-            Если True, сначала кликает по полю перед вводом текста.
-        press_enter : bool, optional
-            Если True, нажимает Enter после ввода значения.
-
-        """
-        element_name = element_dict['name']
-        with allure.step(title=f"{'Click and ' if click_first else ''}Backspace and input in {element_name}: {value}"):
-            field_dict = self.get_element(element_dict)
-            if click_first:
-                field_dict['element'].click()
-            field_dict['element'].send_keys(Keys.BACKSPACE * len(value))
-            field_dict['element'].send_keys(value)
-            if press_enter:
-                field_dict['element'].send_keys(Keys.ENTER)
-            print(f"{'Click and ' if click_first else ''}Backspace and input in {element_name}: {value}")
-    
-    """ Backspace all and input with optional click, enter, and wait type """
-    def backspace_all_and_input(self, element_dict: Dict[str, str], value: str,
-                                click_first: bool = False, press_enter: bool = False,
-                                wait_type: str = 'clickable') -> None:
-        """
-        Очищает поле ввода путем нажатий клавиши Backspace для каждого символа в поле,
-        затем вводит новое значение.
+        Выполняет нажатие клавиши Backspace для удаления символов и вводит текст. Если передается num,
+        то удаляет указанное количество символов. Если num не передан, удаляет все символы в поле.
 
         Parameters
         ----------
@@ -610,53 +579,41 @@ class Base:
         wait_type : str, optional
             Тип ожидания элемента. По умолчанию 'clickable'.
             Доступные варианты: 'clickable', 'visible', 'located', 'find', 'invisibility'.
+        num : int, optional
+            Количество раз для нажатия клавиши Backspace. Если None, удаляет все символы в поле. По умолчанию None.
 
         """
         element_name = element_dict['name']
-        with allure.step(title=f"{'Click and ' if click_first else ''}Backspace and input in {element_name}: {value}"):
+        
+        # Формируем сообщение для шага Allure и консоли
+        message = (f"{'Click and ' if click_first else ''}"
+                   f"Backspace {'all' if num is None else num} times and input in {element_name}: {value}")
+        
+        with allure.step(title=message):
             field_dict = self.get_element(element_dict, wait_type=wait_type)
+            
             if click_first:
                 field_dict['element'].click()
-            current_value = field_dict['element'].get_attribute('value')
-            for _ in range(len(current_value)):
-                field_dict['element'].send_keys(Keys.BACKSPACE)
+            
+            # Если num не указан, удаляем все символы, иначе удаляем num символов
+            if num is None:
+                current_value = field_dict['element'].get_attribute('value')
+                num_backspaces = len(current_value)
+            else:
+                num_backspaces = num
+            
+            # Выполняем нажатие Backspace
+            field_dict['element'].send_keys(Keys.BACKSPACE * num_backspaces)
+            
+            # Вводим новое значение
             field_dict['element'].send_keys(value)
+            
+            # Если указано, выполняем нажатие Enter
             if press_enter:
                 field_dict['element'].send_keys(Keys.ENTER)
-            print(f"{'Click and ' if click_first else ''}Backspaced and input in {element_name}: {value}")
-
-    """ Backspace num times and input with optional click, enter"""
-    def backspace_num_and_input(self, element_dict: Dict[str, str], num: int, value: str,
-                                click_first: bool = False, press_enter: Optional[bool] = False) -> None:
-        """
-        Выполняет нажатие клавиши Backspace заданное количество раз и вводит текст.
-
-        Parameters
-        ----------
-        element_dict : dict
-            Словарь с информацией о поле ввода.
-        num : int
-            Количество раз для нажатия клавиши Backspace.
-        value : str
-            Значение для ввода.
-        click_first : bool, optional
-            Если True, сначала кликает по полю перед вводом текста.
-        press_enter : bool, optional
-            Если True, нажимает Enter после ввода значения.
-
-        """
-        element_name = element_dict['name']
-        with allure.step(
-                title=f"{'Click and ' if click_first else ''}Backspace {num} times and input in {element_name}: {value}"
-        ):
-            field_dict = self.get_element(element_dict)
-            if click_first:
-                field_dict['element'].click()
-            field_dict['element'].send_keys(Keys.BACKSPACE * num)
-            field_dict['element'].send_keys(value)
-            if press_enter:
-                field_dict['element'].send_keys(Keys.ENTER)
-            print(f"{'Click and ' if click_first else ''}Backspaced {num} times and input in {element_name}: {value}")
+            
+            # Вывод сообщения в консоль
+            print(message)
     
     """Scroll to the bottom of the page"""
     def scroll_to_bottom(self) -> NoReturn:

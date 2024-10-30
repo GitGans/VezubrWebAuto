@@ -54,14 +54,14 @@ def test_tariff_luo_copy_lke(base_fixture, domain):
     tariff.click_button(tariff.action_menu_button)
     tariff.click_button(tariff.copy_tariff_button, wait="form")
     # Изменение названия тарифа
-    tariff.backspace_len_and_input(tariff.tariff_name_input, f"ПРР-{base.get_timestamp()}")
+    tariff.backspace_and_input(tariff.tariff_name_input, f"ПРР-{base.get_timestamp()}")
     # Изменение параметров тарифа
     tariff.click_button(tariff.price_input)
-    tariff.backspace_len_and_input(tariff.params_input, base.random_value_float_str(2500, 4000))
+    tariff.backspace_and_input(tariff.params_input, base.random_value_float_str(2500, 4000))
     tariff.click_button(tariff.price_hour_input)
-    tariff.backspace_len_and_input(tariff.params_input, base.random_value_float_str(500, 1000))
+    tariff.backspace_and_input(tariff.params_input, base.random_value_float_str(500, 1000))
     tariff.click_button(tariff.price_mrr_input)
-    tariff.backspace_len_and_input(tariff.params_input, base.random_value_float_str(100, 500))
+    tariff.backspace_and_input(tariff.params_input, base.random_value_float_str(100, 500))
     # Сохранение изменений тарифа
     tariff.click_button(tariff.add_tariff_button)
     tariff.click_button(tariff.confirm_button)
@@ -94,10 +94,10 @@ def test_tariff_ftl_h_copy_lke(base_fixture, domain):
     tariff.click_button(tariff.action_menu_button)
     tariff.click_button(tariff.copy_tariff_button, wait="form")
     # Изменение названия тарифа
-    tariff.backspace_len_and_input(tariff.tariff_name_input, f"ПЧ-{base.get_timestamp()}")
+    tariff.backspace_and_input(tariff.tariff_name_input, f"ПЧ-{base.get_timestamp()}")
     # Изменение параметров тарифа
     tariff.click_button(tariff.price_input)
-    tariff.backspace_len_and_input(tariff.hourly_params_input, base.random_value_float_str(3000, 5000))
+    tariff.backspace_and_input(tariff.hourly_params_input, base.random_value_float_str(3000, 5000))
     # Сохранение изменений тарифа
     tariff.click_button(tariff.add_hourly_tariff_button)
     tariff.click_button(tariff.confirm_button)
@@ -131,14 +131,14 @@ def test_tariff_ftl_cc_copy_lke(base_fixture, domain):
     tariff.click_button(tariff.action_menu_button)
     tariff.click_button(tariff.copy_tariff_button, wait="form")
     # Изменение названия тарифа
-    tariff.backspace_len_and_input(tariff.tariff_name_input, f"ГГ-{base.get_timestamp()}")
+    tariff.backspace_and_input(tariff.tariff_name_input, f"ГГ-{base.get_timestamp()}")
     # Изменение параметров тарифа
     tariff.click_button(tariff.price_input)
-    tariff.backspace_len_and_input(tariff.fixed_params_input, base.random_value_float_str(5000, 10000))
+    tariff.backspace_and_input(tariff.fixed_params_input, base.random_value_float_str(5000, 10000))
     tariff.click_button(tariff.address_cost_input)
-    tariff.backspace_len_and_input(tariff.fixed_params_input, base.random_value_float_str(1000, 3000))
+    tariff.backspace_and_input(tariff.fixed_params_input, base.random_value_float_str(1000, 3000))
     tariff.click_button(tariff.free_downtime_input)
-    tariff.backspace_len_and_input(tariff.fixed_params_input, base.random_value_float_str(10, 60))
+    tariff.backspace_and_input(tariff.fixed_params_input, base.random_value_float_str(10, 60))
     # Сохранение изменений тарифа
     tariff.click_button(tariff.add_fm_tariff_button)
     tariff.click_button(tariff.confirm_button)
@@ -172,21 +172,21 @@ def test_ftl_ml_tariff_copy_lke(base_fixture, domain):
     tariff.click_button(tariff.action_menu_button)
     tariff.click_button(tariff.copy_tariff_button, wait="form")
     # Изменение названия тарифа
-    tariff.backspace_len_and_input(tariff.tariff_name_input, f"ПБ-{base.get_timestamp()}")
+    tariff.backspace_and_input(tariff.tariff_name_input, f"ПБ-{base.get_timestamp()}")
     # Изменение параметров тарифа
     tariff.click_button(tariff.extra_mileage_input)
-    tariff.backspace_len_and_input(tariff.mileage_params_input, base.random_value_float_str(10, 50))
+    tariff.backspace_and_input(tariff.mileage_params_input, base.random_value_float_str(10, 50))
     tariff.click_button(tariff.address_cost_input)
-    tariff.backspace_len_and_input(tariff.mileage_params_input, base.random_value_float_str(1000, 3000))
+    tariff.backspace_and_input(tariff.mileage_params_input, base.random_value_float_str(1000, 3000))
     tariff.click_button(tariff.free_downtime_input)
-    tariff.backspace_len_and_input(tariff.mileage_params_input, base.random_value_float_str(10, 60))
+    tariff.backspace_and_input(tariff.mileage_params_input, base.random_value_float_str(10, 60))
     tariff.click_button(tariff.add_min_price_button)
-    tariff.backspace_len_and_input(tariff.mileage_params_input, base.random_value_float_str(2500, 10000))
+    tariff.backspace_and_input(tariff.mileage_params_input, base.random_value_float_str(2500, 10000))
     # Подтверждение изменений тарифа
     tariff.click_button(tariff.add_confirm_button)
-    tariff.backspace_len_and_input(tariff.mileage_params_input, base.random_value_float_str(10, 30))
-    tariff.backspace_len_and_input(tariff.mileage_params_input_2, base.random_value_float_str(1, 5))
-    tariff.backspace_len_and_input(tariff.mileage_params_input_3, base.random_value_float_str(10, 60))
+    tariff.backspace_and_input(tariff.mileage_params_input, base.random_value_float_str(10, 30))
+    tariff.backspace_and_input(tariff.mileage_params_input_2, base.random_value_float_str(1, 5))
+    tariff.backspace_and_input(tariff.mileage_params_input_3, base.random_value_float_str(10, 60))
     # Сохранение изменений тарифа
     tariff.click_button(tariff.add_fm_tariff_button)
     tariff.click_button(tariff.confirm_button)
@@ -220,14 +220,14 @@ def test_tariff_ltl_copy_lke(base_fixture, domain):
     tariff.click_button(tariff.action_menu_button)
     tariff.click_button(tariff.copy_tariff_button, wait="form")
     # Изменение параметров тарифа
-    tariff.backspace_len_and_input(tariff.min_weight_input, base.random_value_float_str(10, 100))
-    tariff.backspace_len_and_input(tariff.volumetric_weight_input, base.random_value_float_str(10, 100))
-    tariff.backspace_len_and_input(tariff.direct_price_input, base.random_value_float_str(100, 500))
-    tariff.backspace_len_and_input(tariff.reverse_price_input, base.random_value_float_str(100, 500))
-    tariff.backspace_len_and_input(tariff.min_price_input, base.random_value_float_str(1000, 3000))
-    tariff.backspace_len_and_input(tariff.kg_price_input, base.random_value_float_str(50, 200))
-    tariff.backspace_len_and_input(tariff.temp_coeff_input, base.random_value_float_str(1.0, 5.0))
-    tariff.backspace_len_and_input(tariff.delivery_time_input, base.random_value_float_str(5, 50))
+    tariff.backspace_and_input(tariff.min_weight_input, base.random_value_float_str(10, 100))
+    tariff.backspace_and_input(tariff.volumetric_weight_input, base.random_value_float_str(10, 100))
+    tariff.backspace_and_input(tariff.direct_price_input, base.random_value_float_str(100, 500))
+    tariff.backspace_and_input(tariff.reverse_price_input, base.random_value_float_str(100, 500))
+    tariff.backspace_and_input(tariff.min_price_input, base.random_value_float_str(1000, 3000))
+    tariff.backspace_and_input(tariff.kg_price_input, base.random_value_float_str(50, 200))
+    tariff.backspace_and_input(tariff.temp_coeff_input, base.random_value_float_str(1.0, 5.0))
+    tariff.backspace_and_input(tariff.delivery_time_input, base.random_value_float_str(5, 50))
     # Сохранение изменений тарифа
     tariff.click_button(tariff.add_tariff_button)
     tariff.click_button(tariff.confirm_button)

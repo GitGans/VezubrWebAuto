@@ -29,13 +29,13 @@ def test_ltl_tariff_add_lke(base_fixture, domain):
     # Выбор подтипа тарифа "Короб"
     add_tariff.dropdown_without_input(add_tariff.ltl_type_select, "Короб")
     # Ввод минимального веса
-    add_tariff.backspace_len_and_input(add_tariff.min_weight_input, base.random_value_float_str(10, 100))
+    add_tariff.backspace_and_input(add_tariff.min_weight_input, base.random_value_float_str(10, 100))
     # Ввод объёмного веса
-    add_tariff.backspace_len_and_input(add_tariff.volumetric_weight_input, base.random_value_float_str(10, 100))
+    add_tariff.backspace_and_input(add_tariff.volumetric_weight_input, base.random_value_float_str(10, 100))
     # Ввод стоимости прямого сбора
-    add_tariff.backspace_len_and_input(add_tariff.direct_price_input, base.random_value_float_str(100, 500))
+    add_tariff.backspace_and_input(add_tariff.direct_price_input, base.random_value_float_str(100, 500))
     # Ввод стоимости обратного сбора
-    add_tariff.backspace_len_and_input(add_tariff.reverse_price_input, base.random_value_float_str(100, 500))
+    add_tariff.backspace_and_input(add_tariff.reverse_price_input, base.random_value_float_str(100, 500))
     # Выбор региона отправки
     add_tariff.dropdown_with_input(add_tariff.dispatch_region_select, "Свердловская область")
     # Выбор региона доставки

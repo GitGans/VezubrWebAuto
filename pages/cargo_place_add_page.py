@@ -320,9 +320,9 @@ class CargoPlaceAdd(Base):
         # Выбор типа грузоместа "Короб"
         self.dropdown_without_input(self.lke_cp_type_select, "Короб")
         # Ввод рандомизированных данных для веса, объема и стоимости груза
-        self.backspace_len_and_input(self.cp_weight_input, self.random_value_float_str(10, 1500))
-        self.backspace_len_and_input(self.cp_value_input, self.random_value_float_str(0.1, 9.0, precision=1))
-        self.backspace_len_and_input(self.cp_cost_input, self.random_value_float_str(100, 1000000))
+        self.backspace_and_input(self.cp_weight_input, self.random_value_float_str(10, 1500))
+        self.backspace_and_input(self.cp_value_input, self.random_value_float_str(0.1, 9.0, precision=1))
+        self.backspace_and_input(self.cp_cost_input, self.random_value_float_str(100, 1000000))
         # Генерация уникального идентификатора для грузоместа
         cp_stamp = f"ГМ-{self.get_timestamp()}"
         # Ввод уникального штрихкода
@@ -408,10 +408,10 @@ class CargoPlaceAdd(Base):
         # Выбор типа грузоместа "Короб"
         self.dropdown_without_input(self.lke_cp_type_select, "Короб")
         # Ввод рандомизированных данных для количества, веса, объема и стоимости груза
-        self.backspace_len_and_input(self.cp_quantity_input, self.random_value_float_str(1, 10))
-        self.backspace_len_and_input(self.cp_weight_input, self.random_value_float_str(10, 20000))
-        self.backspace_len_and_input(self.cp_value_input, self.random_value_float_str(0.1, 35.0, precision=1))
-        self.backspace_len_and_input(self.cp_cost_input, self.random_value_float_str(100, 1000000))
+        self.backspace_and_input(self.cp_quantity_input, self.random_value_float_str(1, 10))
+        self.backspace_and_input(self.cp_weight_input, self.random_value_float_str(10, 20000))
+        self.backspace_and_input(self.cp_value_input, self.random_value_float_str(0.1, 35.0, precision=1))
+        self.backspace_and_input(self.cp_cost_input, self.random_value_float_str(100, 1000000))
         # Выбор статуса грузоместа "Новое"
         self.dropdown_without_input(self.lke_cp_status_select, "Новое")
         # Генерация уникального идентификатора для грузоместа
