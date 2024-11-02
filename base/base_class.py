@@ -7,7 +7,7 @@ import os
 import platform
 from typing import Any, ClassVar, Dict, Type, NoReturn, Optional
 from selenium import webdriver
-from selenium.common import TimeoutException, ElementClickInterceptedException, JavascriptException
+from selenium.common import TimeoutException, ElementClickInterceptedException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -290,13 +290,12 @@ class Base:
             if hasattr(self, 'allure_dir') and self.allure_dir:
                 allure.attach.file(screenshot_path, name="Screenshot", attachment_type=allure.attachment_type.PNG)
     
-    """ Click button"""
-    def click_button(self, element_dict: Dict[str, str], index: int = 1, do_assert: Optional[bool] = False,
-                     wait: Optional[str] = None, wait_type: str = 'clickable') -> NoReturn:
+    """Click button with optional assertion and loading wait"""
+    def click_button(self, element_dict: Dict[str, str], index: int = 1, do_assert: bool = False,
+                     wait: Optional[str] = None, wait_type: str = 'clickable') -> None:
         """
         Кликает по кнопке с заданным типом ожидания и опционально по индексу элемента.
-        Может выполнять дополнительную проверку текста элемента после клика (ассерт) и ожидание
-        исчезновения элементов загрузки (списки или формы).
+        Опционально выполняет проверку текста элемента после клика и ожидание исчезновения элементов загрузки.
 
         Parameters
         ----------
@@ -305,30 +304,35 @@ class Base:
         index : int, optional
             Индекс элемента в списке однотипных элементов. По умолчанию 1 (первый элемент).
         do_assert : bool, optional
-            Если True, выполнит дополнительную проверку текста элемента после клика.
+            Если True, выполнит проверку текста элемента после клика.
         wait : str, optional
             Определяет, какой спиннер ожидать после клика ('lst' для списка или 'form' для формы).
         wait_type : str, optional
             Тип ожидания элемента перед кликом ('clickable', 'visible', 'located', 'find'), по умолчанию 'clickable'.
 
         """
+        # Формирование локатора и имени элемента с учётом индекса
         element_name = f"{element_dict['name']} index {index}" if index > 1 else element_dict['name']
         locator = f"({element_dict['xpath']})[{index}]" if index > 1 else element_dict['xpath']
         updated_element_dict = {"name": element_name, "xpath": locator}
         
-        with allure.step(title=f"Click on {element_name}"):
+        # Создаем единое сообщение для Allure шага и консоли
+        message = f"Click on {element_name}"
+        
+        with allure.step(title=message):
             button_dict = self.get_element(updated_element_dict, wait_type)
             button_dict['element'].click()
-            print(f"Click on {button_dict['name']}")
+            print(message)
+            
+            # Ожидание спиннера, если задано
             if wait:
-                # Определяем, какой спиннер ожидать
                 loading_spinner = self.loading_form if wait == 'form' else self.loading_list
                 try:
                     self.get_element(loading_spinner, wait_type="visible")  # Ожидание появления спиннера
                 except TimeoutException:
                     with allure.step("Spinner did not appear"):
-                        print("Spinner did not disappear")
-                        return  # Выходим из метода, так как спиннер не появился
+                        print("Spinner did not appear")
+                        return  # Завершаем метод, если спиннер не появился
                 
                 try:
                     self.get_element(loading_spinner, wait_type="invisibility")  # Ожидание исчезновения спиннера
@@ -336,7 +340,8 @@ class Base:
                     with allure.step("Spinner did not disappear"):
                         print("Spinner did not disappear")
                         # Продолжаем выполнение, несмотря на то, что спиннер не исчез
-                        
+            
+            # Выполнение ассерта текста элемента, если do_assert = True
             if do_assert:
                 self.assert_element_text(element_dict)
     
@@ -615,27 +620,12 @@ class Base:
             # Вывод сообщения в консоль
             print(message)
     
-    """Scroll to the bottom of the page"""
-    def scroll_to_bottom(self) -> NoReturn:
-        """
-        Прокручивает страницу до самого низа с помощью JavaScript.
-        """
-        try:
-            # Прокрутка страницы до низа
-            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(0.5)  # Немного подождем после прокрутки, чтобы убедиться, что все элементы загрузились
-        except JavascriptException as e:
-            print(f"JavascriptException: {e}")
-
-    """ Move to and click button"""
+    """Move to element and click another element"""
     def move_and_click(self, move_to: Dict[str, str], click_to: Dict[str, str], move_index: int = 1,
                        click_index: int = 1, move_wait_type: str = 'clickable', click_wait_type: str = 'clickable',
                        do_assert: bool = False, wait: Optional[str] = None) -> None:
         """
-        Перемещается к элементу с заданным типом ожидания и индексом,
-        и кликает по другому элементу с выбором типа ожидания и индексом.
-        После клика может выполнить дополнительную проверку текста элемента (ассерт)
-        и ожидание исчезновения элементов загрузки (списки или формы).
+        Перемещается к одному элементу и кликает по другому, поддерживая настройку индекса, типа ожидания и проверок.
 
         Parameters
         ----------
@@ -644,103 +634,66 @@ class Base:
         click_to : dict
             Словарь с информацией о элементе для клика.
         move_index : int, optional
-            Индекс элемента для перемещения. По умолчанию 1 (первый элемент).
+            Индекс элемента для перемещения, по умолчанию 1.
         click_index : int, optional
-            Индекс элемента для клика. По умолчанию 1 (первый элемент).
+            Индекс элемента для клика, по умолчанию 1.
         move_wait_type : str, optional
             Тип ожидания элемента для перемещения ('clickable', 'visible', 'located', 'find').
         click_wait_type : str, optional
             Тип ожидания элемента для клика ('clickable', 'visible', 'located', 'find').
         do_assert : bool, optional
-            Если True, выполняет дополнительную проверку текста элемента после клика.
+            Если True, выполняет проверку текста элемента после клика.
         wait : str, optional
             Если 'lst' или 'form', ожидает исчезновение указанных элементов загрузки после клика.
 
         """
+        # Перемещаемся к указанному элементу
         self.move_to_element(move_to, index=move_index, wait_type=move_wait_type)
-        time.sleep(0.1)
+        time.sleep(0.1)  # Небольшая задержка перед кликом для надёжности
+        
+        # Кликаем по указанному элементу с дополнительными проверками
         self.click_button(click_to, index=click_index, wait_type=click_wait_type, do_assert=do_assert, wait=wait)
-
-    """ Naw time change"""
+    
+    """ Naw time/datetime change"""
     @staticmethod
-    def naw_time_change(minutes: int) -> str:
+    def naw_time_change(minutes: int, new: str = 'time') -> str:
         """
-        Изменяет текущее время, добавляя указанное количество минут и округляет результат.
+        Изменяет текущее время или дату и время, добавляя указанное количество минут и округляя результат.
 
         Parameters
         ----------
         minutes : int
             Количество минут для добавления к текущему времени.
+        new : str, optional
+            Формат возвращаемого времени. 'time' для формата HHMM (по умолчанию),
+            'datetime' для формата DDMMYYYY HHMM.
 
         Returns
         -------
         str
-            Строка с новым временем в формате HHMM, округленным до ближайших 5 минут.
-
-        """
-        original_time = datetime.datetime.now()
-        new_time = original_time + datetime.timedelta(minutes=minutes)
-        new_time_str = new_time.strftime("%H%M")
-        rounded_time_str = str(int(round(int(new_time_str) / 5) * 5)).zfill(4)
-        return rounded_time_str
-
-    """ Naw datatime change"""
-    @staticmethod
-    def naw_datatime_change(minutes: int) -> str:
-        """
-        Изменяет текущую дату и время, добавляя указанное количество минут и округляет результат.
-
-        Parameters
-        ----------
-        minutes : int
-            Количество минут для добавления к текущей дате и времени.
-
-        Returns
-        -------
-        str
-            Строка с новой датой и временем в формате DDMMYYYY HHMM, округленным до ближайших 5 минут.
-
-        """
-        original_time = datetime.datetime.now()
-        new_time = original_time + datetime.timedelta(minutes=minutes)
-        new_time_str = new_time.strftime("%d%m%Y %H%M")
-        rounded_time_str = str(int(round(int(new_time_str) / 5) * 5)).zfill(4)
-        return rounded_time_str
-
-    """ Get sms code"""
-    def get_confirmation_code(self, phone_number):
-        """
-        Извлекает код подтверждения, связанный с заданным номером телефона.
-
-        Parameters
-        ----------
-        phone_number : str
-            Номер телефона в формате 10 цифр без префикса.
-
-        Returns
-        -------
-        str
-            Код подтверждения как строку, если найден.
+            Строка с новым временем в формате HHMM или DDMMYYYY HHMM, округленным до ближайших 5 минут.
 
         Raises
         ------
         ValueError
-            Если код подтверждения не найден.
+            Если передано неверное значение для параметра new.
         """
-        formatted_phone = '+7' + phone_number
-        xpath_locator = f"//tr[contains(.//div, '{formatted_phone}')]//div[contains(text(), 'Код подтверждения:')]"
-        try:
-            element_text = WebDriverWait(self.driver, 60).until(
-                EC.visibility_of_element_located((By.XPATH, xpath_locator))
-            ).text
-        except TimeoutException:
-            raise ValueError(f"Код подтверждения для номера {formatted_phone} не найден.")
-
-        match = re.search(r'\d+', element_text)
-        if match:
-            return match.group(0)
+        original_time = datetime.datetime.now()
+        new_time = original_time + datetime.timedelta(minutes=minutes)
+        
+        # Определяем формат
+        if new == 'time':
+            time_str = new_time.strftime("%H%M")
+        elif new == 'datetime':
+            time_str = new_time.strftime("%d%m%Y %H%M")
         else:
-            raise ValueError(f"Не удалось извлечь код подтверждения из текста: {element_text}")
+            raise ValueError("Unsupported format. Use 'time' or 'datetime'.")
+        
+        # Округляем время до ближайших 5 минут
+        rounded_time_str = str(int(round(int(time_str[-4:]) / 5) * 5)).zfill(4)
+        
+        # Возвращаем строку с правильным форматом
+        return time_str[:-4] + rounded_time_str if new == 'datetime' else rounded_time_str
 
     """ Generate INN """
     @staticmethod

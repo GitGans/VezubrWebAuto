@@ -1,3 +1,5 @@
+import time
+
 import allure
 import pytest
 from selenium.webdriver.support.wait import WebDriverWait
@@ -46,6 +48,9 @@ def test_registration_new_lke(base_fixture, domain):
     # Переход к деталям сообщений
     sms.click_button(sms.sms_login_button)
     sms.click_button(sms.detailing_button)
+    time.sleep(5)
+    # Обновление страницы
+    sms.click_button(sms.refresh_button)
     # Получение кода подтверждения
     code = sms.get_confirmation_code(phone)
     
@@ -118,6 +123,10 @@ def test_registration_new_lkz(base_fixture, domain):
     # Переход к деталям сообщений
     sms.click_button(sms.sms_login_button)
     sms.click_button(sms.detailing_button)
+    time.sleep(5)
+    # Обновление страницы
+    sms.click_button(sms.refresh_button)
+    
     # Получение кода подтверждения
     code = sms.get_confirmation_code(phone)
     
@@ -209,6 +218,10 @@ def test_registration_new_lkp(base_fixture, domain):
     # Переход к деталям сообщений
     sms.click_button(sms.sms_login_button)
     sms.click_button(sms.detailing_button)
+    time.sleep(5)
+    # Обновление страницы
+    sms.click_button(sms.refresh_button)
+    
     # Получение кода подтверждения
     code = sms.get_confirmation_code(phone)
     
