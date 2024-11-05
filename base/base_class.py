@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timezone, timedelta
 import time
 import random
 import re
@@ -182,15 +182,17 @@ class Base:
         str
             Текущее время в выбранном формате.
         """
+        current_time = datetime.now(timezone.utc)  # Используем текущую дату и время с учетом временной зоны UTC
+        
         if eight:
             # Формат с восемью знаками без разделителей
-            timestamp = datetime.datetime.utcnow().strftime("%d%H%M%S")
+            timestamp = current_time.strftime("%d%H%M%S")
         elif dot:
             # Формат с точками в качестве разделителей
-            timestamp = datetime.datetime.utcnow().strftime("%Y.%m.%d.%H.%M.%S")
+            timestamp = current_time.strftime("%Y.%m.%d.%H.%M.%S")
         else:
             # Формат по умолчанию без разделителей
-            timestamp = datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S")
+            timestamp = current_time.strftime("%Y%m%d%H%M%S")
         
         return timestamp
     
@@ -678,9 +680,9 @@ class Base:
         ValueError
             Если передано неверное значение для параметра new.
         """
-        original_time = datetime.datetime.now()
-        new_time = original_time + datetime.timedelta(minutes=minutes)
-        
+        original_time = datetime.now()
+        new_time = original_time + timedelta(minutes=minutes)
+
         # Определяем формат
         if new == 'time':
             time_str = new_time.strftime("%H%M")
@@ -688,10 +690,10 @@ class Base:
             time_str = new_time.strftime("%d%m%Y %H%M")
         else:
             raise ValueError("Unsupported format. Use 'time' or 'datetime'.")
-        
+
         # Округляем время до ближайших 5 минут
         rounded_time_str = str(int(round(int(time_str[-4:]) / 5) * 5)).zfill(4)
-        
+
         # Возвращаем строку с правильным форматом
         return time_str[:-4] + rounded_time_str if new == 'datetime' else rounded_time_str
 

@@ -34,37 +34,44 @@ class SmsCenter(Base):
         "xpath": "//button[@class='TlYSdkvjy8CvSMMQ0Zfb RkndBZDErw_QNC9G8r72 HStWRKScOyQNFQYvXccg Vd5x6c7IiEaFl4pAvotC Sp_9XlfPRQdlk8xOYoyU']",
         "name": "refresh_button"
     }
-    """ Get sms code"""
-    def get_confirmation_code(self, phone_number):
+
+    """ Get sms code with retries """
+    def get_confirmation_code(self, phone_number, max_attempts=12):
         """
-        Извлекает код подтверждения, связанный с заданным номером телефона.
+        Извлекает код подтверждения, связанный с заданным номером телефона, с повторными попытками.
 
         Parameters
         ----------
         phone_number : str
             Номер телефона в формате 10 цифр без префикса.
+        max_attempts : int, optional
+            Максимальное количество попыток проверки.
 
         Returns
         -------
-        str
-            Код подтверждения как строку, если найден.
+        str or None
+            Код подтверждения как строку, если найден, или None, если не найден после всех попыток.
 
         Raises
         ------
         ValueError
-            Если код подтверждения не найден.
+            Если код подтверждения не найден после всех попыток.
         """
         formatted_phone = '+7' + phone_number
         xpath_locator = f"//tr[contains(.//div, '{formatted_phone}')]//div[contains(text(), 'Код подтверждения:')]"
-        try:
-            element_text = WebDriverWait(self.driver, 60).until(
-                EC.visibility_of_element_located((By.XPATH, xpath_locator))
-            ).text
-        except TimeoutException:
-            raise ValueError(f"Код подтверждения для номера {formatted_phone} не найден.")
-
-        match = re.search(r'\d+', element_text)
-        if match:
-            return match.group(0)
-        else:
-            raise ValueError(f"Не удалось извлечь код подтверждения из текста: {element_text}")
+        
+        for attempt in range(max_attempts):
+            try:
+                element_text = WebDriverWait(self.driver, 5).until(
+                    EC.visibility_of_element_located((By.XPATH, xpath_locator))
+                ).text
+                match = re.search(r'\d+', element_text)
+                if match:
+                    print(f"Код подтверждения получен на попытке {attempt + 1}: {match.group(0)}")
+                    return match.group(0)
+            except TimeoutException:
+                print(f"Попытка {attempt + 1} не удалась. Обновляем страницу...")
+                self.click_button(self.refresh_button)
+        
+        # Если после всех попыток код не найден, выбрасываем ошибку
+        raise ValueError(f"Код подтверждения для номера {formatted_phone} не найден после {max_attempts} попыток.")
