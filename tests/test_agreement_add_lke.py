@@ -44,6 +44,14 @@ def test_agreement_client_add_lke(base_fixture, domain):
     add_agr.click_button(add_agr.add_agr_button, do_assert=True)
     # Клик по кнопке подтверждения добавления договора
     add_agr.click_button(add_agr.confirm_add_button)
+    # Клик по кнопке экшен меню
+    add_agr.click_button(add_agr.action_button)
+    # Выбор пункта Договор прекращен
+    add_agr.click_button(add_agr.termination_contract_button)
+    time.sleep(1.5)
+    # Проверка даты действия договора
+    data = add_agr.naw_time_change(0, 'date_dot')
+    add_agr.assert_element_text(add_agr.agr_date_finish, data, wait_type='visible')
     # Конец теста
 
 
@@ -84,6 +92,14 @@ def test_agreement_producer_add_lke(base_fixture, domain):
     add_agr.click_button(add_agr.add_agr_button, do_assert=True)
     # Клик по кнопке подтверждения добавления договора
     add_agr.click_button(add_agr.confirm_add_button)
+    # Клик по кнопке экшен меню
+    add_agr.click_button(add_agr.action_button)
+    # Выбор пункта Договор прекращен
+    add_agr.click_button(add_agr.termination_contract_button)
+    time.sleep(1.5)
+    # Проверка даты действия договора
+    data = add_agr.naw_time_change(0, 'date_dot')
+    add_agr.assert_element_text(add_agr.agr_date_finish, data, wait_type='visible')
     # Конец теста
 
 
@@ -124,4 +140,12 @@ def test_agreement_inter_contractor_add_lke(base_fixture, domain):
     add_agr.click_button(add_agr.add_agr_button, do_assert=True)
     # Клик по кнопке подтверждения добавления договора
     add_agr.click_button(add_agr.confirm_add_button)
+    # Клик по кнопке экшен меню
+    add_agr.click_button(add_agr.action_button)
+    # Выбор пункта Договор прекращен
+    add_agr.click_button(add_agr.termination_contract_button)
+    time.sleep(1.5)
+    # Проверка даты действия договора
+    data = add_agr.naw_time_change(0, 'date_dot')
+    add_agr.assert_element_text(add_agr.agr_date_finish, data, wait_type='visible')
     # Конец теста

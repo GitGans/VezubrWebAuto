@@ -660,20 +660,22 @@ class Base:
     @staticmethod
     def naw_time_change(minutes: int, new: str = 'time') -> str:
         """
-        Изменяет текущее время или дату и время, добавляя указанное количество минут и округляя результат.
+        Изменяет текущее время, дату или дату и время, добавляя указанное количество минут и округляя результат.
 
         Parameters
         ----------
         minutes : int
             Количество минут для добавления к текущему времени.
         new : str, optional
-            Формат возвращаемого времени. 'time' для формата HHMM (по умолчанию),
-            'datetime' для формата DDMMYYYY HHMM.
+            Формат возвращаемого значения.
+            'time' для формата HHMM (по умолчанию),
+            'datetime' для формата DDMMYYYY HHMM,
+            'date_dot' для формата DD.MM.YYYY.
 
         Returns
         -------
         str
-            Строка с новым временем в формате HHMM или DDMMYYYY HHMM, округленным до ближайших 5 минут.
+            Строка с новым временем в формате HHMM, DDMMYYYY HHMM или DD.MM.YYYY, округленным до ближайших 5 минут.
 
         Raises
         ------
@@ -688,8 +690,10 @@ class Base:
             time_str = new_time.strftime("%H%M")
         elif new == 'datetime':
             time_str = new_time.strftime("%d%m%Y %H%M")
+        elif new == 'date_dot':
+            return new_time.strftime("%d.%m.%Y")
         else:
-            raise ValueError("Unsupported format. Use 'time' or 'datetime'.")
+            raise ValueError("Unsupported format. Use 'time', 'datetime', or 'date_dot'.")
 
         # Округляем время до ближайших 5 минут
         rounded_time_str = str(int(round(int(time_str[-4:]) / 5) * 5)).zfill(4)

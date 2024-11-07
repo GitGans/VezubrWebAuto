@@ -78,6 +78,18 @@ class AgreementAdd(Base):
     }
     confirm_add_button = {
         "xpath": "//button[@class='ant-btn ant-btn-primary']",
-        "name": "create_button"
+        "name": "confirm_add_button"
+    }
+    action_button = {
+        "xpath": "//button[@class='filter-button circle box-shadow margin-left-12 default']",
+        "name": "action_button"
+    }
+    termination_contract_button = {
+        "xpath": "//span[contains(@class, 'text-big') and text()='Договор прекращен']",
+        "name": "termination_contract_button"
+    }
+    agr_date_finish = {
+        "xpath": "(//input[@class='ant-calendar-picker-input ant-input ant-input-disabled'])[2]",
+        "name": "agr_date_finish"
     }
     
