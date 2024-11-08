@@ -134,9 +134,9 @@ def test_semitrailer_inner_edit_lke(base_fixture, domain):
     add_ts.click_button(add_ts.confirm_button, wait="form")
     # Редактирование транспортного средства
     add_ts.click_button(add_ts.edit_button)
-    add_ts.backspace_and_input(add_ts.capacity_input, "100")
-    add_ts.backspace_and_input(add_ts.volume_input, "120")
-    add_ts.backspace_and_input(add_ts.pallets_input, "35")
+    add_ts.backspace_and_input(add_ts.capacity_input, "0.5")
+    add_ts.backspace_and_input(add_ts.volume_input, "0.5")
+    add_ts.backspace_and_input(add_ts.pallets_input, "0")
     add_ts.backspace_and_input(add_ts.height_from_ground_input, "5")
     add_ts.click_button(add_ts.sanitation_toggl)
     add_ts.all_additional_params_without_gps()

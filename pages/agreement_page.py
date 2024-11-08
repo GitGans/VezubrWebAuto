@@ -33,3 +33,11 @@ class Agreement(Base):
         "xpath": "//span[@class='ant-radio']",
         "name": "select_tariff_radio_button"
     }
+    delete_extra_agr_button = {
+        "xpath": "//button[@title='Удалить']",
+        "name": "delete_extra_agr_button"
+    }
+    yes_button = {
+        "xpath": "//button[@class='ant-btn ant-btn-primary']",
+        "name": "yes_button"
+    }

@@ -38,7 +38,7 @@ class ExtraAgreementAdd(Base):
     }
     appoint_later_button = {
         "xpath": "//button[@class='ant-btn semi-wide margin-left-16' and span[contains(text(), 'Назначить позже')]]",
-        "name": "add_extra_agr_button",
+        "name": "appoint_later_button",
         "reference_xpath": "//div[@class='ant-modal-confirm-content' and text()='ДУ к договору было успешно создано']",
         "reference": "ДУ к договору было успешно создано"
     }
@@ -59,7 +59,8 @@ class ExtraAgreementAdd(Base):
     # Methods
 
     def add_base_extra_agreements(self):
-        self.input_in_field(self.extra_agr_number_input, f"№-{self.get_timestamp()}")
+        extra_agr_number = f"№-{self.get_timestamp()}"
+        self.input_in_field(self.extra_agr_number_input, extra_agr_number)
         buttons_to_click = [
             self.extra_agr_add_date_button,
             self.today_button,
@@ -71,3 +72,5 @@ class ExtraAgreementAdd(Base):
         self.input_in_field(self.extra_agr_date_input, "01012040", press_enter=True)
         self.input_in_field(self.extra_agr_comment_input, "ДУ создано автотестом", click_first=True)
         self.click_button(self.add_extra_agr_button)
+        
+        return extra_agr_number

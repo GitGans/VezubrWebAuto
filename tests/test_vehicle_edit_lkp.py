@@ -123,7 +123,7 @@ def test_semitrailer1_edit_lkp(base_fixture, domain):
     add_ts.click_button(add_ts.sanitation_toggl)
     add_ts.click_button(add_ts.sanitary_date_button)
     add_ts.input_in_field(add_ts.calendar_input, "10102045")
-    add_ts.backspace_and_input(add_ts.capacity_input, "80")
+    add_ts.backspace_and_input(add_ts.capacity_input, click_first=True, value="80")
     add_ts.backspace_and_input(add_ts.height_from_ground_input, "5")
     add_ts.input_in_field(add_ts.platform_height_input, "1.5")
     add_ts.input_in_field(add_ts.platform_length_input, "35")

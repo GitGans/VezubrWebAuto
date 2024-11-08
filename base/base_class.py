@@ -235,6 +235,38 @@ class Base:
             assert re.fullmatch(expected_value, value_word), f"Expected '{expected_value}', but found '{value_word}'."
             print(f"Assert \"{value_word}\" == \"{expected_value}\"")
     
+    """ Verify text presence on the page """
+    def verify_text_on_page(self, text: str, should_exist: bool = True) -> None:
+        """
+        Проверяет наличие или отсутствие заданного текста на всей странице.
+
+        Parameters
+        ----------
+        text : str
+            Текст для поиска на странице.
+        should_exist : bool, optional
+            Если True, проверяет, что текст присутствует на странице.
+            Если False, проверяет, что текст отсутствует на странице. По умолчанию True.
+
+        Raises
+        ------
+        AssertionError
+            Если текст не найден при should_exist=True или найден при should_exist=False.
+        """
+        # Формируем сообщение для шага Allure и вывода в консоль
+        message = f"Verify that text '{text}' is {'present' if should_exist else 'absent'} on the page"
+        
+        with allure.step(message):
+            page_source = self.driver.page_source
+            text_found = text in page_source
+            
+            if should_exist:
+                assert text_found, f"Expected text '{text}' to be present on the page, but it was not found."
+            else:
+                assert not text_found, f"Expected text '{text}' to be absent on the page, but it was found."
+            
+            print(message)
+    
     """ Get random value float to str"""
     @staticmethod
     def random_value_float_str(of: float, to: float, precision: int = 0) -> str:
